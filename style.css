@@ -1,0 +1,142 @@
+/* General styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #F2F4F8; /* Light background color */
+    font-family: 'Times New Roman', Times, serif;
+    color: #8694a9; /* Text color */
+    overflow-x: hidden;
+}
+
+/* Heading 1 */
+h1 {
+    font-size: 28pt;
+    text-align: center;
+    padding: 10px;
+    margin-top: 0;
+    background-color: #0056A3; /* Primary color */
+    color: #fff;
+    border-radius: 5pt;
+}
+
+/* Sub-heading */
+.subH1 {
+    font-size: 20pt;
+    font-style: italic;
+}
+
+/* General layout */
+#main-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* White background for the container */
+    border-radius: 2.5%;
+    text-align: center; /* Center align content */
+}
+
+/* Logo container */
+#logo {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Logo Styling */
+.logo {
+    max-width: 300px; /* Increase size of the logo */
+    height: auto;
+    border-radius: 10px; /* Optional: adds rounded corners to the logo */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Add subtle shadow to the logo */
+}
+
+/* Login Button Styling */
+.login-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-btn {
+    background-color: #00A8FF; /* Secondary accent color */
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 16pt;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #F9A826; /* Highlight color */
+    transform: scale(1.05);
+}
+
+.login-btn:active {
+    background-color: #0056A3; /* Primary color for active state */
+    transform: scale(0.98);
+}
+
+/* Styling for the form container */
+#login-form-container {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #B0B8C3; /* Form borders */
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Form label styling */
+#user-login-form label {
+    font-size: 14pt;
+    color: #8694a9; /* Text color */
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Input field styling */
+#user-login-form input[type="email"], 
+#user-login-form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #D9E1EB; /* Border color */
+    border-radius: 5px;
+    font-size: 14pt;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#user-login-form input[type="email"]:focus, 
+#user-login-form input[type="password"]:focus {
+    border-color: #00A8FF; /* Focus accent color */
+    box-shadow: 0px 0px 5px rgba(0, 168, 255, 0.5); /* Accent shadow */
+    outline: none;
+}
+
+/* Submit Button */
+.submit-login-btn {
+    background-color: #00A8FF; /* Secondary accent color */
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 16pt;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.submit-login-btn:hover {
+    background-color: #F9A826; /* Highlight color on hover */
+}
+
+.submit-login-btn:active {
+    background-color: #0056A3; /* Active state color */
+}
