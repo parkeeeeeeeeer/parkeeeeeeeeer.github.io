@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {scoringCriteria} from './criteria';
+import {scoringCriteria} from './pfaCriteria';
 import './FitnessTest.css'; // Import your CSS file
 
 // Sample scoring criteria

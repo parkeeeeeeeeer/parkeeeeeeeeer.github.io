@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { scoringCriteria } from './criteria'; // Make sure to import your scoring criteria
-import './FitnessTest.css'; // Import your CSS file
+import { scoringCriteria } from './pfaCriteria'; // Make sure to import your scoring criteria
+import '../css/pfa.css'; // Import your CSS file
 
 // Helper function to convert MM:SS to total seconds
 function convertToSeconds(minutes, seconds) {
