@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Test Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .calculated-scores {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+        .calculated-scores p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Fitness Test Scores</h2>
+
+    <!-- Input Section -->
+    <form id="fitness-form">
+        <label for="cadet-name">Cadet Name:</label>
+        <input type="text" id="cadet-name" placeholder="Enter cadet name" required>
+
+        <label for="cadet-age">Cadet Age:</label>
+        <input type="number" id="cadet-age" placeholder="Enter cadet age" required>
+
+        <label for="cadet-gender">Cadet Gender:</label>
+        <select id="cadet-gender" required>
+            <option value="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+        <label for="pushup-score">Push-up Score:</label>
+        <input type="number" id="pushup-score" placeholder="Enter push-up score" required>
+
+        <label for="situp-score">Sit-up Score:</label>
+        <input type="number" id="situp-score" placeholder="Enter sit-up score" required>
+
+        <label for="run-time">Run Time (in seconds):</label>
+        <input type="number" id="run-time" placeholder="Enter run time (seconds)" required>
+
+        <button type="button" onclick="calculateScores()">Calculate Scores</button>
+    </form>
+
+    <!-- Calculation Section -->
+    <div class="calculated-scores" id="calculated-scores" style="display:none;">
+        <p><strong>Push-up Score:</strong> <span id="pushup-result"></span></p>
+        <p><strong>Sit-up Score:</strong> <span id="situp-result"></span></p>
+        <p><strong>1.5-Mile Run Score:</strong> <span id="run-result"></span></p>
+        <p><strong>Total Score:</strong> <span id="total-result"></span></p>
+    </div>
+</div>
+
+<!-- JavaScript Section -->
+<script>
+    // Mock scoring criteria
+    const scoringCriteria = [
+        // Example criteria for pushups, situps, and 1.5-mile run by age and gender
+        { exercise: 'pushup', gender: 'male', ageGroup: '<25', minPerformanceValue: 50, maxPerformanceValue: 100, points: 10 },
+        { exercise: 'situp', gender: 'male', ageGroup: '<25', minPerformanceValue: 50, maxPerformanceValue: 100, points: 10 },
+        { exercise: '1.5_mile_run', gender: 'male', ageGroup: '<25', minPerformanceValue: 540, maxPerformanceValue: 600, points: 50 },
+        // More criteria can be added for different age groups and genders
+    ];
+
+    // Function to calculate points based on performance
+    function calculateScore(exercise, gender, age, performanceValue) {
+        let ageGroup;
+        if (age < 25) ageGroup = '<25';
+        else if (age >= 25 && age < 30) ageGroup = '25-30';
+        else if (age >= 30 && age < 35) ageGroup = '30-35';
+        else ageGroup = '35-39';
+
+        const criteria = scoringCriteria.find(
+            (criteria) =>
+                criteria.exercise === exercise &&
+                criteria.gender === gender &&
+                criteria.ageGroup === ageGroup &&
+                performanceValue >= criteria.minPerformanceValue &&
+                performanceValue <= criteria.maxPerformanceValue
+        );
+
+        return criteria ? criteria.points : 0;
+    }
+
+    // Function to handle score calculation
+    function calculateScores() {
+        const age = parseInt(document.getElementById('cadet-age').value);
+        const gender = document.getElementById('cadet-gender').value;
+        const pushupScore = parseInt(document.getElementById('pushup-score').value);
+        const situpScore = parseInt(document.getElementById('situp-score').value);
+        const runTime = parseInt(document.getElementById('run-time').value);
+
+        const pushupPoints = calculateScore('pushup', gender, age, pushupScore);
+        const situpPoints = calculateScore('situp', gender, age, situpScore);
+        const runPoints = calculateScore('1.5_mile_run', gender, age, runTime);
+        const totalScore = pushupPoints + situpPoints + runPoints;
+
+        // Display the calculated scores
+        document.getElementById('pushup-result').innerText = pushupPoints;
+        document.getElementById('situp-result').innerText = situpPoints;
+        document.getElementById('run-result').innerText = runPoints;
+        document.getElementById('total-result').innerText = totalScore;
+
+        document.getElementById('calculated-scores').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
