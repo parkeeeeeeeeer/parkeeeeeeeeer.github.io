@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import "style.css"; // Add your CSS styles
-import { loginUser } from '../..services/authService.js';
+import "../css"; // Add your CSS styles
+import "../assets"
 
 const LoginPage = () => {
     const [showLoginForm, setShowLoginForm] = useState(false);
