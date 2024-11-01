@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,98 @@
 <body>
     <div id="root"></div>
 
-    <!-- Link to external JavaScript file -->
+    <-- Link to external JavaScript file
     <script src="src/js/loginPage.js"></script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation Tracker - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const LoginPage = () => {
+            const [showLoginForm, setShowLoginForm] = useState(false);
+
+            const handleLoginButtonClick = () => {
+                setShowLoginForm(!showLoginForm);
+            };
+
+            const handleSubmit = async (event) => {
+                event.preventDefault();
+                const email = event.target.elements['user-email'].value;
+                const password = event.target.elements['user-password'].value;
+
+                try {
+                    const response = await fetch('http://localhost:5000/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password }),
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        localStorage.setItem('token', data.token);
+                        window.location.href = '/dashboard';
+                    } else {
+                        alert('Login failed: ' + (data.message || 'Please try again.'));
+                    }
+                } catch (error) {
+                    console.error('Error during login:', error);
+                }
+            };
+
+            return (
+                <div id="main-container">
+                    <h1>
+                        Evaluation Tracker
+                        <br /><span className="subH1">Detachment 130, Howard University</span>
+                    </h1>
+                    
+                    <p id="logo">
+                        <img src="det130.png" alt="Detachment 130 Logo" className="logo" />
+                    </p>
+                    
+                    <div className="login-button-container">
+                        <button className="login-btn" onClick={handleLoginButtonClick}>
+                            Login
+                        </button>
+                    </div>
+
+                    {showLoginForm && (
+                        <div id="login-form-container">
+                            <h2>Login with your Detachment or School Email</h2>
+                            <form id="user-login-form" onSubmit={handleSubmit}>
+                                <label htmlFor="user-email">Email:</label>
+                                <input type="email" id="user-email" name="user-email" placeholder="Enter your email" required />
+                                
+                                <label htmlFor="user-password">Password:</label>
+                                <input type="password" id="user-password" name="user-password" placeholder="Enter your password" required />
+                                
+                                <button type="submit" className="submit-login-btn">Login</button>
+                            </form>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.render(<LoginPage />, document.getElementById('root'));
+    </script>
 </body>
 </html>
