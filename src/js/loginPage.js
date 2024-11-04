@@ -1,74 +1,61 @@
-import React, { useState } from 'react';
-import "../css"; // Add your CSS styles
-import "../assets"
+// Function to handle the Login button click event
+function handleLoginButtonClick() {
+    const loginFormContainer = document.getElementById('login-form-container');
+    const loginButton = document.querySelector('.login-btn');
 
-const LoginPage = () => {
-    const [showLoginForm, setShowLoginForm] = useState(false);
+    // Remove the 'hidden' class to display the form
+    loginFormContainer.classList.remove('hidden');
+    
+    // Hide the login button
+    loginButton.style.display = 'none';
 
-    const handleLoginButtonClick = () => {
-        setShowLoginForm(!showLoginForm);
-    };
+    // Scroll to the login form smoothly
+    loginFormContainer.scrollIntoView({ behavior: 'smooth' });
+}
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const email = event.target.elements['user-email'].value;
-        const password = event.target.elements['user-password'].value;
+// Function to handle the form submission event
+function handleSubmit(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    
+    // Extract values from the email and password input fields
+    const email = document.getElementById('user-email').value;
+    const password = document.getElementById('user-password').value;
+    
+    // Basic form validation (optional: can expand this with more complex validation)
+    if (!validateEmail(email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
 
-        // You can handle form submission here
-        try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+    // Simulate login logic (you'll replace this with actual authentication logic)
+    loginUser(email, password);
+}
 
-            const data = await response.json();
-            if (response.ok) {
-                localStorage.setItem('token', data.token);
-                window.location.href = '/dashboard'; // Redirect to the dashboard
-            } else {
-                alert('Login failed: ' + (data.message || 'Please try again.'));
-            }
-        } catch (error) {
-            console.error('Error during login:', error);
-        }
-    };
+// Helper function to validate email format using a regex pattern
+function validateEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailPattern.test(email);
+}
 
-    return (
-        <div id="main-container">
-            <h1>
-                Evaluation Tracker
-                <br /><span className="subH1">Detachment 130, Howard University</span>
-            </h1>
-            
-            <p id="logo">
-                <img src="det130.png" alt="Detachment 130 Logo" className="logo" />
-            </p>
-            
-            <div className="login-button-container">
-                <button className="login-btn" onClick={handleLoginButtonClick}>
-                    Login
-                </button>
-            </div>
+// Function to simulate a login action (you would replace this with an API call)
+function loginUser(email, password) {
+    // Example: Simulate successful login
+    console.log(`Logging in with Email: ${email} and Password: ${password}`);
+    
+    // Placeholder for login API logic
+    setTimeout(() => {
+        alert('Login successful! Redirecting...');
+        // Redirect to the dashboard or main page after login
+        window.location.href = 'cadetDashboard.html'; // Replace with your actual dashboard route
+    }, 1000);
+}
 
-            {showLoginForm && (
-                <div id="login-form-container">
-                    <h2>Login with your Detachment or School Email</h2>
-                    <form id="user-login-form" onSubmit={handleSubmit}>
-                        <label htmlFor="user-email">Email:</label>
-                        <input type="email" id="user-email" name="user-email" placeholder="Enter your email" required />
-                        
-                        <label htmlFor="user-password">Password:</label>
-                        <input type="password" id="user-password" name="user-password" placeholder="Enter your password" required />
-                        
-                        <button type="submit" className="submit-login-btn">Login</button>
-                    </form>
-                </div>
-            )}
-        </div>
-    );
-};
-
-export default LoginPage;
+// Event listeners
+document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.getElementById('user-login-form');
+    const loginButton = document.querySelector('.login-btn');
+    
+    // Attach event handlers
+    loginForm.addEventListener('submit', handleSubmit);
+    loginButton.addEventListener('click', handleLoginButtonClick);
+});

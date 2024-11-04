@@ -2,37 +2,41 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #F2F4F8; /* Light background color */
-    font-family: 'Times New Roman', Times, serif;
-    color: #8694a9; /* Text color */
+    background-color: #ECEFF1; /* Light neutral background */
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    color: #3C4858; /* Darker text color for better readability */
     overflow-x: hidden;
 }
 
 /* Heading 1 */
 h1 {
-    font-size: 28pt;
+    font-size: 32px;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     margin-top: 0;
-    background-color: #0056A3; /* Primary color */
-    color: #fff;
-    border-radius: 5pt;
+    background-color: #1E88E5; /* Bright, modern blue */
+    color: #FFFFFF;
+    border-radius: 8px; /* Softer rounded corners */
+    letter-spacing: 1px; /* Adds modern spacing */
 }
 
 /* Sub-heading */
 .subH1 {
-    font-size: 20pt;
+    font-size: 18px;
     font-style: italic;
+    font-weight: 300; /* Lighter weight for a modern feel */
 }
 
 /* General layout */
 #main-container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff; /* White background for the container */
-    border-radius: 2.5%;
-    text-align: center; /* Center align content */
+    width: 90%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #FFFFFF;
+    border-radius: 12px; /* Slightly larger rounding for a card-like feel */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Modern shadow effect */
+    text-align: center;
 }
 
 /* Logo container */
@@ -43,10 +47,10 @@ h1 {
 
 /* Logo Styling */
 .logo {
-    max-width: 300px; /* Increase size of the logo */
+    max-width: 250px;
     height: auto;
-    border-radius: 10px; /* Optional: adds rounded corners to the logo */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Add subtle shadow to the logo */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow for the logo */
 }
 
 /* Login Button Styling */
@@ -56,87 +60,90 @@ h1 {
 }
 
 .login-btn {
-    background-color: #00A8FF; /* Secondary accent color */
-    color: #fff;
-    padding: 10px 15px;
-    font-size: 16pt;
+    background-color: #42A5F5; /* Softer blue */
+    color: #FFFFFF;
+    padding: 12px 18px;
+    font-size: 16px;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 168, 255, 0.2); /* Light shadow for depth */
 }
 
 .login-btn:hover {
-    background-color: #F9A826; /* Highlight color */
-    transform: scale(1.05);
+    background-color: #1E88E5; /* Darker blue on hover */
+    box-shadow: 0 6px 20px rgba(0, 168, 255, 0.3); /* Larger shadow on hover */
 }
 
 .login-btn:active {
-    background-color: #0056A3; /* Primary color for active state */
-    transform: scale(0.98);
+    background-color: #1565C0; /* Darker active state */
 }
 
 /* Styling for the form container */
 #login-form-container {
-    margin-top: 30px;
-    padding: 15px;
-    background-color: #fff;
-    border: 1px solid #B0B8C3; /* Form borders */
+    margin-top: 40px;
+    padding: 25px;
+    background-color: #F5F7FA;
     border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05); /* Light card-like shadow */
 }
 
 /* Form label styling */
 #user-login-form label {
-    font-size: 14pt;
-    color: #8694a9; /* Text color */
-    font-weight: bold;
+    font-size: 14px;
+    color: #3C4858;
+    font-weight: 500; /* Medium weight for better visibility */
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 /* Input field styling */
-#user-login-form input[type="email"], 
+#user-login-form input[type="email"],
 #user-login-form input[type="password"] {
     width: 100%;
     padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #D9E1EB; /* Border color */
-    border-radius: 5px;
-    font-size: 14pt;
+    margin-bottom: 15px;
+    border: 1px solid #DCE3EC;
+    border-radius: 6px;
+    font-size: 14px;
     box-sizing: border-box;
+    background-color: #FFFFFF;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-#user-login-form input[type="email"]:focus, 
+#user-login-form input[type="email"]:focus,
 #user-login-form input[type="password"]:focus {
-    border-color: #00A8FF; /* Focus accent color */
-    box-shadow: 0px 0px 5px rgba(0, 168, 255, 0.5); /* Accent shadow */
+    border-color: #42A5F5;
+    box-shadow: 0 0 5px rgba(66, 165, 245, 0.5);
     outline: none;
 }
 
 /* Submit Button */
 .submit-login-btn {
-    background-color: #00A8FF; /* Secondary accent color */
-    color: #fff;
-    padding: 12px 24px;
-    font-size: 16pt;
-    border-radius: 8px;
+    background-color: #1E88E5;
+    color: #FFFFFF;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 6px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    display: block;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
     width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer shadow */
     margin-top: 20px;
 }
 
 .submit-login-btn:hover {
-    background-color: #F9A826; /* Highlight color on hover */
+    background-color: #42A5F5;
+    box-shadow: 0 6px 20px rgba(0, 168, 255, 0.3); /* Enhance shadow on hover */
 }
 
 .submit-login-btn:active {
-    background-color: #0056A3; /* Active state color */
+    background-color: #1565C0;
+}
+
+/* Hide the form initially */
+.hidden {
+    display: none;
 }

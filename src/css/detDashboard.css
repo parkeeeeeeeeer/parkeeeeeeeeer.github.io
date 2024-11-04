@@ -1,0 +1,114 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #F2F4F8;
+    color: #333;
+}
+
+/* Container for the entire dashboard */
+#dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header section */
+header {
+    text-align: center;
+    background-color: #0056A3;
+    padding: 20px;
+    color: white;
+    border-radius: 5px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28pt;
+}
+
+header p {
+    font-size: 14pt;
+    margin-top: 10px;
+}
+
+/* Stats Section */
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background-color: #fff;
+    border: 1px solid #D9E1EB;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 20%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3 {
+    margin-bottom: 15px;
+    font-size: 18pt;
+    color: #0056A3;
+}
+
+.stat-card p {
+    font-size: 24pt;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Navigation Cards Section */
+.dashboard-navigation {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.nav-card {
+    background-color: #fff;
+    border: 1px solid #D9E1EB;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 22%;
+    margin-bottom: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-card h4 {
+    font-size: 18pt;
+    margin-bottom: 15px;
+    color: #0056A3;
+}
+
+.nav-card p {
+    font-size: 14pt;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.nav-btn {
+    background-color: #00A8FF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14pt;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: #F9A826;
+    transform: scale(1.05);
+}
+
+.nav-btn:active {
+    background-color: #0056A3;
+}

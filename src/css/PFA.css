@@ -1,74 +1,136 @@
 /* FitnessTest.css */
 
+body {
+  background-color: #f0f4f8; /* Light background for a clean look */
+  font-family: 'Arial', sans-serif; /* Clean and modern font */
+}
+
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 30px auto; /* Centered with top and bottom margin */
+  padding: 30px; /* More padding for spaciousness */
+  background-color: #ffffff; /* White background for contrast */
+  border-radius: 10px; /* Slightly rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+h2 {
+  color: #333; /* Darker text for visibility */
+  text-align: center;
+  margin-bottom: 20px; /* Space below the heading */
+  font-size: 2rem; /* Larger heading for emphasis */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin: 10px 0 5px; /* Consistent spacing */
+  font-weight: bold;
+  color: #555; /* Lighter than heading for distinction */
+}
+
+input[type="number"],
+select {
+  padding: 12px; /* More padding for comfort */
+  margin-bottom: 15px; /* Space between inputs */
+  border: 1px solid #ccc; /* Neutral border */
+  border-radius: 5px; /* Rounded edges for inputs */
+  font-size: 1rem; /* Consistent font size */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+}
+
+input[type="number"]:focus,
+select:focus {
+  border-color: #007bff; /* Blue border on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glow effect on focus */
+  outline: none; /* Remove default outline */
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px; /* Comfortable button padding */
+  background-color: #007bff; /* Primary blue button */
+  color: white; /* White text for contrast */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded button */
+  font-size: 1rem; /* Consistent font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s, transform 0.2s; /* Transition effects */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.calculated-scores {
+  margin-top: 20px; /* Space above results section */
+  padding: 15px; /* Padding for content */
+  background-color: #e9ecef; /* Light gray for contrast */
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #ccc; /* Border for definition */
+}
+
+.calculated-scores p {
+  margin: 5px 0; /* Consistent margin */
+  font-weight: bold; /* Emphasize results */
+  color: #333; /* Dark text for readability */
+}
+
+/* Container for lap inputs */
+#lap-inputs {
+  margin-top: 20px;
+  border: 1px solid #ccc; /* Light gray border */
+  padding: 15px;
+  border-radius: 5px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background */
+}
+
+/* Style for each lap input field */
+#lap-time-fields input {
+  display: block; /* Stack inputs vertically */
+  width: 100%; /* Full width to fit in the parent container */
+  padding: 10px; /* Comfortable padding inside input */
+  margin: 8px 0; /* Reduced spacing between inputs */
+  border: 1px solid #007bff; /* Blue border */
+  border-radius: 4px; /* Slightly rounded corners */
+  font-size: 16px; /* Font size */
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+
+/* Style for input focus */
+#lap-time-fields input:focus {
+  border-color: #0056b3; /* Darker blue when focused */
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Light shadow */
+}
+
+/* Placeholder text style */
+#lap-time-fields input::placeholder {
+  color: #888; /* Gray placeholder text */
+  font-style: italic; /* Italic style */
+}
+
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .container {
+      padding: 20px; /* Less padding on small screens */
   }
-  
+
   h2 {
-    color: #333;
-    text-align: center;
+      font-size: 1.5rem; /* Smaller heading for mobile */
   }
-  
-  form {
-    display: flex;
-    flex-direction: column;
+
+  #lap-inputs {
+    padding: 10px; /* Less padding on smaller screens */
   }
-  
-  label {
-    margin: 10px 0 5px;
-    font-weight: bold;
+
+  #lap-time-fields input {
+      font-size: 14px; /* Smaller font size */
   }
-  
-  input[type="number"],
-  select {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  
-  input[type="number"]:focus,
-  select:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  h3 {
-    margin-top: 20px;
-    text-align: center;
-    color: #333;
-  }
-  
-  .calculated-scores {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #e9ecef;
-    border-radius: 4px;
-  }
-  
-  .calculated-scores p {
-    margin: 5px 0;
-    font-weight: bold;
-  }
-  
+}

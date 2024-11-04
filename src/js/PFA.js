@@ -1,232 +1,151 @@
-import React, { useEffect, useState } from 'react';
-import { scoringCriteria } from './pfaCriteria'; // Make sure to import your scoring criteria
-import '../css/pfa.css'; // Import your CSS file
+// Import scoring criteria if needed
+import { scoringCriteria } from "./pfaCriteria.js";
 
-// Helper function to convert MM:SS to total seconds
-function convertToSeconds(minutes, seconds) {
-  return Number(minutes) * 60 + Number(seconds);
+
+// Define the function to calculate scores
+function calculateScores() {
+    const ageElement = document.getElementById("age");
+    const pushupScoreElement = document.getElementById("pushup-score");
+    const situpScoreElement = document.getElementById("situp-score");
+    const lapCountElement = document.getElementById("lap-count");
+
+    // Check if elements exist
+    if (!ageElement || !pushupScoreElement || !situpScoreElement || !lapCountElement) {
+        console.error("One or more input elements not found.");
+        return; // Exit if any element is missing
+    }
+
+    const pushupScore = parseInt(pushupScoreElement.value) || 0;
+    const situpScore = parseInt(situpScoreElement.value) || 0;
+
+    // Get the selected gender from user input and normalize to lowercase
+    const genderSelect = document.getElementById('cadet-gender');
+    const gender = genderSelect.value; 
+
+
+    const age = parseInt(ageElement.value); // Assuming there's an input for age
+
+    // Check if age is above 40 and display an error if so
+    if (age > 40) {
+        alert("Error: Age cannot be above 40.");
+        return; // Stop further processing
+    }
+
+    const ageGroup = getAgeGroup(age); // Function to determine the age group
+
+    // Initialize total run time in seconds
+    let totalRunTimeInSeconds = 0;
+    let lastLapTimeInSeconds = 0; // Variable to hold the last lap time
+
+    // Calculate total run time from lap inputs
+    const lapTimeFields = document.getElementById("lap-time-fields").getElementsByTagName("input");
+    for (let i = 0; i < lapTimeFields.length; i++) {
+        const lapTime = lapTimeFields[i].value.trim();
+        if (lapTime) {
+            const [minutes, seconds] = lapTime.split(":").map(Number);
+            totalRunTimeInSeconds += (minutes * 60) + seconds; // Total run time accumulative
+            lastLapTimeInSeconds = (minutes * 60) + seconds; // Update the last lap time
+        }
+    }
+
+    console.log(gender + " " + ageGroup);
+    // Convert last lap time to a readable format (MM:SS)
+    const finalRunTime = formatTime(lastLapTimeInSeconds); // Only display the last lap time
+
+    // Calculate points using scoring criteria based on dynamic gender and age group
+    const pushupPoints = getPoints(pushupScore, 'pushup', gender, ageGroup);
+    const situpPoints = getPoints(situpScore, 'situp', gender, ageGroup); 
+    const runPoints = getPoints(lastLapTimeInSeconds, '1.5_mile_run', gender, ageGroup); // Use last lap time for scoring
+
+    const totalScore = pushupPoints + situpPoints + runPoints; // Include run points in total score
+
+    // Display the results
+    document.getElementById("pushup-result").innerText = `Push-ups: ${pushupScore}, Points: ${pushupPoints}`;
+    document.getElementById("situp-result").innerText = `Sit-ups: ${situpScore}, Points: ${situpPoints}`;
+    document.getElementById("run-result").innerText = `Run Time: ${finalRunTime}, Points: ${runPoints}`; // Show final run time
+    document.getElementById("total-result").innerText = `Total Points: ${totalScore}`; 
+
+    // Show the calculated scores section
+    document.getElementById("calculated-scores").style.display = 'block';
 }
 
-// Function to calculate points based on performance
-function calculateScore(exercise, gender, age, performanceValue) {
-  let ageGroup;
-  if (age < 25) ageGroup = '<25';
-  else if (age >= 25 && age < 30) ageGroup = '25-30';
-  else if (age >= 30 && age < 35) ageGroup = '30-35';
-  else ageGroup = '35-39';
-
-  const criteria = scoringCriteria.find(
-    (criteria) =>
-      criteria.exercise === exercise &&
-      criteria.gender === gender &&
-      criteria.ageGroup === ageGroup &&
-      performanceValue >= criteria.minPerformanceValue &&
-      performanceValue <= criteria.maxPerformanceValue
-  );
-
-  return criteria ? criteria.points : 0;
+// Helper function to format total run time from seconds to MM:SS
+function formatTime(totalSeconds) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
-const FitnessTest = () => {
-  const [cadets, setCadets] = useState([]);
-  const [selectedCadet, setSelectedCadet] = useState('');
-  const [pushupScore, setPushupScore] = useState('');
-  const [situpScore, setSitupScore] = useState('');
-  const [laps, setLaps] = useState([
-    { minutes: '', seconds: '' },
-    { minutes: '', seconds: '' },
-    { minutes: '', seconds: '' },
-    { minutes: '', seconds: '' },
-    { minutes: '', seconds: '' },
-    { minutes: '', seconds: '' }
-  ]);
-  const [calculatedScores, setCalculatedScores] = useState({});
+// Function to format lap time inputs to MM:SS format automatically
+function formatLapInput(event) {
+    const input = event.target;
+    let value = input.value.replace(/\D/g, ''); // Remove all non-digit characters
 
-  useEffect(() => {
-    // Fetch cadet data from the backend
-    const fetchCadets = async () => {
-      const response = await fetch('/api/cadets');
-      const data = await response.json();
-      setCadets(data);
-    };
+    // Add formatting if there are at least 2 digits (for minutes)
+    if (value.length > 2) {
+        value = value.slice(0, 2) + ':' + value.slice(2);
+    }
 
-    fetchCadets();
-  }, []);
+    // Ensure it doesn't exceed MM:SS format (e.g., 59:59)
+    if (value.length > 5) {
+        value = value.slice(0, 5);
+    }
 
-  // Function to validate input for pushups and situps
-  const validatePushupSitup = (value) => {
-    const number = Number(value);
-    return Number.isInteger(number) && number >= 0;
-  };
+    // Update the input field with the formatted value
+    input.value = value;
+}
 
-  // Validate MM:SS format for laps
-  const validateLapTime = (minutes, seconds) => {
-    const min = Number(minutes);
-    const sec = Number(seconds);
-    return (
-      Number.isInteger(min) && min >= 0 &&
-      Number.isInteger(sec) && sec >= 0 && sec < 60
+// Function to determine the age group based on user input
+function getAgeGroup(age) {
+    if (age < 25) return '<25';
+    else if (age < 30) return '25-29';
+    else if (age < 35) return '30-34';
+    else if (age < 40) return '35-39';
+    return '40+'; // Handle case for ages 40 and above, but this won't be reached due to earlier check
+}
+
+
+
+// Helper function to get points based on score and criteria
+function getPoints(score, exercise, gender, ageGroup) {
+    const criteria = scoringCriteria.find(criterion =>
+        criterion.exercise === exercise &&
+        criterion.gender === gender &&
+        criterion.ageGroup === ageGroup &&
+        score >= criterion.minPerformanceValue &&
+        score <= criterion.maxPerformanceValue
     );
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    return criteria ? criteria.points : 0; // Return points or 0 if no criteria met
+}
 
-    // Validate pushups and situps
-    if (!validatePushupSitup(pushupScore) || !validatePushupSitup(situpScore)) {
-      alert('Please enter valid whole, non-negative numbers for push-ups and sit-ups.');
-      return;
-    }
+// Add event listeners to newly created input fields
+function showLapInputs() {
+    const lapCount = parseInt(document.getElementById("lap-count").value);
+    const lapInputsContainer = document.getElementById("lap-inputs");
+    const lapTimeFields = document.getElementById("lap-time-fields");
 
-    // Validate all lap times
-    for (let i = 0; i < laps.length; i++) {
-      const { minutes, seconds } = laps[i];
-      if (!validateLapTime(minutes, seconds)) {
-        alert(`Please enter a valid time in MM:SS format for Lap ${i + 1}.`);
-        return;
-      }
-    }
+    // Clear existing input fields
+    lapTimeFields.innerHTML = '';
 
-    // Convert all lap times to total seconds and calculate total run time
-    const totalRunTimeSeconds = laps.reduce((total, lap) => {
-      return total + convertToSeconds(lap.minutes, lap.seconds);
-    }, 0);
+    if (lapCount > 0) {
+        lapInputsContainer.style.display = 'block';
 
-    // Submit the scores to the backend
-    const response = await fetch(`/api/cadets/${selectedCadet}/scores`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        pushupScore,
-        situpScore,
-        runTime: totalRunTimeSeconds, // Send total run time in seconds
-      }),
-    });
-
-    if (response.ok) {
-      alert('Scores updated successfully!');
-      // Optionally, clear the input fields after submission
-      setPushupScore('');
-      setSitupScore('');
-      setLaps(laps.map(() => ({ minutes: '', seconds: '' })));
+        for (let i = 1; i <= lapCount; i++) {
+            const inputField = document.createElement("input");
+            inputField.type = "text";
+            inputField.placeholder = `Lap ${i} Time (MM:SS)`;
+            inputField.addEventListener('input', formatLapInput); // Add formatting listener
+            lapTimeFields.appendChild(inputField);
+        }
     } else {
-      alert('Error updating scores.');
+        lapInputsContainer.style.display = 'none';
     }
-  };
+}
 
-  const handleCalculate = () => {
-    const cadetDetails = cadets.find(cadet => cadet._id === selectedCadet);
-    if (cadetDetails) {
-      const { gender, age } = cadetDetails;
 
-      const pushupPoints = calculateScore('pushup', gender, age, Number(pushupScore));
-      const situpPoints = calculateScore('situp', gender, age, Number(situpScore));
+// Add event listener to the calculate button
+document.getElementById("calculate-btn").addEventListener("click", calculateScores);
 
-      // Convert all lap times to total run time in seconds
-      const totalRunTimeSeconds = laps.reduce((total, lap) => {
-        return total + convertToSeconds(lap.minutes, lap.seconds);
-      }, 0);
-
-      const runPoints = calculateScore('1.5_mile_run', gender, age, totalRunTimeSeconds);
-      const totalScore = pushupPoints + situpPoints + runPoints;
-
-      setCalculatedScores({
-        pushupScore: pushupPoints,
-        situpScore: situpPoints,
-        runScore: runPoints,
-        totalScore: totalScore,
-      });
-    }
-  };
-
-  const handleLapChange = (index, field, value) => {
-    setLaps(prev => {
-      const updatedLaps = [...prev];
-      updatedLaps[index] = { ...updatedLaps[index], [field]: value };
-      return updatedLaps;
-    });
-  };
-
-  return (
-    <div className="container">
-      <h2>Fitness Test Scores</h2>
-
-      {/* Input Section */}
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="cadet-select">Select Cadet:</label>
-        <select
-          id="cadet-select"
-          value={selectedCadet}
-          onChange={(e) => setSelectedCadet(e.target.value)}
-          required
-        >
-          <option value="">Select a cadet</option>
-          {cadets.map((cadet) => (
-            <option key={cadet._id} value={cadet._id}>
-              {cadet.name}
-            </option>
-          ))}
-        </select>
-
-        <label htmlFor="pushup-score">Push-up Score:</label>
-        <input
-          type="number"
-          id="pushup-score"
-          value={pushupScore}
-          onChange={(e) => setPushupScore(e.target.value)}
-          required
-        />
-
-        <label htmlFor="situp-score">Sit-up Score:</label>
-        <input
-          type="number"
-          id="situp-score"
-          value={situpScore}
-          onChange={(e) => setSitupScore(e.target.value)}
-          required
-        />
-
-        {laps.map((lap, index) => (
-          <div key={index}>
-            <label>{`Lap ${index + 1} Time (MM:SS):`}</label>
-            <div>
-              <input
-                type="number"
-                placeholder="MM"
-                value={lap.minutes}
-                onChange={(e) => handleLapChange(index, 'minutes', e.target.value)}
-                required
-              />
-              <input
-                type="number"
-                placeholder="SS"
-                value={lap.seconds}
-                onChange={(e) => handleLapChange(index, 'seconds', e.target.value)}
-                required
-              />
-            </div>
-          </div>
-        ))}
-
-        <button type="submit">Submit Scores</button>
-      </form>
-
-      {/* Calculation Section */}
-      <h3>Calculate Scores</h3>
-      <button onClick={handleCalculate}>Calculate</button>
-
-      {calculatedScores.totalScore !== undefined && (
-        <div className="calculated-scores">
-          <p>Push-up Score: {calculatedScores.pushupScore}</p>
-          <p>Sit-up Score: {calculatedScores.situpScore}</p>
-          <p>1.5-Mile Run Score: {calculatedScores.runScore}</p>
-          <p>Total Score: {calculatedScores.totalScore}</p>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default FitnessTest;
+// Optionally, add event listener for lap count change
+document.getElementById("lap-count").addEventListener("change", showLapInputs);

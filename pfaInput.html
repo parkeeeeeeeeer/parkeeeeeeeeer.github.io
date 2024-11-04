@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Test Calculator</title>
+    <link rel="stylesheet" href="src/css/pfa.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Fitness Test Scores</h2>
+
+        <form id="fitness-form">
+            <!-- Age Input -->
+            <div>
+                <label for="age">Enter Age:</label>
+                <input type="number" id="age" min="17" max="40" required>
+            </div>
+
+            <label for="cadet-gender">Cadet Gender:</label>
+            <select id="cadet-gender" required>
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <label for="pushup-score">Push-up Score:</label>
+            <input type="number" id="pushup-score" placeholder="Enter push-up score" required>
+
+            <label for="situp-score">Sit-up Score:</label>
+            <input type="number" id="situp-score" placeholder="Enter sit-up score" required>
+
+            <label for="lap-count">Number of Laps (1-6):</label>
+            <select id="lap-count">
+                <option value="">Select number of laps</option>
+                <option value="1">1 Lap</option>
+                <option value="2">2 Laps</option>
+                <option value="3">3 Laps</option>
+                <option value="4">4 Laps</option>
+                <option value="5">5 Laps</option>
+                <option value="6">6 Laps</option>
+            </select>
+
+            <!-- Container for lap time inputs -->
+            <div id="lap-inputs" style="display: none;">
+                <div id="lap-time-fields"></div>
+            </div>
+
+            <button type="button" id="calculate-btn">Calculate Scores</button>
+        </form>
+
+        <div id="calculated-scores" style="display:none;">
+            <h2>Results:</h2>
+            <p id="pushup-result"></p>
+            <p id="situp-result"></p>
+            <p id="run-result"></p>
+            <p id="total-result"></p>
+        </div>
+    </div>
+
+    <script type="module" src="src/js/pfa.js"></script>
+</body>
+</html>
