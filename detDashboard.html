@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluation Tracker - Dashboard</title>
     <link rel="stylesheet" href="src/css/detDashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="dashboard-container">
@@ -13,47 +14,111 @@
             <p>Detachment 130, Howard University</p>
         </header>
 
-        <section class="stats-container">
-            <div class="stat-card">
-                <h3>Total Cadets</h3>
-                <p>120</p>
-            </div>
-            <div class="stat-card">
-                <h3>Active SOBs</h3>
-                <p>87</p>
-            </div>
-            <div class="stat-card">
-                <h3>Pending Form 2s</h3>
-                <p>15</p>
-            </div>
-            <div class="stat-card">
-                <h3>Average PFA Score</h3>
-                <p>93.5%</p>
-            </div>
-        </section>
+        <div class="main-content">
+            <!-- Stats Section (left side) -->
+            <aside class="stats-container">
+                <div class="stat-card">
+                    <h3>Total Cadets</h3>
+                    <p>120</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Average PFA Score</h3>
+                    <p>93.5%</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active SOBs</h3>
+                    <p>87</p>
+                </div>
+            
+            </aside>
 
-        <section class="dashboard-navigation">
-            <div class="nav-card">
-                <h4>PFA Tracker</h4>
-                <p>Monitor and track cadet fitness performance.</p>
-                <button class="nav-btn">Go to PFA Tracker</button>
-            </div>
-            <div class="nav-card">
-                <h4>SOB Tracker</h4>
-                <p>Track and evaluate Samples of Behavior.</p>
-                <button class="nav-btn">Go to SOB Tracker</button>
-            </div>
-            <div class="nav-card">
-                <h4>Attendance Tracker</h4>
-                <p>Keep track of cadet attendance.</p>
-                <button class="nav-btn">Go to Attendance Tracker</button>
-            </div>
-            <div class="nav-card">
-                <h4>Form 2 Manager</h4>
-                <p>Manage Form 2 submissions for cadets.</p>
-                <button class="nav-btn">Go to Form 2 Manager</button>
-            </div>
-        </section>
+            <!-- Main Dashboard Content (centered graphs) -->
+            <section class="overall-trends-dashboard">
+                <h2>Overall Trends Dashboard (Unit-Level)</h2>
+
+                <!-- PFA Trends Section -->
+                <div class="trend-card">
+                    <h3>PFA Trends Overview</h3>
+                    <canvas id="pfa-trend-chart"></canvas>
+                </div>
+
+                <!-- SOB Performance Trends -->
+                <div class="trend-card">
+                    <h3>SOBs Performance Trends</h3>
+                    <canvas id="sob-trend-chart"></canvas>
+                </div>
+
+                <!-- Attendance Trends -->
+                <div class="trend-card">
+                    <h3>Attendance Trends</h3>
+                    <canvas id="attendance-trend-chart"></canvas>
+                </div>
+
+                <!-- Form 2 Submission Overview -->
+                <div class="trend-card">
+                    <h3>Form 2 Submission Overview</h3>
+                    <canvas id="form2-trend-chart"></canvas>
+                </div>
+
+                <!-- Competency Growth Visualization -->
+                <div class="trend-card">
+                    <h3>Competency Growth Visualization</h3>
+                    <canvas id="competency-trend-chart"></canvas>
+                </div>
+            </section>
+        </div>
     </div>
+
+    <script>
+        // Example of PFA Trends Chart using Chart.js
+        const pfaTrendCtx = document.getElementById('pfa-trend-chart').getContext('2d');
+        const pfaTrendChart = new Chart(pfaTrendCtx, {
+            type: 'line',
+            data: {
+                labels: ['Start', 'Midterm', 'End'],
+                datasets: [{
+                    label: 'Average PFA Score',
+                    data: [85, 90, 93], // Example data
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Example of SOB Trends Chart using Chart.js
+        const sobTrendCtx = document.getElementById('sob-trend-chart').getContext('2d');
+        const sobTrendChart = new Chart(sobTrendCtx, {
+            type: 'line',
+            data: {
+                labels: ['Start', 'Midterm', 'End'],
+                datasets: [{
+                    label: 'SOB Competency',
+                    data: [70, 80, 90], // Example data
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Additional charts can be added similarly for Attendance, Form 2, Competency Growth, etc.
+    </script>
 </body>
 </html>

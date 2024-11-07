@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker</title>
+    <link rel="stylesheet" href="src/css/attendance.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Attendance Tracker</h1>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#attendance-form">Mark Attendance</a></li>
+                <li><a href="#attendance-report">View Reports</a></li>
+            </ul>
+        </nav>
+
+        <section id="attendance-form">
+            <h2>Mark Attendance</h2>
+            <form id="attendanceEntryForm">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="event">Event Type:</label>
+                <select id="event" name="event" required>
+                    <option value="" disabled selected>Select Event Type</option>
+                    <option value="llab">Leadership Laboratory (LLAB)</option>
+                    <option value="pmt">PMT Event</option>
+                    <option value="wwpt">WWPT</option>
+                    <option value="upt">UPT</option>
+                    <option value="specialEvent">Special Event</option>
+                </select>
+
+                <div id="flight-container" style="display: none;">
+                    <label for="flight">Flight:</label>
+                    <select id="flight" name="flight">
+                        <option value="" disabled selected>Select Flight</option>
+                        <option value="pocFlight">POC</option>
+                        <option value="flight1">Alpha</option>
+                        <option value="flight2">Bravo</option>
+                        <option value="flight3">Charlie</option>
+                        <option value="pocFlight">Delta</option>
+                        <option value="flight1">Echo</option>
+                        <option value="flight2">Foxtrot</option>
+                        <option value="flight3">Golf</option>
+                        <option value="flight3">Hotel</option>
+                    </select>
+                </div>
+
+                <div id="university-container" style="display: none;">
+                    <label for="university">UPT Session:</label>
+                    <select id="university" name="university">
+                        <option value="" disabled selected>Select University</option>
+                        <option value="HU1">HU1</option>
+                        <option value="HU2">HU2</option>
+                        <option value="AU">AU</option>
+                        <option value="GW">GW</option>
+                        <option value="GU">GU</option>
+                        <option value="CUA">CUA</option>
+                        <option value="MU">MU</option>
+                        <!-- Add more universities as needed -->
+                    </select>
+                </div>
+
+                <div id="cadets-container" style="display: none;">
+                    <h3>Cadets in Selected Flight</h3>
+                    <div id="cadets-list">
+                        <!-- Cadets will be dynamically added here -->
+                    </div>
+                </div>
+
+                <button type="submit">Submit Attendance</button>
+            </form>
+        </section>
+    </div>
+
+    <script src="src/js/attendance.js"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>

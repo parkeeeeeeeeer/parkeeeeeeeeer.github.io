@@ -1,114 +1,156 @@
-/* General Styles */
-body {
+Reset some default styles
+body, html {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-    background-color: #F2F4F8;
-    color: #333;
+    background-color: #f4f4f9;
 }
 
-/* Container for the entire dashboard */
+/* Dashboard Container */
 #dashboard-container {
-    max-width: 1200px;
+    width: 90%;
     margin: 0 auto;
     padding: 20px;
+    max-width: 1200px; /* Limit the maximum width for larger screens */
+    overflow: hidden; /* Hide any overflow from the dashboard container */
 }
 
-/* Header section */
+/* Header Styles */
 header {
     text-align: center;
-    background-color: #0056A3;
-    padding: 20px;
-    color: white;
-    border-radius: 5px;
+    margin-bottom: 30px;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 28pt;
+    font-size: 2.5rem;
+    color: #0056A3; /* Main color */
+    margin-bottom: 0.5rem;
 }
 
 header p {
-    font-size: 14pt;
-    margin-top: 10px;
+    color: #666;
+    font-size: 1.2rem;
 }
 
 /* Stats Section */
 .stats-container {
     display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
+    flex-direction: column;
+    gap: 15px; /* Reduced gap between cards */
+    padding-right: 20px;
+    max-width: 200px; /* Limit the width of the stats section */
+    height: auto; /* Allow height to grow based on content */
+    flex: 1 1 200px; /* Maintain base size while allowing growth */
+    min-height: 200px;
+    overflow: hidden; /* Prevent child overflow */
 }
 
 .stat-card {
     background-color: #fff;
-    border: 1px solid #D9E1EB;
-    border-radius: 10px;
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 20%;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 1 1 auto; /* Allow cards to grow and take equal height while preventing shrinking */
+    min-height: 100px; /* Set a minimum height for each card */
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    overflow: hidden; /* Prevent overflow from the main content */
+    height: auto; /* Allow main content to adjust height as needed */
+}
+
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .stat-card h3 {
-    margin-bottom: 15px;
-    font-size: 18pt;
-    color: #0056A3;
+    font-size: 1.4rem;
+    color: #0056A3; /* Main color */
+    margin-bottom: 10px;
 }
 
 .stat-card p {
-    font-size: 24pt;
-    color: #333;
+    font-size: 2rem;
     font-weight: bold;
+    color: #333;
 }
 
-/* Navigation Cards Section */
-.dashboard-navigation {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 30px;
-}
-
-.nav-card {
+/* Main Dashboard Section */
+.overall-trends-dashboard {
+    flex: 3;
     background-color: #fff;
-    border: 1px solid #D9E1EB;
-    border-radius: 10px;
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Enable scrolling if necessary */
+    max-height: 600px; /* Set a max height for the trends container */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+}
+
+.overall-trends-dashboard h2 {
     text-align: center;
-    width: 22%;
-    margin-bottom: 20px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    color: #0056A3; /* Main color */
 }
 
-.nav-card h4 {
-    font-size: 18pt;
-    margin-bottom: 15px;
-    color: #0056A3;
+/* Trend Cards */
+.trend-card {
+    margin-bottom: 30px;
+    text-align: center;
+    flex-shrink: 0; /* Prevent the cards from shrinking */
 }
 
-.nav-card p {
-    font-size: 14pt;
-    color: #555;
-    margin-bottom: 20px;
+/* Chart Canvas */
+canvas {
+    width: 100%;
+    height: 300px; /* Set a fixed height for the charts */
 }
 
-.nav-btn {
-    background-color: #00A8FF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 14pt;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
 
-.nav-btn:hover {
-    background-color: #F9A826;
-    transform: scale(1.05);
-}
+    .main-content {
+        flex-direction: column;
+        align-items: stretch; /* Allow items to stretch to full width */
+    }
 
-.nav-btn:active {
-    background-color: #0056A3;
+    .stats-container {
+        padding-right: 0;
+        max-width: 100%; /* Allow the stats section to take full width */
+        height: auto; /* Allow it to grow based on content */
+        overflow-y: hidden; /* Prevent scrolling in mobile view */
+    }
+
+    .stat-card {
+        width: 90%; /* Make cards full width */
+        flex: 1 1 auto; /* Ensure all cards take equal height */
+        margin-bottom: 20px; /* Spacing between cards */
+    }
+
+    /* Optional: Reduce the min height for smaller screens */
+    .stat-card {
+        min-height: 80px; /* Adjust for smaller screens if necessary */
+    }
+
+    .overall-trends-dashboard {
+        width: 100%;
+        max-height: 400px; /* Adjusted max-height for mobile */
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
 }
