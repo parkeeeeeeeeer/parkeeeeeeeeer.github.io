@@ -1,4 +1,7 @@
 {
     "homepage": "https://parkeeeeeeeeer.github.io/index.html",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "dependencies": {
+        "bcrypt": "^5.1.1"
+    }
 }
