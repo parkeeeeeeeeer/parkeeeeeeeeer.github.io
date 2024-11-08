@@ -50,6 +50,65 @@ function loginUser(email, password) {
     }, 1000);
 }
 
+
+// // // Function to simulate a login action (you would replace this with an API call)
+// function loginUser(email, password) {
+//     fetch('/api/login', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ email, password }),
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         if (data.message === 'Login successful') {
+//             console.log(`Login successful! Role: ${data.role}`);
+//             // Redirect based on role
+//             redirectUserBasedOnRole(data.role);
+//         } else {
+//             alert(data.message); // Show error message
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error during login:', error);
+//         alert('An error occurred during login.');
+//     });
+// }
+
+// // Function to redirect users based on their access level
+// function redirectUserBasedOnRole(role) {
+//     switch (role) {
+//         case 'Cadre':
+//             window.location.href = 'detDashboard.html'; // Redirect to Cadre Dashboard
+//             break;
+//         case 'Wing/CC':
+//             window.location.href = 'detDashboard.html'; // Redirect to Wing/CC Dashboard
+//             break;
+//         case 'A3':
+//             window.location.href = 'detDashboard.html'; // Redirect to A3 Dashboard
+//             break;
+//         case 'A9':
+//             window.location.href = 'detDashboard.html'; // Redirect to A9 Dashboard
+//             break;
+//         case 'Flt/CC':
+//             window.location.href = 'detDashboard.html'; // Redirect to Flight Commander Dashboard
+//             break;
+//         case 'IO':
+//             window.location.href = 'detDashboard.html'; // Redirect to IO Dashboard
+//             break;
+//         case 'POC':
+//             window.location.href = 'cadetProfile.html'; // Redirect to POC Dashboard
+//             break;
+//         case 'GMC':
+//             window.location.href = 'cadetProfile.html'; // Redirect to GMC Dashboard
+//             break;
+//         default:
+//             window.location.href = 'cadetProfile.html'; // Default redirect to a generic Cadet Dashboard
+//             break;
+//     }
+// }
+
 // Event listeners
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('user-login-form');
