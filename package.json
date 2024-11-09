@@ -1,8 +1,12 @@
 {
-    "homepage": "https://parkeeeeeeeeer.github.io/index.html",
-    "version": "0.1.0",
     "dependencies": {
-        "bcrypt": "^5.1.1",
-        "firebase": "^11.0.1"
+      "firebase-admin": "^11.0.0",
+      "firebase-functions": "^4.0.0",
+      "firebase": "^9.0.0"
+    },
+    "devDependencies": {
+      "eslint": "^8.0.0",
+      "eslint-plugin-import": "^2.26.0"
     }
 }
+  
