@@ -16,8 +16,8 @@
       ]
     },
     {
-      "source": "afrotc-evaluation-tracker",
-      "codebase": "afrotc-evaluation-tracker",
+      "source": "public",
+      "codebase": "public",
       "ignore": [
         "node_modules",
         ".git",
@@ -36,12 +36,6 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
     ]
   },
   "storage": {
