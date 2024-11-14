@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluation Tracker - Login</title>
-    <link rel="stylesheet" href="src/css/main.css"> <!-- Link to your CSS -->
+    
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="src/css/main.css"> 
+    
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-firestore.js"></script>
-
+    
 </head>
 <body>
     <div id="root"></div>
@@ -24,30 +25,29 @@
             <img src="src/assets/det130.png" alt="Detachment 130 Logo" class="logo" />
         </p>
         
+        <!-- Login Button -->
         <div class="login-button-container">
             <button class="login-btn" onclick="handleLoginButtonClick()">
                 Login
             </button>
         </div>
 
+        <!-- Login Form -->
         <div id="login-form-container" class="hidden">
             <h2>Login with your Detachment or School Email</h2>
-            <form id="user-login-form" onSubmit={handleSubmit}>
-                <label htmlFor="user-email">Email:</label>
+            <form id="user-login-form" onsubmit="handleSubmit(event)">
+                <label for="user-email">Email:</label>
                 <input type="email" id="user-email" name="user-email" placeholder="Enter your email" required />
                 
-                <label htmlFor="user-password">Password:</label>
+                <label for="user-password">Password:</label>
                 <input type="password" id="user-password" name="user-password" placeholder="Enter your password" required />
                 
                 <button type="submit" class="submit-login-btn">Login</button>
             </form>
         </div>
-        
     </div>
 
-    <script src="src/firebase/firebase.js"></script>
-
-    <script src="src/js/loginPage.js"></script> <!-- Link to your JavaScript file -->
+    <!-- Custom Scripts -->
+    <script type="module" src="src/js/loginPage.js"></script>
 </body>
 </html>
-
