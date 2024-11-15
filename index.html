@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluation Tracker - Login</title>
     
     <!-- Link to your CSS file -->
-    <link rel="stylesheet" href="src/css/main.css"> 
-    
+    <link rel="stylesheet" href="src/css/main.css">
+
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    
-</head>
-<body>
-    <div id="root"></div>
 
+</head>
+
+<body>
     <div id="main-container">
         <h1>
             Evaluation Tracker
-            <br /><span class="subH1">Detachment 130, Howard University</span>
+            <br><span class="subH1">Detachment 130, Howard University</span>
         </h1>
-        
+
         <p id="logo">
-            <img src="src/assets/det130.png" alt="Detachment 130 Logo" class="logo" />
+            <img src="src/assets/det130.png" alt="Detachment 130 Logo" class="logo">
         </p>
-        
-        <!-- Login Button -->
-        <div class="login-button-container">
-            <button class="login-btn" onclick="handleLoginButtonClick()">
-                Login
-            </button>
+
+        <!-- Button Container -->
+        <div class="button-container">
+            <button class="login-btn" onclick="handleLoginButtonClick()">Login</button>
+            <button class="signup-btn" onclick="handleSignUpClick()">Sign-Up</button>
         </div>
 
         <!-- Login Form -->
@@ -37,17 +36,105 @@
             <h2>Login with your Detachment or School Email</h2>
             <form id="user-login-form" onsubmit="handleSubmit(event)">
                 <label for="user-email">Email:</label>
-                <input type="email" id="user-email" name="user-email" placeholder="Enter your email" required />
-                
+                <input type="email" id="user-email" name="user-email" placeholder="Enter your email" required>
+
                 <label for="user-password">Password:</label>
-                <input type="password" id="user-password" name="user-password" placeholder="Enter your password" required />
-                
+                <input type="password" id="user-password" name="user-password" placeholder="Enter your password" required>
+
                 <button type="submit" class="submit-login-btn">Login</button>
             </form>
         </div>
+
+        <!-- Sign-Up Form -->
+        <div id="signup-form-container" class="hidden">
+            <h2>Create an Account</h2>
+            <form id="user-signup-form" onsubmit="handleSignUp(event)">
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required>
+
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required>
+
+                <label for="school-email">School Email:</label>
+                <input type="email" id="school-email" name="school-email" placeholder="Enter your school email" required>
+
+                <label for="student-id">Student ID:</label>
+                <input type="text" id="student-id" name="student-id" placeholder="Enter your student ID" required>
+
+                <label for="phone-number">Phone Number:</label>
+                <input type="tel" id="phone-number" name="phone-number" placeholder="Enter your phone number" required>
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="" selected disabled>Select Gender</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                </select>
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age" min="18" required>
+
+                <label for="university">University:</label>
+                <select id="university" name="university" required>
+                    <option value="" selected disabled>Select University</option>
+                    <option value="HU">Howard University</option>
+                    <option value="AU">American University</option>
+                    <option value="CUA">Catholic University</option>
+                    <option value="GU">Georgetown University</option>
+                    <option value="GWU">George Washington University</option>
+                    <option value="MU">Marymount University</option>
+                    <option value="TWU">Trinity Washington University</option>
+                    <option value="UDC">University of the District of Columbia</option>
+                    <option value="N/A">N/A</option>
+                </select>
+
+                <label for="as-year">AS Year:</label>
+                <select id="as-year" name="as-year" required>
+                    <option value="" selected disabled>Select AS Year</option>
+                    <option value="AS 100/150">AS 100/150</option>
+                    <option value="AS 200/250/500">AS 200/250/500</option>
+                    <option value="AS 300">AS 300</option>
+                    <option value="AS 400">AS 400</option>
+                    <option value="N/A">N/A</option>
+                </select>
+
+                <label for="flight">Flight:</label>
+                <select id="flight" name="flight" required>
+                    <option value="" selected disabled>Select Flight</option>
+                    <option value="POC">POC</option>
+                    <option value="Alpha">Alpha</option>
+                    <option value="Bravo">Bravo</option>
+                    <option value="Charlie">Charlie</option>
+                    <option value="Delta">Delta</option>
+                    <option value="Echo">Echo</option>
+                    <option value="Foxtrot">Foxtrot</option>
+                    <option value="Golf">Golf</option>
+                    <option value="Hotel">Hotel</option>
+                    <option value="India">India</option>
+                    <option value="N/A">N/A</option>
+                </select>
+
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="" selected disabled>Select Role</option>
+                    <option value="Cadre">Cadre</option>
+                    <option value="Wing/CC">Wing/CC</option>
+                    <option value="A3">A3</option>
+                    <option value="A9">A9</option>
+                    <option value="IO">IO</option>
+                    <option value="Flt/CC">Flt/CC</option>
+                    <option value="POC">POC</option>
+                    <option value="GMC">GMC</option>
+                </select>
+
+                <button type="submit" class="submit-signup-btn">Sign Up</button>
+            </form>
+        </div>
+
     </div>
 
     <!-- Custom Scripts -->
-    <script type="module" src="src/js/loginPage.js"></script>
+    <script type="module" src="src/js/auth.js"></script>
 </body>
+
 </html>

@@ -14,8 +14,8 @@ h1 {
     text-align: center;
     padding: 15px;
     margin-top: 0;
-    background-color: #1E88E5; /* Bright, modern blue */
-    color: #FFFFFF;
+    background-color: #0056A3; /* New main color */
+    color: #F5F7FA;
     border-radius: 8px; /* Softer rounded corners */
     letter-spacing: 1px; /* Adds modern spacing */
 }
@@ -33,7 +33,7 @@ h1 {
     max-width: 500px;
     margin: 50px auto;
     padding: 30px;
-    background-color: #FFFFFF;
+    background-color: #F5F7FA;
     border-radius: 12px; /* Slightly larger rounding for a card-like feel */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Modern shadow effect */
     text-align: center;
@@ -54,43 +54,49 @@ h1 {
 }
 
 /* Login Button Styling */
-.login-button-container {
+.login-button-container, .signup-form-container {
     text-align: center;
     margin-top: 20px;
 }
 
-.login-btn {
-    background-color: #42A5F5; /* Softer blue */
-    color: #FFFFFF;
-    padding: 12px 18px;
+/* Button Styles */
+.login-btn, .signup-btn, .submit-login-btn, .submit-signup-btn {
+    background-color: #0056A3; /* Main color */
+    color: #F5F7FA;
+    padding: 14px 20px;
     font-size: 16px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 168, 255, 0.2); /* Light shadow for depth */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 86, 163, 0.2); /* Light shadow for depth */
+    width: 100%;
+    margin-bottom: 20px; /* Adds more space between buttons */
 }
 
-.login-btn:hover {
-    background-color: #1E88E5; /* Darker blue on hover */
-    box-shadow: 0 6px 20px rgba(0, 168, 255, 0.3); /* Larger shadow on hover */
+
+.login-btn:hover, .signup-btn:hover, .submit-login-btn:hover, .submit-signup-btn:hover {
+    background-color: #003D73; /* Darker shade of the main color */
+    box-shadow: 0 6px 20px rgba(0, 86, 163, 0.3); /* Larger shadow on hover */
+    transform: translateY(-3px); /* Lift effect on hover */
 }
 
-.login-btn:active {
-    background-color: #1565C0; /* Darker active state */
+.login-btn:active, .signup-btn:active, .submit-login-btn:active, .submit-signup-btn:active {
+    background-color: #002D5B; /* Darker shade of the main color for active state */
+    transform: translateY(1px); /* Slight press effect on click */
 }
 
 /* Styling for the form container */
-#login-form-container {
+#login-form-container, #signup-form-container {
     margin-top: 40px;
     padding: 25px;
-    background-color: #F5F7FA;
+    background-color: #F1F1F1; /* Soft light gray */
     border-radius: 10px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05); /* Light card-like shadow */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Slightly more noticeable shadow */
 }
 
 /* Form label styling */
-#user-login-form label {
+#user-login-form label, #user-signup-form label {
     font-size: 14px;
     color: #3C4858;
     font-weight: 500; /* Medium weight for better visibility */
@@ -100,7 +106,12 @@ h1 {
 
 /* Input field styling */
 #user-login-form input[type="email"],
-#user-login-form input[type="password"] {
+#user-login-form input[type="password"],
+#user-signup-form input[type="text"],
+#user-signup-form input[type="email"],
+#user-signup-form input[type="tel"],
+#user-signup-form input[type="number"],
+#user-signup-form select {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
@@ -108,39 +119,41 @@ h1 {
     border-radius: 6px;
     font-size: 14px;
     box-sizing: border-box;
-    background-color: #FFFFFF;
+    background-color: #F5F7FA; /* Same background color as login form */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #user-login-form input[type="email"]:focus,
-#user-login-form input[type="password"]:focus {
+#user-login-form input[type="password"]:focus,
+#user-signup-form input[type="text"]:focus,
+#user-signup-form input[type="email"]:focus,
+#user-signup-form input[type="tel"]:focus,
+#user-signup-form input[type="number"]:focus,
+#user-signup-form select:focus {
     border-color: #42A5F5;
     box-shadow: 0 0 5px rgba(66, 165, 245, 0.5);
     outline: none;
 }
 
-/* Submit Button */
-.submit-login-btn {
-    background-color: #1E88E5;
-    color: #FFFFFF;
+/* Additional styling for the submit buttons */
+.submit-login-btn, .submit-signup-btn {
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    margin-top: 20px;
     padding: 14px;
     font-size: 16px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    width: 100%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer shadow */
-    margin-top: 20px;
+    border-radius: 8px;
 }
 
-.submit-login-btn:hover {
+.submit-login-btn:hover, .submit-signup-btn:hover {
     background-color: #42A5F5;
     box-shadow: 0 6px 20px rgba(0, 168, 255, 0.3); /* Enhance shadow on hover */
+    transform: translateY(-3px); /* Lift effect on hover */
 }
 
-.submit-login-btn:active {
-    background-color: #1565C0;
+.submit-login-btn:active, .submit-signup-btn:active {
+    background-color: #003D73; /* Darker shade of the main color */
+    transform: translateY(1px); /* Slight press effect */
 }
 
 /* Hide the form initially */
