@@ -74,7 +74,6 @@ h1 {
     margin-bottom: 20px; /* Adds more space between buttons */
 }
 
-
 .login-btn:hover, .signup-btn:hover, .submit-login-btn:hover, .submit-signup-btn:hover {
     background-color: #003D73; /* Darker shade of the main color */
     box-shadow: 0 6px 20px rgba(0, 86, 163, 0.3); /* Larger shadow on hover */
@@ -111,6 +110,7 @@ h1 {
 #user-signup-form input[type="email"],
 #user-signup-form input[type="tel"],
 #user-signup-form input[type="number"],
+#user-signup-form input[type="password"],
 #user-signup-form select {
     width: 100%;
     padding: 12px;
@@ -129,6 +129,7 @@ h1 {
 #user-signup-form input[type="email"]:focus,
 #user-signup-form input[type="tel"]:focus,
 #user-signup-form input[type="number"]:focus,
+#user-signup-form input[type="password"]:focus,
 #user-signup-form select:focus {
     border-color: #42A5F5;
     box-shadow: 0 0 5px rgba(66, 165, 245, 0.5);

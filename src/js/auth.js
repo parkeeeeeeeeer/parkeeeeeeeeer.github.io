@@ -1,6 +1,6 @@
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -19,107 +19,57 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Handle Login Form Submission
-function handleSubmit(event) {
-    event.preventDefault(); // Prevent form submission
+const formContainer = document.getElementById('form-container');
+
+// Inject Login Form
+function showLoginForm() {
+    formContainer.innerHTML = `
+        <div id="login-form-container">
+            <h2>Login with your Detachment or School Email</h2>
+            <form id="user-login-form">
+                <label for="user-email">Email:</label>
+                <input type="email" id="user-email" name="user-email" placeholder="Enter your email" required>
+                <label for="user-password">Password:</label>
+                <input type="password" id="user-password" name="user-password" placeholder="Enter your password" required>
+                <button type="submit" class="submit-login-btn">Login</button>
+            </form>
+        </div>
+    `;
+    const loginForm = document.getElementById('user-login-form');
+    loginForm.addEventListener('submit', handleLogin);
+}
+
+async function handleLogin(event) {
+    event.preventDefault();
 
     const email = document.getElementById('user-email').value;
     const password = document.getElementById('user-password').value;
 
-    // Validate the email and password
-    if (!validateEmail(email)) {
-        alert('Invalid email format');
-        return;
+    try {
+        // Log in the user
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        console.log("User logged in:", user.uid);
+
+        // Fetch user role from Firestore
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            console.log("User data:", userData);
+
+            const role = userData.role; // Get role from Firestore
+            redirectUserBasedOnRole(role); // Redirect user based on role
+        } else {
+            console.error("No user data found in Firestore");
+            alert('User data not found. Please contact support.');
+        }
+    } catch (error) {
+        console.error("Error during login:", error);
+        alert('Error logging in: ' + error.message);
     }
-
-    if (password.trim() === '') {
-        alert('Password cannot be empty');
-        return;
-    }
-
-    // Sign in with Firebase Authentication
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log('Login successful', user);
-            const role = getUserRole(user); // Retrieve user role (this should be fetched from Firestore)
-            redirectUserBasedOnRole(role);  // Redirect based on user role
-        })
-        .catch((error) => {
-            console.error('Error logging in', error.message);
-            alert('Login failed. Please check your credentials.');
-        });
 }
 
-// Handle Sign-Up Form Submission
-function handleSignUp(event) {
-    event.preventDefault(); // Prevent form submission
-
-    // Retrieve values from the form fields
-    const firstName = document.getElementById('first-name').value;
-    const lastName = document.getElementById('last-name').value;
-    const email = document.getElementById('school-email').value;
-    const studentId = document.getElementById('student-id').value;
-    const phoneNumber = document.getElementById('phone-number').value;
-    const gender = document.getElementById('gender').value;
-    const age = document.getElementById('age').value;
-    const university = document.getElementById('university').value;
-    const asYear = document.getElementById('as-year').value;
-    const flight = document.getElementById('flight').value;
-    const role = document.getElementById('role').value;
-
-    // Validate email
-    if (!validateEmail(email)) {
-        alert("Invalid email format");
-        return;
-    }
-
-    // Create new user with Firebase Authentication
-    createUserWithEmailAndPassword(auth, email, 'temporaryPassword123')  // Replace with secure password logic
-        .then(async (userCredential) => {
-            const user = userCredential.user;
-
-            // Create Firestore document for this user
-            const userRef = doc(db, 'users', user.uid);
-            await setDoc(userRef, {
-                firstName,
-                lastName,
-                email,
-                studentId,
-                phoneNumber,
-                gender,
-                age,
-                university,
-                asYear,
-                flight,
-                role
-            });
-
-            console.log("User registered and data saved to Firestore");
-
-            // Redirect after successful sign-up
-            alert("Signup successful!");
-            window.location.href = "detDashboard.html";  // Redirect to the appropriate page
-        })
-        .catch((error) => {
-            console.error("Error signing up: ", error.message);
-            alert("Error during sign-up. Please try again.");
-        });
-}
-
-// Helper function to validate email format using regex
-function validateEmail(email) {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    return emailPattern.test(email);
-}
-
-// Fetching user role (you should update this with actual logic)
-function getUserRole(user) {
-    // Assuming role is stored in Firestore; simulate role fetching
-    return 'Cadre';  // This should be replaced with actual role fetching logic
-}
-
-// Redirect based on user role
 function redirectUserBasedOnRole(role) {
     switch (role) {
         case 'Cadre':
@@ -140,54 +90,154 @@ function redirectUserBasedOnRole(role) {
     }
 }
 
-// Handle login and signup form transitions
-function handleLoginButtonClick() {
-    const loginFormContainer = document.getElementById('login-form-container');
-    const signupFormContainer = document.getElementById('signup-form-container');
-    const loginButton = document.querySelector('.login-btn');
-    const signupButton = document.querySelector('.signup-btn');
+// Inject Signup Form
+function showSignupForm() {
+    formContainer.innerHTML = `
+        <div id="signup-form-container">
+            <h2>Create an Account</h2>
+            <form id="user-signup-form">
+                <label for="school-email">School Email:</label>
+                <input type="email" id="school-email" name="school-email" placeholder="Enter your school email" required>
 
-    // Show login form, hide signup form
-    loginFormContainer.classList.remove('hidden');
-    signupFormContainer.classList.add('hidden');
-    
-    // Hide login button, show signup button
-    loginButton.style.display = 'none';
-    signupButton.style.display = 'block';
+                <label for="password">Create Password:</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
 
-    // Smooth scroll to login form
-    loginFormContainer.scrollIntoView({ behavior: 'smooth' });
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required>
+
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required>
+
+                <label for="student-id">Student ID:</label>
+                <input type="text" id="student-id" name="student-id" placeholder="Enter your student ID" required>
+
+                <label for="phone-number">Phone Number:</label>
+                <input type="tel" id="phone-number" name="phone-number" placeholder="Enter your phone number" required>
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age" min="18" required>
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="" selected disabled>Select Gender</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                </select>
+
+                <label for="university">University:</label>
+                <select id="university" name="university" required>
+                    <option value="" selected disabled>Select University</option>
+                    <option value="HU">Howard University</option>
+                    <option value="AU">American University</option>
+                    <option value="CUA">Catholic University</option>
+                    <option value="GU">Georgetown University</option>
+                    <option value="GWU">George Washington University</option>
+                    <option value="MU">Marymount University</option>
+                    <option value="TWU">Trinity Washington University</option>
+                    <option value="UDC">University of the District of Columbia</option>
+                    <option value="N/A">N/A</option>
+                </select>
+
+                <label for="as-year">AS Year:</label>
+                <select id="as-year" name="as-year" required>
+                    <option value="" selected disabled>Select AS Year</option>
+                    <option value="AS 100/150">AS 100/150</option>
+                    <option value="AS 200/250/500">AS 200/250/500</option>
+                    <option value="AS 300">AS 300</option>
+                    <option value="AS 400">AS 400</option>
+                    <option value="N/A">N/A</option>
+                </select>
+
+                <label for="flight">Flight:</label>
+                <select id="flight" name="flight" required>
+                    <option value="" selected disabled>Select Flight</option>
+                    <option value="POC">POC</option>
+                    <option value="Alpha">Alpha</option>
+                    <option value="Bravo">Bravo</option>
+                    <option value="Charlie">Charlie</option>
+                    <option value="Delta">Delta</option>
+                    <option value="Echo">Echo</option>
+                    <option value="Foxtrot">Foxtrot</option>
+                    <option value="Golf">Golf</option>
+                    <option value="Hotel">Hotel</option>
+                    <option value="India">India</option>
+                    <option value="N/A">N/A</option>
+                </select>
+
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="" selected disabled>Select Role</option>
+                    <option value="Cadre">Cadre</option>
+                    <option value="Wing/CC">Wing/CC</option>
+                    <option value="A3">A3</option>
+                    <option value="A9">A9</option>
+                    <option value="IO">IO</option>
+                    <option value="Flt/CC">Flt/CC</option>
+                    <option value="POC">POC</option>
+                    <option value="GMC">GMC</option>
+                </select>
+
+                <button type="submit" class="submit-signup-btn">Sign Up</button>
+            </form>
+        </div>
+    `;
+
+    const signupForm = document.getElementById('user-signup-form');
+    signupForm.addEventListener('submit', handleSignUp);
 }
 
-function handleSignUpClick() {
-    const loginFormContainer = document.getElementById('login-form-container');
-    const signupFormContainer = document.getElementById('signup-form-container');
-    const signupButton = document.querySelector('.signup-btn');
-    const loginButton = document.querySelector('.login-btn');
+// Handle Signup Submission
+async function handleSignUp(event) {
+    event.preventDefault();
 
-    // Show signup form, hide login form
-    signupFormContainer.classList.remove('hidden');
-    loginFormContainer.classList.add('hidden');
+    const email = document.getElementById('school-email').value;
+    const password = document.getElementById('password').value;
+    const firstName = document.getElementById('first-name').value;
+    const lastName = document.getElementById('last-name').value;
+    const studentID = document.getElementById('student-id').value;
+    const phoneNumber = document.getElementById('phone-number').value;
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+    const university = document.getElementById('university').value;
+    const asYear = document.getElementById('as-year').value;
+    const flight = document.getElementById('flight').value;
+    const role = document.getElementById('role').value;
 
-    // Hide signup button, show login button
-    signupButton.style.display = 'none';
-    loginButton.style.display = 'block';
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-    // Smooth scroll to signup form
-    signupFormContainer.scrollIntoView({ behavior: 'smooth' });
+        // Save additional user details in Firestore
+        await setDoc(doc(db, 'users', user.uid), {
+            email,
+            firstName,
+            lastName,
+            studentID,
+            phoneNumber,
+            age,
+            gender,
+            university,
+            asYear,
+            flight,
+            role
+        });
+
+        alert('Account created successfully!');
+
+         // Reset the form container to the original state
+         formContainer.innerHTML = `<p>Thank you for signing up! Redirecting...</p>`;
+        
+         // Optional: Add a small delay before redirecting
+         setTimeout(() => {
+             window.location.href = 'index.html'; // Redirect to the original state/page
+         }, 2000); // 2 seconds delay
+         
+    } catch (error) {
+        alert('Error creating account: ' + error.message);
+    }
 }
 
-// Event listeners for form toggling
-document.addEventListener('DOMContentLoaded', function () {
-    const loginForm = document.getElementById('user-login-form');
-    const signupForm = document.getElementById('signup-form-container');
-    const loginButton = document.querySelector('.login-btn');
+// Button Handlers
+window.handleLoginButtonClick = showLoginForm;
+window.handleSignUpClick = showSignupForm;
 
-    // Hide signup form initially
-    signupForm.classList.add('hidden');
-
-    // Attach event listeners
-    loginForm.addEventListener('submit', handleSubmit);
-    loginButton.addEventListener('click', handleLoginButtonClick);
-    document.querySelector('.signup-btn').addEventListener('click', handleSignUpClick);
-});
