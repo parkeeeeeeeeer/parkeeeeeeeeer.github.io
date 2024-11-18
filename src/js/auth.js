@@ -1,6 +1,18 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,signOut
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -8,10 +20,10 @@ const firebaseConfig = {
     authDomain: "afrotc-evaluation-tracker.firebaseapp.com",
     databaseURL: "https://afrotc-evaluation-tracker-default-rtdb.firebaseio.com",
     projectId: "afrotc-evaluation-tracker",
-    storageBucket: "afrotc-evaluation-tracker.firebasestorage.app",
+    storageBucket: "afrotc-evaluation-tracker.appspot.com",
     messagingSenderId: "512597921417",
     appId: "1:512597921417:web:06fbe2e897ffe700b6c058",
-    measurementId: "G-T54VQWMHPG"
+    measurementId: "G-T54VQWMHPG",
 };
 
 // Initialize Firebase
@@ -19,10 +31,170 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const formContainer = document.getElementById('form-container');
+const formContainer = document.getElementById("form-container");
+
+// Navbar Loader
+// Navbar Loader
+async function loadNavBar(role) {
+    const navBarContainer = document.getElementById("navbar-container");
+    if (!navBarContainer) {
+        console.error("Navbar container not found!");
+        return;
+    }
+
+    let navFile = "";
+
+    // Determine the file to load based on the role
+    switch (role) {
+        case "Cadre":
+            navFile = "src/assets/cadreNavBar.html";
+            break;
+        case "Wing/CC":
+            navFile = "src/assets/wcNavBar.html";
+            break;
+        case "A3":
+            navFile = "src/assets/a3NavBar.html";
+            break;
+        case "A9":
+            navFile = "src/assets/a9NavBar.html";
+            break;
+        case "Flt/CC":
+        case "IO":
+            navFile = "src/assets/pocNavBar.html";
+            break;
+        case "POC":
+            navFile = "src/assets/pocNavBar.html";
+            break;
+        case "GMC":
+            navFile = "src/assets/gmcNavBar.html";
+            break;
+        default:
+            navFile = "src/assets/gmcNavBar.html";
+            break;
+    }
+
+    try {
+        // Fetch the navbar HTML
+        const response = await fetch(navFile);
+        if (response.ok) {
+            const navbarHTML = await response.text();
+            navBarContainer.innerHTML = navbarHTML;
+
+            // Inject the user's name into the navbar
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    // Fetch user data from Firestore
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        const firstName = userData.firstName || "F";
+                        const lastName = userData.lastName || "Last";
+
+                        // Format name as "LastName, F."
+                        const formattedName = `${lastName}, ${firstName.charAt(0)}.`;
+
+                        // Find the dropdown button and update it with the name
+                        const dropBtn = navBarContainer.querySelector(".dropbtn");
+                        if (dropBtn) {
+                            dropBtn.textContent = formattedName;
+                        } else {
+                            console.error("Dropdown button not found in navbar.");
+                        }
+                    } else {
+                        console.error("User document does not exist in Firestore.");
+                    }
+                } catch (error) {
+                    console.error("Error retrieving user data from Firestore:", error);
+                }
+            } else {
+                console.error("No user is currently logged in.");
+            }
+
+            // Add the logout functionality
+            const logoutButton = navBarContainer.querySelector("#logout-button");
+            if (logoutButton) {
+                logoutButton.addEventListener("click", async (event) => {
+                    event.preventDefault();
+                    try {
+                        await signOut(auth);
+                        console.log("User successfully logged out.");
+                        window.location.href = "../../index.html"; // Redirect to login page
+                    } catch (error) {
+                        console.error("Error logging out:", error);
+                    }
+                });
+            } else {
+                console.error("Logout button not found in navbar.");
+            }
+        } else {
+            console.error(`Failed to load navbar: ${response.statusText}`);
+            navBarContainer.innerHTML = '<p>Error loading navigation bar.</p>';
+        }
+    } catch (error) {
+        console.error("Error fetching navbar:", error);
+        navBarContainer.innerHTML = '<p>Error loading navigation bar.</p>';
+    }
+}
+
+
+// Redirect After Login/Signup
+function redirectUserBasedOnRole(role) {
+    switch (role) {
+        case "Cadre":
+        case "Wing/CC":
+        case "A3":
+        case "A9":
+        case "Flt/CC":
+        case "IO":
+            window.location.href = "detDashboard.html";
+            break;
+        case "POC":
+        case "GMC":
+            window.location.href = "cadetProfile.html";
+            break;
+        default:
+            window.location.href = "cadetProfile.html";
+            break;
+    }
+}
+
+// Handle Login
+async function handleLogin(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("user-email").value;
+    const password = document.getElementById("user-password").value;
+
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        console.log("User logged in:", user.uid);
+
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            const role = userData.role;
+            console.log("User role detected:", role);
+
+            await loadNavBar(role); // Load the appropriate navbar
+            redirectUserBasedOnRole(role); // Redirect user to the correct page
+        } else {
+            console.error("No user data found in Firestore");
+            alert("User data not found. Please contact support.");
+        }
+    } catch (error) {
+        console.error("Error during login:", error);
+        alert("Error logging in: " + error.message);
+    }
+}
 
 // Inject Login Form
 function showLoginForm() {
+
+
+
     formContainer.innerHTML = `
         <div id="login-form-container">
             <h2>Login with your Detachment or School Email</h2>
@@ -35,63 +207,15 @@ function showLoginForm() {
             </form>
         </div>
     `;
+
     const loginForm = document.getElementById('user-login-form');
     loginForm.addEventListener('submit', handleLogin);
 }
 
-async function handleLogin(event) {
-    event.preventDefault();
-
-    const email = document.getElementById('user-email').value;
-    const password = document.getElementById('user-password').value;
-
-    try {
-        // Log in the user
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        console.log("User logged in:", user.uid);
-
-        // Fetch user role from Firestore
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists()) {
-            const userData = userDoc.data();
-            console.log("User data:", userData);
-
-            const role = userData.role; // Get role from Firestore
-            redirectUserBasedOnRole(role); // Redirect user based on role
-        } else {
-            console.error("No user data found in Firestore");
-            alert('User data not found. Please contact support.');
-        }
-    } catch (error) {
-        console.error("Error during login:", error);
-        alert('Error logging in: ' + error.message);
-    }
-}
-
-function redirectUserBasedOnRole(role) {
-    switch (role) {
-        case 'Cadre':
-        case 'Wing/CC':
-        case 'A3':
-        case 'A9':
-        case 'Flt/CC':
-        case 'IO':
-            window.location.href = 'detDashboard.html';  // Redirect to common dashboard
-            break;
-        case 'POC':
-        case 'GMC':
-            window.location.href = 'cadetProfile.html';  // Redirect to cadet profile page
-            break;
-        default:
-            window.location.href = 'cadetProfile.html';  // Default to cadet dashboard
-            break;
-    }
-}
 
 // Inject Signup Form
 function showSignupForm() {
+
     formContainer.innerHTML = `
         <div id="signup-form-container">
             <h2>Create an Account</h2>
@@ -190,28 +314,32 @@ function showSignupForm() {
 async function handleSignUp(event) {
     event.preventDefault();
 
-    const email = document.getElementById('school-email').value;
-    const password = document.getElementById('password').value;
     const firstName = document.getElementById('first-name').value;
     const lastName = document.getElementById('last-name').value;
     const studentID = document.getElementById('student-id').value;
     const phoneNumber = document.getElementById('phone-number').value;
-    const age = document.getElementById('age').value;
+    const age = parseInt(document.getElementById('age').value, 10);
     const gender = document.getElementById('gender').value;
     const university = document.getElementById('university').value;
     const asYear = document.getElementById('as-year').value;
     const flight = document.getElementById('flight').value;
     const role = document.getElementById('role').value;
+    const email = document.getElementById('school-email').value;
+    const password = document.getElementById('password').value;
 
     try {
+        // Create user with email and password
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Save additional user details in Firestore
-        await setDoc(doc(db, 'users', user.uid), {
-            email,
+        console.log("User created:", user.uid);
+
+        // Store user data in Firestore
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, {
             firstName,
             lastName,
+            email,
             studentID,
             phoneNumber,
             age,
@@ -219,25 +347,87 @@ async function handleSignUp(event) {
             university,
             asYear,
             flight,
-            role
+            role,
+            uid: user.uid,
+            createdAt: new Date().toISOString(),
         });
 
-        alert('Account created successfully!');
+        console.log("User data saved in Firestore.");
 
-         // Reset the form container to the original state
-         formContainer.innerHTML = `<p>Thank you for signing up! Redirecting...</p>`;
-        
-         // Optional: Add a small delay before redirecting
-         setTimeout(() => {
-             window.location.href = 'index.html'; // Redirect to the original state/page
-         }, 2000); // 2 seconds delay
-         
+        // Redirect user based on role
+        redirectUserBasedOnRole(role);
+
     } catch (error) {
-        alert('Error creating account: ' + error.message);
+        console.error("Error during sign-up:", error);
+        alert("Error signing up: " + error.message);
     }
+
 }
+// Auth State Listener
+// Auth State Listener
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        console.log("User is logged in:", user.uid);
+
+        try {
+            // Fetch the user's document from Firestore
+            const userDocRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userDocRef);
+
+            if (userSnap.exists()) {
+                const userData = userSnap.data();
+
+                // Extract user details
+                const role = userData.role || "Unknown Role";
+                const firstName = userData.firstName || "FirstName";
+                const lastName = userData.lastName || "LastName";
+
+                // Format name: LastName, F.I.
+                const formattedName = `${lastName}, ${firstName.charAt(0).toUpperCase()}.`;
+
+                // Add the name to the navbar
+                const dropdownButton = document.querySelector(".dropbtn");
+                if (dropdownButton) {
+                    dropdownButton.textContent = formattedName;
+                } else {
+                    console.error("Dropdown button not found");
+                }
+
+                console.log("Role detected on page load:", role);
+
+                await loadNavBar(role); // Ensure the navbar matches the role
+            } else {
+                console.error("No user data found in Firestore");
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    } else {
+        console.error("No user logged in");
+    }
+});
+
 
 // Button Handlers
-window.handleLoginButtonClick = showLoginForm;
-window.handleSignUpClick = showSignupForm;
+window.handleLoginButtonClick = () => showLoginForm();
+window.handleSignUpClick = () => showSignupForm();
 
+document.addEventListener("DOMContentLoaded", () => {
+    const logoutButton = document.getElementById("logout-button");
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async (event) => {
+            event.preventDefault(); // Prevent default link behavior
+
+            try {
+                await signOut(auth); // Log the user out
+                console.log("User successfully logged out.");
+                window.location.href = "../../index.html"; // Redirect to login page
+            } catch (error) {
+                console.error("Error logging out:", error);
+            }
+        });
+    } else {
+        console.error("Logout button not found!");
+    }
+});

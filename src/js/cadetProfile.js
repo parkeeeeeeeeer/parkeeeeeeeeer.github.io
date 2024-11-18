@@ -1,3 +1,4 @@
+import '/auth.js'
 // Placeholder for rendering PFA chart
 function renderPFAChart() {
     const pfaChart = document.getElementById('pfa-chart');

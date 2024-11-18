@@ -1,149 +1,152 @@
 /* General Styles */
 body {
-    background-color: #f0f4f8; /* Light background */
-    font-family: 'Arial', sans-serif; /* Consistent font */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    height: 100vh;
-  }
-  
-  /* Main Container for the Sidebar and Content */
+  background-color: #f7f7f7; /* Light grayish background */
+  font-family: 'Arial', sans-serif; /* Consistent, modern font */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column; /* Stack navbar and content */
+  height: 100vh;
+  width: 100%; /* Full width */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  display: flex;
+  flex: 1; /* Fill available space */
+  width: 100%;
+  max-width: 100%; /* Ensure full width */
+  margin: 0;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  box-sizing: border-box;
+  padding-top: 80px; /* Adjust for navbar height */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 300px;
+  background-color: #0056A3; /* Sidebar using primary color */
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.cadet-info h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.cadet-info p {
+  margin: 5px 0;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Sidebar Navigation */
+.nav-menu {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.nav-link {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: #0056A3; /* Primary color for nav buttons */
+  border: none;
+  color: white;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+  background-color: #004085; /* Darker blue on hover */
+  transform: translateY(-2px); /* Subtle lift effect */
+}
+
+/* Main Content Area */
+.main-content {
+  flex-grow: 1;
+  background-color: #ffffff;
+  padding: 20px;
+  margin-left: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for content */
+  overflow-y: auto; /* Enable scrolling for long content */
+}
+
+.content-section {
+  display: none;
+}
+
+.content-section.active {
+  display: block;
+}
+
+h3 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Section Styling */
+#pfa-chart, #sob-chart {
+  height: 300px;
+  background-color: #e9ecef; /* Light gray for charts */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 300px; /* Vertically centered placeholder */
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
   .dashboard-container {
-    display: flex;
-    width: 100%;
-    max-width: 1200px;
-    margin: 20px auto; /* Centered with margins */
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    flex-direction: column; /* Stack sidebar and content vertically */
+    padding: 15px;
   }
-  
-  /* Sidebar */
-  .sidebar {
-    width: 300px;
-    background-color: #007bff; /* Primary blue background */
-    color: white;
-    padding: 20px;
-    border-radius: 10px; /* Rounded corners */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .profile-picture {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-  }
-  
-  .cadet-info h2 {
-    margin: 0;
-    font-size: 1.8rem;
-    text-align: center;
-  }
-  
-  .cadet-info p {
-    margin: 5px 0;
-    text-align: center;
-    font-size: 1rem;
-  }
-  
-  /* Sidebar Navigation */
-  .nav-menu {
-    margin-top: 20px;
-    width: 100%;
-  }
-  
-  .nav-link {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    background-color: #0056b3; /* Darker blue for buttons */
-    border: none;
-    color: white;
-    cursor: pointer;
-    text-align: left;
-    font-size: 1rem;
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s, transform 0.2s;
-  }
-  
-  .nav-link:hover, .nav-link.active {
-    background-color: #003d80; /* Darker blue on hover */
-    transform: translateY(-2px); /* Lift effect */
-  }
-  
-  /* Main Content Area */
+
   .main-content {
-    flex-grow: 1;
-    background-color: #ffffff;
-    padding: 20px;
-    margin-left: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for content */
+    margin-left: 0;
+    margin-top: 20px;
   }
-  
-  .content-section {
-    display: none;
+
+  .sidebar {
+    width: 100%;
+    padding: 15px;
   }
-  
-  .content-section.active {
-    display: block;
+
+  .nav-link {
+    font-size: 0.9rem;
+    padding: 10px;
   }
-  
-  h3 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    color: #333;
+}
+
+@media (max-width: 600px) {
+  .dashboard-container {
+    padding: 15px;
   }
-  
-  /* Section Styling */
-  #pfa-chart, #sob-chart {
-    height: 300px;
-    background-color: #e9ecef; /* Light gray for charts */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 300px; /* Vertically centered placeholder */
+
+  h2 {
+    font-size: 1.5rem;
   }
-  
-  /* Responsive design for small screens */
-  @media (max-width: 800px) {
-    .dashboard-container {
-      flex-direction: column; /* Stack sidebar and content vertically */
-      padding: 15px;
-    }
-  
-    .main-content {
-      margin-left: 0;
-      margin-top: 20px;
-    }
-  
-    .sidebar {
-      width: 100%;
-      padding: 15px;
-    }
-  
-    .nav-link {
-      font-size: 0.9rem; /* Adjust button size */
-      padding: 10px;
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .container {
-        padding: 15px; /* Less padding on small screens */
-    }
-  
-    h2 {
-        font-size: 1.5rem; /* Smaller heading for mobile */
-    }
-  
-    .nav-link {
-        font-size: 0.85rem; /* Smaller font size */
-    }
-  }
-  
+}

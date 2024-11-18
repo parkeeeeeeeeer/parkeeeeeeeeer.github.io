@@ -1,0 +1,119 @@
+/* Navbar Container */
+#navbar-container {
+    width: 100%;
+    height: 60px; /* Consistent height */
+    background-color: #0056A3; /* Primary color */
+    color: white;
+    display: flex;
+    justify-content: space-between; /* Space out left and right content */
+    align-items: center;
+    padding: 0 20px; /* Padding on left and right */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    position: fixed; /* Fixed to the top */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Always visible */
+    box-sizing: border-box;
+}
+
+/* Logo (Left Side) */
+#navbar-container .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+/* Navigation Links (Right Side) */
+#navbar-container .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between items */
+    margin-left: auto; /* Push to the right */
+}
+
+/* Dropdown Container */
+.nav-links .dropdown {
+    position: relative;
+}
+
+/* Dropdown Button */
+.nav-links .dropbtn {
+    background-color: transparent; /* Match navbar background */
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-links .dropbtn:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle highlight on hover */
+    transform: scale(1.05); /* Slightly larger on hover */
+}
+
+/* Dropdown Content */
+.nav-links .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Position below the button */
+    right: 0; /* Align to the right of the button */
+    background-color: white; /* Dropdown background */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    min-width: 150px;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+/* Dropdown Links */
+.nav-links .dropdown-content a {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #0056A3; /* Match primary color */
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-links .dropdown-content a:hover {
+    background-color: #f2f4f8; /* Light hover effect */
+    color: #004085; /* Slightly darker hover text */
+}
+
+/* Show Dropdown on Hover */
+.nav-links .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Mobile Friendly Adjustments */
+@media (max-width: 768px) {
+    #navbar-container {
+        flex-wrap: wrap; /* Allow wrapping for small screens */
+        height: auto; /* Flexible height */
+        padding: 10px; /* Adjust padding */
+    }
+
+    #navbar-container .logo {
+        font-size: 1.2rem; /* Smaller logo */
+    }
+
+    #navbar-container .nav-links {
+        flex-direction: column; /* Stack items */
+        align-items: flex-start; /* Align items to the left */
+        gap: 10px; /* Add spacing between links */
+    }
+
+    .nav-links .dropdown-content {
+        position: static; /* Remove absolute positioning */
+        box-shadow: none; /* No shadow for stacked links */
+        width: 100%; /* Take full width */
+    }
+}

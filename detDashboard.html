@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluation Tracker - Dashboard</title>
     <link rel="stylesheet" href="src/css/detDashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-firestore.js"></script>
 </head>
 <body>
+    <div id="navbar-container"></div>
+
     <div id="dashboard-container">
         <header>
             <h1>Welcome to the Evaluation Tracker Dashboard</h1>
@@ -72,6 +70,7 @@
         </div>
     </div>
 
+    <script type="module" src="src/js/auth.js"></script>
     <script>
         // Example of PFA Trends Chart using Chart.js
         const pfaTrendCtx = document.getElementById('pfa-trend-chart').getContext('2d');
