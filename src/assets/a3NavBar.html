@@ -1,17 +1,18 @@
-<nav class="navbar">
+<nav id="navbar-container">
     <div class="logo">Det 130</div>
-    
     <div class="nav-links">
+        
         <div class="dropdown">
-            <button class="dropbtn">Cadets</button>
+            <button class="dropbtnReg">Cadets</button>
             <div class="dropdown-content">
+                <a href=".html">All</a>
                 <a href=".html">AS100s</a>
                 <a href=".html">AS200s</a>
             </div>
         </div>
 
         <div class="dropdown">
-            <button class="dropbtn">Data</button>
+            <button class="dropbtnReg">Data</button>
             <div class="dropdown-content">
                 <a href="../../pfaData.html">PFA Data</a>
                 <a href="../../form2Data.html">Form 2 Data</a>
@@ -19,18 +20,20 @@
         </div>
 
         <div class="dropdown">
-            <button class="dropbtn">Submissions</button>
+            <button class="dropbtnReg">Submissions</button>
             <div class="dropdown-content">
                 <a href="../../pfaInput.html">PFA Submissions</a>
                 <a href="../../form2Submissions.html">Form 2 Submissions</a>
             </div>
         </div>
-
+        
+        <!-- Name Dropdown -->
         <div class="dropdown">
-            <button class="dropbtn">name</button>
+            <button class="dropbtn"></button>
             <div class="dropdown-content">
-                <a href = '../../cadetProfile.html'>Profile</a>
-                <a href="../../index.html">logout</a>
+                <a href="../../cadetProfile.html">Profile</a>
+                <a href="../../detDashboard.html">Dashboard</a>
+                <a id="logout-button" href="#">Logout</a>
             </div>
         </div>
     </div>

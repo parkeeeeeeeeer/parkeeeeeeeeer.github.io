@@ -1,4 +1,4 @@
-Reset some default styles
+/* Reset some default styles */
 body, html {
     margin: 0;
     padding: 0;
@@ -13,6 +13,7 @@ body, html {
     padding: 20px;
     max-width: 1200px; /* Limit the maximum width for larger screens */
     overflow: hidden; /* Hide any overflow from the dashboard container */
+    margin-top: 60px; /* Adjust for the fixed navbar height */
 }
 
 /* Header Styles */
@@ -115,47 +116,8 @@ canvas {
     height: 300px; /* Set a fixed height for the charts */
 }
 
-/* Navbar Container */
-.navbar-container {
-    width: 100%;
-    background-color: #0056A3; /* Main color */
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.navbar-container .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-}
-
-.navbar-container .menu {
-    display: flex;
-    gap: 20px;
-}
-
-.navbar-container .menu a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-}
-
-.navbar-container .menu a:hover {
-    color: #f4f4f9;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
-
     .main-content {
         flex-direction: column;
         align-items: stretch; /* Allow items to stretch to full width */
@@ -190,37 +152,5 @@ canvas {
 
     header p {
         font-size: 1rem;
-    }
-
-    .navbar-container {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px;
-    }
-
-    .navbar-container .menu {
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
-        display: none; /* Hidden by default */
-    }
-
-    .navbar-container .menu.active {
-        display: flex; /* Show on toggle */
-    }
-
-    .navbar-container .menu a {
-        width: 100%;
-        padding: 10px 0;
-        text-align: left;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .navbar-container .toggle {
-        font-size: 1.5rem;
-        color: #fff;
-        cursor: pointer;
-        display: block;
-        align-self: flex-end;
     }
 }

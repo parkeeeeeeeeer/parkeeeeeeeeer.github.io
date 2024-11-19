@@ -6,8 +6,6 @@
     <title>Cadet Profile Dashboard</title>
     <link rel="stylesheet" href="src/css/cadetProfile.css">
     <link rel="stylesheet" href="src/css/nav.css">
-
-
 </head>
 <body>
     <div id="navbar-container"></div>
@@ -16,59 +14,49 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="cadet-overview">
-                <img src="cadet.jpg" alt="Cadet Profile Picture" class="profile-picture">
                 <div class="cadet-info">
-                    <h2>Cadet Full Name</h2>
-                    <p>AS Year: 300</p>
-                    <p>Projected Commissioning Date: May 2025</p>
-                    <p>School: State University</p>
-                    <p>Email: cadet.email@example.com</p>
-                    <p>Phone: (555) 123-4567</p>
+                    <h2 id="cadet-name"></h2>
+                    <p id="cadet-as-year"></p>
+                    <p id="cadet-school"></p>
+                    <p id="cadet-email"></p>
+                    <p id="cadet-phone"></p>
+                    <p id="cadet-schoolID"></p>
+
+                    <!-- <p id="cadet-commissioning-date"></p> -->
                 </div>
             </div>
             <nav class="nav-menu">
-                <button class="nav-link active" onclick="showSection('overview')">Overview</button>
-                <button class="nav-link" onclick="showSection('pfa')">PFA Score Breakdown</button>
-                <button class="nav-link" onclick="showSection('sob')">SOB Performance</button>
-                <button class="nav-link" onclick="showSection('attendance')">Attendance Overview</button>
-                <button class="nav-link" onclick="showSection('form2')">Form 2 Status</button>
-                <button class="nav-link" onclick="showSection('snapshots')">Data Snapshots</button>
+                <button class="nav-link active" onclick="showSection(event, 'overview')">Overview</button>
+                <button class="nav-link" onclick="showSection(event, 'pfa')">PFA Score Breakdown</button>
+                <button class="nav-link" onclick="showSection(event, 'sob')">SOB Performance</button>
+                <button class="nav-link" onclick="showSection(event, 'attendance')">Attendance Overview</button>
+                <button class="nav-link" onclick="showSection(event, 'form2')">Form 2 Status</button>
+                <button class="nav-link" onclick="showSection(event, 'snapshots')">Data Snapshots</button>
             </nav>
         </div>
 
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Overview Section -->
             <div id="overview" class="content-section active">
                 <h3>Cadet Overview</h3>
                 <p>This section provides a summary of the cadet’s overall status.</p>
             </div>
-
-            <!-- PFA Score Breakdown -->
             <div id="pfa" class="content-section">
                 <h3>PFA Score Breakdown</h3>
                 <div id="pfa-chart"></div>
             </div>
-
-            <!-- SOB Performance -->
             <div id="sob" class="content-section">
                 <h3>SOB Performance</h3>
                 <div id="sob-chart"></div>
             </div>
-
-            <!-- Attendance Overview -->
             <div id="attendance" class="content-section">
                 <h3>Attendance Overview</h3>
                 <p>Attendance data will be displayed here.</p>
             </div>
-
-            <!-- Form 2 Status -->
             <div id="form2" class="content-section">
                 <h3>Form 2 Status</h3>
                 <p>Form 2 submission status will be displayed here.</p>
             </div>
-
-            <!-- Data Snapshots -->
             <div id="snapshots" class="content-section">
                 <h3>Data Snapshots</h3>
                 <p>Data comparisons and progress over time.</p>
@@ -77,6 +65,6 @@
     </div>
 
     <script type="module" src="src/js/auth.js"></script>
-    <script src="src/js/cadetProfile.js"></script>
+    <script type="module" src="src/js/cadetProfile.js"></script>
 </body>
 </html>

@@ -32,6 +32,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const formContainer = document.getElementById("form-container");
+export { app, auth, db };
 
 // Navbar Loader
 // Navbar Loader
@@ -119,7 +120,7 @@ async function loadNavBar(role) {
                     try {
                         await signOut(auth);
                         console.log("User successfully logged out.");
-                        window.location.href = "../../index.html"; // Redirect to login page
+                        window.location.href = "/index.html"; // Redirect to login page
                     } catch (error) {
                         console.error("Error logging out:", error);
                     }
@@ -265,10 +266,10 @@ function showSignupForm() {
                 <label for="as-year">AS Year:</label>
                 <select id="as-year" name="as-year" required>
                     <option value="" selected disabled>Select AS Year</option>
-                    <option value="AS 100/150">AS 100/150</option>
-                    <option value="AS 200/250/500">AS 200/250/500</option>
-                    <option value="AS 300">AS 300</option>
-                    <option value="AS 400">AS 400</option>
+                    <option value="100">AS 100/150</option>
+                    <option value="200">AS 200/250/500</option>
+                    <option value="300">AS 300</option>
+                    <option value="400">AS 400</option>
                     <option value="N/A">N/A</option>
                 </select>
 
@@ -296,7 +297,6 @@ function showSignupForm() {
                     <option value="A3">A3</option>
                     <option value="A9">A9</option>
                     <option value="IO">IO</option>
-                    <option value="Flt/CC">Flt/CC</option>
                     <option value="POC">POC</option>
                     <option value="GMC">GMC</option>
                 </select>
@@ -305,9 +305,25 @@ function showSignupForm() {
             </form>
         </div>
     `;
-
+    // <option value="Flt/CC">Flt/CC</option>
+    
     const signupForm = document.getElementById('user-signup-form');
     signupForm.addEventListener('submit', handleSignUp);
+}
+
+function formatPhoneNumber(phone) {
+    // Remove non-numeric characters
+    const cleaned = phone.replace(/\D/g, '');
+    
+    // Match groups of numbers for formatting
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+
+    if (match) {
+        return `(${match[1]}) ${match[2]}-${match[3]}`;
+    }
+
+    // Return original input if it doesn't match expected format
+    return phone;
 }
 
 // Handle Signup Submission
@@ -317,7 +333,7 @@ async function handleSignUp(event) {
     const firstName = document.getElementById('first-name').value;
     const lastName = document.getElementById('last-name').value;
     const studentID = document.getElementById('student-id').value;
-    const phoneNumber = document.getElementById('phone-number').value;
+    const phoneNumber = formatPhoneNumber(document.getElementById('phone-number').value);
     const age = parseInt(document.getElementById('age').value, 10);
     const gender = document.getElementById('gender').value;
     const university = document.getElementById('university').value;
@@ -385,14 +401,6 @@ onAuthStateChanged(auth, async (user) => {
                 // Format name: LastName, F.I.
                 const formattedName = `${lastName}, ${firstName.charAt(0).toUpperCase()}.`;
 
-                // Add the name to the navbar
-                const dropdownButton = document.querySelector(".dropbtn");
-                if (dropdownButton) {
-                    dropdownButton.textContent = formattedName;
-                } else {
-                    console.error("Dropdown button not found");
-                }
-
                 console.log("Role detected on page load:", role);
 
                 await loadNavBar(role); // Ensure the navbar matches the role
@@ -411,23 +419,3 @@ onAuthStateChanged(auth, async (user) => {
 // Button Handlers
 window.handleLoginButtonClick = () => showLoginForm();
 window.handleSignUpClick = () => showSignupForm();
-
-document.addEventListener("DOMContentLoaded", () => {
-    const logoutButton = document.getElementById("logout-button");
-
-    if (logoutButton) {
-        logoutButton.addEventListener("click", async (event) => {
-            event.preventDefault(); // Prevent default link behavior
-
-            try {
-                await signOut(auth); // Log the user out
-                console.log("User successfully logged out.");
-                window.location.href = "../../index.html"; // Redirect to login page
-            } catch (error) {
-                console.error("Error logging out:", error);
-            }
-        });
-    } else {
-        console.error("Logout button not found!");
-    }
-});
