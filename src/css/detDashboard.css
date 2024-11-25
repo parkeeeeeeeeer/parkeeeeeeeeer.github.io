@@ -3,7 +3,7 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
+    background-color: #f7f7f7;
 }
 
 /* Dashboard Container */
@@ -14,6 +14,7 @@ body, html {
     max-width: 1200px; /* Limit the maximum width for larger screens */
     overflow: hidden; /* Hide any overflow from the dashboard container */
     margin-top: 60px; /* Adjust for the fixed navbar height */
+    background-color: #f7f7f7;
 }
 
 /* Header Styles */

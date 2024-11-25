@@ -209,7 +209,10 @@ function showLoginForm() {
         </div>
     `;
 
+    scrollToFormContainer();
     const loginForm = document.getElementById('user-login-form');
+
+    // const loginForm = document.getElementById('user-login-form');
     loginForm.addEventListener('submit', handleLogin);
 }
 
@@ -306,9 +309,13 @@ function showSignupForm() {
         </div>
     `;
     // <option value="Flt/CC">Flt/CC</option>
-    
+    scrollToFormContainer();
     const signupForm = document.getElementById('user-signup-form');
     signupForm.addEventListener('submit', handleSignUp);
+}
+
+function scrollToFormContainer() {
+    formContainer.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function formatPhoneNumber(phone) {

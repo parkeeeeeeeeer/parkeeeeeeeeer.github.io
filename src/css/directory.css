@@ -1,0 +1,137 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7; /* Neutral background */
+    color: #333333; /* Darker text for better readability */
+    overflow-x: hidden;
+    padding-top: 70px; /* Adjust for fixed navbar */
+}
+
+/* Header Section */
+header {
+    text-align: center;
+    margin-bottom: 40px; /* Increased margin to separate from content */
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #0056A3; /* Main color */
+    margin-bottom: 1rem; /* More space below header */
+    font-weight: bold; /* Make header text bold */
+}
+
+/* Main Container */
+#main-container {
+    width: 85%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 12px; /* Slightly more rounded corners */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow for a lighter feel */
+}
+
+/* Filter Section */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Increased gap for breathing room */
+    margin-bottom: 30px; /* More space below filter section */
+    width: 80%; /* Adjust the width to control the overall size */
+    max-width: 1200px; /* Max width to prevent it from growing too wide */
+    margin: 0 auto; /* Center the container horizontally */
+    align-items: center;
+    justify-content: center; /* Center the content horizontally */
+}
+
+/* Input and Select Styles */
+.filter-container input, 
+.filter-container select {
+    flex: 1;
+    padding: 14px; /* More padding for ease of use */
+    font-size: 16px; /* Slightly larger font */
+    border: 1px solid #8694a9;
+    border-radius: 8px; /* Rounded corners for inputs */
+    background-color: #f5f5f5; /* Light gray */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.filter-container input:focus, 
+.filter-container select:focus {
+    border-color: #42A5F5;
+    box-shadow: 0 0 5px rgba(66, 165, 245, 0.5);
+    outline: none;
+}
+
+/* Table Styles */
+table {
+    width: 90%; /* Set width to 90% of the container */
+    border-collapse: collapse;
+    margin: 30px auto; /* Add margin-top for spacing and auto for centering */
+    border-spacing: 0; /* Remove spacing between cells */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Depth effect */
+    background-color: #fff;
+}
+
+/* Table Header */
+thead {
+    background-color: #0056A3; /* Primary color for header */
+    color: #ffffff; /* White text for better contrast */
+    text-align: left;
+    font-size: 14px; /* Slightly larger header font */
+    padding: 12px 16px; /* Added padding for a more spacious header */
+}
+
+/* Table Cells */
+th, td {
+    text-align: left;
+    padding: 18px 24px; /* Added extra padding for better spacing */
+    border: 1px solid #ddd;
+    font-size: 15px; /* Adjusted font size for better readability */
+}
+
+th {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Alternating Row Colors */
+tr:nth-child(even) {
+    background-color: #F5F5F5; /* Slightly darker alternating row */
+}
+
+/* Row Hover Effect */
+tr:hover {
+    background-color: #E0E0E0; /* Row hover effect with more contrast */
+}
+
+/* Remove hover effect from table header */
+thead tr:hover {
+    background-color: #0056A3; /* Ensures no hover effect in header */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .filter-container {
+        flex-direction: column; /* Stack filters vertically */
+    }
+
+    header h1 {
+        font-size: 2rem; /* Slightly smaller header for small screens */
+    }
+
+    table {
+        font-size: 14px; /* Slightly smaller table font */
+    }
+
+    th, td {
+        padding: 12px 16px; /* Adjusted padding for smaller screens */
+    }
+
+    .filter-container input, 
+    .filter-container select {
+        padding: 12px; /* Adjusted padding for small screens */
+    }
+}

@@ -27,13 +27,17 @@ h1 {
     font-weight: 300; /* Lighter weight for a modern feel */
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* General layout */
 #main-container {
     width: 90%;
     max-width: 500px;
     margin: 50px auto;
     padding: 30px;
-    background-color: #F5F7FA;
+    background-color: #FFFF;
     border-radius: 12px; /* Slightly larger rounding for a card-like feel */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Modern shadow effect */
     text-align: center;

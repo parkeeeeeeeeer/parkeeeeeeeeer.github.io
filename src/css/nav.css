@@ -93,6 +93,30 @@
     display: block;
 }
 
+
+/* Basic Styling for Nav Links */
+.nav-links a {
+    background-color: transparent; /* Transparent background */
+    color: white; /* White text color */
+    font-size: 1rem; /* Standard font size */
+    font-weight: bold; /* Bold text */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Padding around the link */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover effects for nav link */
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Slight background color change on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Active state (when the link is active or selected) */
+.nav-links a:active {
+    background-color: rgba(255, 255, 255, 0.2); /* Darker background when clicked */
+}
+
 /* Mobile Friendly Adjustments */
 @media (max-width: 768px) {
     #navbar-container {

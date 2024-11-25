@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadet Profile Dashboard</title>
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="src/css/directory.css">
+    <link rel="stylesheet" href="src/css/nav.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Page Title -->
+    <header>
+        <h1>Directory</h1>
+    </header>
+
+    <!-- Filter Section -->
+    <section class="filter-container">
+        <input type="text" id="searchInput" placeholder="Search by name..." />
+        <select id="roleFilter">
+            <option value="">All Roles</option>
+            <option value="100">AS 100/150s</option>
+            <option value="200">AS 200/250/500s</option>
+            <option value="300">AS 300</option>
+            <option value="400">AS 400s</option>
+        </select>
+    </section>
+
+    <!-- Directory Table -->
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Email</th>
+                    <th>AS Year</th>
+                    <th>University</th>
+                </tr>
+            </thead>
+            <tbody id="directoryTable">
+                <!-- Directory rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- JavaScript -->
+    <script type="module" src="src/js/auth.js"></script>
+    <script type="module" src="src/js/directory.js"></script>
+</body>
+</html>

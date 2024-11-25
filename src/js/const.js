@@ -7,9 +7,11 @@ import { auth, db } from './auth.js';
 
 const user = auth.currentUser;
 
+
 const userDoc = await getDoc(doc(db, "users", user.uid));
 
 const userData = userDoc.data();
+
 
 const PFAUserDoc = await getDoc(doc(db, "PFA", user.uid));
 
@@ -19,6 +21,7 @@ const userPFAData = PFAUserDoc.data();
 const SOBUserDoc = await getDoc(doc(db, "SOB", user.uid));
 
 const userSOBData = SOBUserDoc.data();
+
 
 const SOBStandardDoc = await getDoc(doc(db, "SOB", "Standard"));
 
