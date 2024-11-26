@@ -387,7 +387,6 @@ async function handleSignUp(event) {
 
 }
 // Auth State Listener
-// Auth State Listener
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         console.log("User is logged in:", user.uid);
