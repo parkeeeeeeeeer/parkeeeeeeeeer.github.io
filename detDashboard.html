@@ -6,6 +6,8 @@
     <title>Evaluation Tracker - Dashboard</title>
     <link rel="stylesheet" href="src/css/detDashboard.css">
     <link rel="stylesheet" href="src/css/nav.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 </head>
 <body>
@@ -72,57 +74,113 @@
         </div>
     </div>
 
-    <script type="module" src="src/js/auth.js"></script>
     <script>
-        // Example of PFA Trends Chart using Chart.js
+// placeholder graphs below 
+        function generateRandomData(length, max) {
+            return Array.from({ length }, () => Math.floor(Math.random() * max));
+        }
+    
         const pfaTrendCtx = document.getElementById('pfa-trend-chart').getContext('2d');
-        const pfaTrendChart = new Chart(pfaTrendCtx, {
+        new Chart(pfaTrendCtx, {
             type: 'line',
             data: {
                 labels: ['Start', 'Midterm', 'End'],
                 datasets: [{
                     label: 'Average PFA Score',
-                    data: [85, 90, 93], // Example data
+                    data: generateRandomData(3, 100),
                     borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderWidth: 2,
-                    fill: false
+                    fill: true,
                 }]
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
+                    y: { beginAtZero: true, max: 100 }
                 }
             }
         });
-
-        // Example of SOB Trends Chart using Chart.js
+    
         const sobTrendCtx = document.getElementById('sob-trend-chart').getContext('2d');
-        const sobTrendChart = new Chart(sobTrendCtx, {
+        new Chart(sobTrendCtx, {
             type: 'line',
             data: {
                 labels: ['Start', 'Midterm', 'End'],
                 datasets: [{
                     label: 'SOB Competency',
-                    data: [70, 80, 90], // Example data
+                    data: generateRandomData(3, 100),
                     borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
                     borderWidth: 2,
-                    fill: false
+                    fill: true,
                 }]
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
+                    y: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+    
+        const attendanceTrendCtx = document.getElementById('attendance-trend-chart').getContext('2d');
+        new Chart(attendanceTrendCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Start', 'Midterm', 'End'],
+                datasets: [{
+                    label: 'Attendance Percentage',
+                    data: generateRandomData(3, 100),
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true, max: 100 }
                 }
             }
         });
 
-        // Additional charts can be added similarly for Attendance, Form 2, Competency Growth, etc.
+        const form2TrendCtx = document.getElementById('form2-trend-chart').getContext('2d');
+        new Chart(form2TrendCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Start', 'Midterm', 'End'],
+                datasets: [{
+                    label: 'Form 2 Submissions (%)',
+                    data: generateRandomData(3, 100),
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+    
+        const competencyTrendCtx = document.getElementById('competency-trend-chart').getContext('2d');
+        new Chart(competencyTrendCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Leadership', 'Teamwork', 'Communication', 'Problem-Solving', 'Technical Skills'],
+                datasets: [{
+                    label: 'Competency Growth',
+                    data: generateRandomData(5, 100),
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    r: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
     </script>
-</body>
-</html>
+    
