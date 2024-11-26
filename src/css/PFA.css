@@ -1,13 +1,14 @@
-/* FitnessTest.css */
-
 body {
-  background-color: #f0f4f8; /* Light background for a clean look */
+  background-color: #f7f7f7; /* Light background for a clean look */
   font-family: 'Arial', sans-serif; /* Clean and modern font */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  box-sizing: border-box; /* Consistent box-sizing */
 }
 
 .container {
   max-width: 800px;
-  margin: 30px auto; /* Centered with top and bottom margin */
+  margin: 10px auto; /* Centered with a top margin to accommodate navbar */
   padding: 30px; /* More padding for spaciousness */
   background-color: #ffffff; /* White background for contrast */
   border-radius: 10px; /* Slightly rounded corners */
@@ -15,10 +16,10 @@ body {
 }
 
 h2 {
-  color: #333; /* Darker text for visibility */
+  font-size: 2.5rem;
+  color: #0056A3; /* Main color */
+  margin-top: 90px; /* Reduced top margin for better spacing */
   text-align: center;
-  margin-bottom: 20px; /* Space below the heading */
-  font-size: 2rem; /* Larger heading for emphasis */
 }
 
 form {
@@ -27,7 +28,7 @@ form {
 }
 
 label {
-  margin: 10px 0 5px; /* Consistent spacing */
+  margin: 10px 0 5px; /* Consistent spacing for labels */
   font-weight: bold;
   color: #555; /* Lighter than heading for distinction */
 }
@@ -49,21 +50,21 @@ select:focus {
   outline: none; /* Remove default outline */
 }
 
-button {
-  margin-top: 15px;
-  padding: 12px; /* Comfortable button padding */
-  background-color: #007bff; /* Primary blue button */
-  color: white; /* White text for contrast */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded button */
+/* Styling for the cadet search input */
+#searchInput {
+  padding: 10px;
+  width: 100%; /* Full width input */
+  margin-top: 8px; /* Space above the input */
+  margin-bottom: 15px; /* Space below the input */
+  border: 1px solid #ccc; /* Neutral border */
+  border-radius: 5px; /* Rounded edges */
   font-size: 1rem; /* Consistent font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s, transform 0.2s; /* Transition effects */
+  box-sizing: border-box; /* Make sure padding doesn’t overflow */
 }
 
-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  transform: translateY(-2px); /* Slight lift on hover */
+#searchInput::placeholder {
+  color: #888; /* Light placeholder text */
+  font-style: italic; /* Italicize placeholder text */
 }
 
 .calculated-scores {
@@ -101,7 +102,6 @@ button:hover {
   box-sizing: border-box; /* Include padding and border in width */
 }
 
-
 /* Style for input focus */
 #lap-time-fields input:focus {
   border-color: #0056b3; /* Darker blue when focused */
@@ -115,6 +115,30 @@ button:hover {
   font-style: italic; /* Italic style */
 }
 
+/* Specific styling for the Calculate and Submit Scores button */
+#calculate-btn {
+  margin-top: 20px; /* Space above the button */
+  padding: 12px 20px; /* Comfortable padding inside the button */
+  background-color: #0056A3; /* Main color for the button */
+  color: white; /* White text for contrast */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1rem; /* Consistent font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transition effects */
+}
+
+/* Hover effect for the Calculate button */
+#calculate-btn:hover {
+  background-color: #003e73; /* Darker shade on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Focus effect for the Calculate button */
+#calculate-btn:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); /* Green glow effect on focus */
+}
 
 /* Responsive design */
 @media (max-width: 600px) {

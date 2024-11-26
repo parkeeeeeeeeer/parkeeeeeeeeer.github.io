@@ -4,56 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Test Calculator</title>
-    <link rel="stylesheet" href="src/css/pfa.css">
+    <!-- Linking stylesheets -->
     <link rel="stylesheet" href="src/css/nav.css">
-
+    <link rel="stylesheet" href="src/css/pfa.css">
+    <!-- Linking scripts -->
+    <script type="module" src="src/js/auth.js"></script>
 </head>
 <body>
-
+    <!-- Navbar -->
     <div id="navbar-container"></div>
 
+    <h2>PFA Submissions</h2>
+    
+    <!-- Main Content -->
     <div class="container">
-        <h2>Fitness Test Scores</h2>
 
+        <!-- Form -->
         <form id="fitness-form">
-            <!-- Age Input -->
-            <div>
-                <label for="age">Enter Age:</label>
-                <input type="number" id="age" min="17" max="40" required>
-            </div>
 
-            <label for="cadet-gender">Cadet Gender:</label>
-            <select id="cadet-gender" required>
-                <option value="">Select gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-            </select>
+              <!-- Cadet Search -->
+            <label for="searchInput">Search by Name:</label>
+            <input type="text" id="searchInput" placeholder="Search by name..." aria-label="Search by name">
 
+
+            <!-- Push-up Input -->
             <label for="pushup-score"># of Push-ups:</label>
-            <input type="number" id="pushup-score" placeholder="Enter push-up score" required>
+            <input type="number" id="pushup-score" placeholder="Enter # of push-ups" required>
 
+            <!-- Sit-up Input -->
             <label for="situp-score"># of Sit-ups:</label>
-            <input type="number" id="situp-score" placeholder="Enter sit-up score" required>
+            <input type="number" id="situp-score" placeholder="Enter # of sit-ups" required>
 
+            <!-- Laps Dropdown -->
             <label for="lap-count">Number of Laps (1-6):</label>
-            <select id="lap-count">
-                <option value="">Select number of laps</option>
+            <select id="lap-count" required>
+                <option value="" disabled selected>Select number of laps</option>
                 <option value="1">1 Lap</option>
                 <option value="2">2 Laps</option>
                 <option value="3">3 Laps</option>
-                <o ption value="4">4 Laps</option>
+                <option value="4">4 Laps</option>
                 <option value="5">5 Laps</option>
                 <option value="6">6 Laps</option>
             </select>
 
-            <!-- Container for lap time inputs -->
+            <!-- Dynamic Lap Input Container -->
             <div id="lap-inputs" style="display: none;">
                 <div id="lap-time-fields"></div>
             </div>
 
-            <button type="button" id="calculate-btn">Calculate Scores</button>
+            <!-- Submit Button -->
+            <button type="button" id="calculate-btn">Calculate and Submit Scores</button>
         </form>
 
+        <!-- Results Section -->
         <div id="calculated-scores" style="display:none;">
             <h2>Results:</h2>
             <p id="pushup-result"></p>
@@ -63,7 +66,7 @@
         </div>
     </div>
 
+    <!-- JavaScript for Fitness Test -->
     <script type="module" src="src/js/pfa.js"></script>
-    <script type="module" src="src/js/auth.js"></script>
 </body>
 </html>
