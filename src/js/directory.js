@@ -5,22 +5,27 @@ const searchInput = document.getElementById("searchInput");
 const roleFilter = document.getElementById("roleFilter");
 const directoryTable = document.getElementById("directoryTable");
 
+let directoryData = [];
+let selectedPerson = null; // To store the selected person
+
+// Fetch directory data from Firestore
 const fetchDirectory = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "users"));
-    const directoryData = querySnapshot.docs.map((doc) => ({
+    directoryData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-    return directoryData; // Ensure the data is returned
+    displayDirectory(directoryData); // Display all users initially
   } catch (error) {
     console.error("Error fetching directory:", error);
-    return []; // Return an empty array in case of an error
   }
 };
 
-const displayDirectory = (data = []) => { // Default to an empty array
+// Display the directory data in the table
+const displayDirectory = (data = []) => {
   directoryTable.innerHTML = ""; // Clear the table
+
   data.forEach((entry) => {
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -31,33 +36,48 @@ const displayDirectory = (data = []) => { // Default to an empty array
       <td>${entry.university || "N/A"}</td>
     `;
     directoryTable.appendChild(row);
+
+    // Add click event to manually select a person
+    row.addEventListener("click", () => setSelectedPerson(entry, row));
   });
 };
 
-const filterDirectory = (data) => {
+// Set the selected person and highlight the row
+const setSelectedPerson = (person, row) => {
+  selectedPerson = person;
+
+  // Remove highlight from all rows
+  document.querySelectorAll("#directoryTable tr").forEach((tr) => tr.classList.remove("highlight"));
+
+  // Highlight the selected row
+  row.classList.add("highlight");
+
+  console.log("Selected Person:", selectedPerson);
+};
+
+// Filter the directory based on search input and role filter
+const filterDirectory = () => {
   const searchText = searchInput.value.toLowerCase();
   const selectedRole = roleFilter.value;
 
-  return data.filter((entry) => {
-    const matchesSearch = entry.name.toLowerCase().includes(searchText);
-    const matchesRole = !selectedRole || entry.role === selectedRole;
+  const filteredData = directoryData.filter((entry) => {
+    const fullName = `${entry.firstName} ${entry.lastName}`.toLowerCase();
+    const matchesSearch = fullName.includes(searchText);
+    const matchesRole = !selectedRole || entry.asYear === selectedRole;
     return matchesSearch && matchesRole;
   });
+
+  displayDirectory(filteredData);
+
+  // Automatically select a person if only one match is found
+  if (filteredData.length === 1) {
+    setSelectedPerson(filteredData[0], directoryTable.querySelector("tr"));
+  }
 };
 
-// Fetch data and set up filters
-let directoryData = [];
-fetchDirectory().then((data) => {
-  console.log("Fetched Data:", data); // Debugging log
-  directoryData = data;
-  displayDirectory(data);
-});
+// Fetch data and display the initial directory
+fetchDirectory();
 
 // Add event listeners for filters
-searchInput.addEventListener("input", () => {
-  displayDirectory(filterDirectory(directoryData));
-});
-
-roleFilter.addEventListener("change", () => {
-  displayDirectory(filterDirectory(directoryData));
-});
+searchInput.addEventListener("input", filterDirectory);
+roleFilter.addEventListener("change", filterDirectory);
