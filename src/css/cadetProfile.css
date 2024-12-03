@@ -37,6 +37,7 @@ body {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
+  margin-right: 20px;
 }
 
 .profile-picture {
@@ -200,4 +201,26 @@ canvas {
   max-width: 800px; 
   margin: 20px auto;  
   text-align: center; 
+}
+
+/* Container */ 
+
+.container {
+  background-color: #f8f9fa; 
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
+  padding: 20px; 
+  margin: 0px auto; 
+  max-width: 900px; 
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container canvas {
+  width: 100% !important; 
+  height: 400px !important; 
+}
+
+.container h3 {
+  text-align: center;
+  margin-bottom: 20px; 
 }
