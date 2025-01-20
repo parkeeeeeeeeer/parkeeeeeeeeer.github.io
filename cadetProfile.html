@@ -36,23 +36,23 @@
         </div>
 
         <!-- Main Content -->
-        <div id="overview" class="content-section active">
-            <h3>Overview</h3>
-            <div id="overview-cards">
-                <div class="card" id="overview-pfa">
-                    <h4>Average PFA Score</h4>
-                    <p id="pfa-score">90%</p>
-                </div>
-                <div class="card" id="overview-sob">
-                    <h4>Average SOB Score</h4>
-                    <p id="sob-score">85%</p>
-                </div>
-                <div class="card" id="overview-attendance">
-                    <h4>Overall Attendance</h4>
-                    <p id="attendance-score">92%</p>
+            <div id="overview" class="content-section active">
+                <h3>Overview</h3>
+                <div id="overview-cards">
+                    <div class="card" id="overview-pfa">
+                        <h4>Average PFA Score</h4>
+                        <p id="pfa-score">90%</p>
+                    </div>
+                    <div class="card" id="overview-sob">
+                        <h4>Average SOB Score</h4>
+                        <p id="sob-score">85%</p>
+                    </div>
+                    <div class="card" id="overview-attendance">
+                        <h4>Overall Attendance</h4>
+                        <p id="attendance-score">92%</p>
+                    </div>
                 </div>
             </div>
-        </div>
         
         <div id="attendance" class="content-section">
             <div class="container">
@@ -81,7 +81,10 @@
         <div id="sob" class="content-section">
             <div class="container">
                 <h3>SOB Performance</h3>
-                <canvas id="sob-chart"></canvas>
+                <!-- Provide descriptive text or labels for accessibility -->
+                <p>Below is the performance chart for SOB objectives:</p>
+                <!-- Canvas for rendering the chart -->
+                <canvas id="sob-chart" width="400" height="200" aria-label="SOB Performance Chart" role="img"></canvas>
             </div>
         </div>
         

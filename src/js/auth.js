@@ -48,7 +48,7 @@ async function loadNavBar(role) {
     // Determine the file to load based on the role
     switch (role) {
         case "Cadre":
-            navFile = "src/assets/cadreNavBar.html";
+            navFile = "src/assets/cadreNavbar.html";
             break;
         case "Wing/CC":
             navFile = "src/assets/wcNavBar.html";

@@ -5,6 +5,8 @@ import {
 
 import { auth, db } from './auth.js';
 
+import { objectives } from "./SOB.js";
+
 /**
  * Load user data from Firestore for the currently authenticated user.
  */
@@ -112,60 +114,29 @@ function renderPFAChart() {
  * SOB Chart
  */
 function renderSOBChart() {
-    const sobChart = document.getElementById('sob-chart');
-    if (!sobChart) {
-        console.error('SOB Chart element not found in the DOM!');
-        return;
-    }
-
-    const ctx = sobChart.getContext('2d');
-    if (!ctx) {
-        console.error('Failed to get 2D context for SOB Chart!');
-        return;
-    }
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Start', 'Midterm', 'End'], 
-            datasets: [{
-                label: 'Standards of Behavior', 
-                data: [50, 40, 90], 
-                borderColor: '#4CAF50', 
-                backgroundColor: 'rgba(76, 175, 80, 0.2)', 
-                borderWidth: 2, 
-                tension: 0.4, 
-                fill: true 
-            }]
-        }, 
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100, 
-                    title: {
-                        display: true,
-                        text: 'SOB Score (%)'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Semester Timeline'
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    position: 'top', 
-                },
-            }
-        }
+ 
+     // Iterate through objectives and create table rows
+     objectives.forEach(obj => {
+         const row = document.createElement('tr');
+ 
+         // Add data cells
+         const categoryCell = document.createElement('td');
+         categoryCell.textContent = obj.category;
+         row.appendChild(categoryCell);
+ 
+         const objectiveNumberCell = document.createElement('td');
+         objectiveNumberCell.textContent = obj.objective_number;
+         row.appendChild(objectiveNumberCell);
+ 
+         const descriptionCell = document.createElement('td');
+         descriptionCell.textContent = obj.description;
+         row.appendChild(descriptionCell);
+        // const bcCell = document.createElement('td');
+        // bcCell.textContent = obj.bc || '';
+        // row.appendChild(bcCell);
     });
-    console.log('SOB Chart rendered successfully!');
-} 
+
+}
 /**
  * Attendance Chart
  */

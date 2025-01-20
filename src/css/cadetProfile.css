@@ -24,11 +24,12 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
   box-sizing: border-box;
   padding-top: 80px; /* Adjust for navbar height */
+  height: 100%; /* Ensure the container fills the available height */
 }
 
 /* Sidebar */
 .sidebar {
-  width: 300px;
+  width: 300px; /* Fixed width for sidebar */
   background-color: #0056A3; /* Sidebar using primary color */
   color: white;
   padding: 20px;
@@ -38,6 +39,9 @@ body {
   align-items: center;
   box-sizing: border-box;
   margin-right: 20px;
+  height: 90vh; /* Sidebar height takes full screen height */
+  overflow-y: auto; /* Enable scrolling within the sidebar if content overflows */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
 }
 
 .profile-picture {
@@ -63,6 +67,7 @@ body {
 .nav-menu {
   margin-top: 20px;
   width: 100%;
+  overflow-y: auto; /* Allow scrolling if the navigation list becomes long */
 }
 
 .nav-link {
@@ -93,30 +98,80 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for content */
   overflow-y: auto; /* Enable scrolling for long content */
-}
-
-.content-section {
-  display: none;
-}
-
-.content-section.active {
-  display: block;
-}
-
-h3 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  color: #333;
+  height: 100%; /* Ensure the content area grows to fill available height */
 }
 
 /* Section Styling */
-#pfa-chart, #sob-chart {
-  height: 300px;
-  background-color: #e9ecef; /* Light gray for charts */
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.content-section {
+  display: none; /* Hide all sections by default */
+  overflow-y: auto; /* Add scroll if the content inside a section is too long */
+  max-height: calc(100vh - 120px); /* Ensure sections don’t exceed viewport height */
+}
+
+.content-section.active {
+  display: block; /* Show only active section */
+}
+
+/* Overview Section CSS */
+#overview-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+  margin-top: 20px;
+  width: 90%; /* Ensure the cards take up full width */
+}
+
+.card {
+  width: 300px; /* Card width */
+  height: 170px; /* Card height */
   text-align: center;
-  line-height: 300px; /* Vertically centered placeholder */
+  border: 1px solid #E0E0E0;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1; /* Allow card to expand based on available space */
+}
+
+.card h4 {
+  font-size: 1.4rem; /* Font size */
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 1.8rem; /* Font size */
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+/* making graphs the same size */
+canvas {
+  width: 100% !important; 
+  height: 400px !important; 
+}
+
+/* Graph Container - used for individual charts (remove extra containers) */
+.chart-container {
+  width: 90%; 
+  max-width: 800px; 
+  margin: 20px auto;  
+  text-align: center; 
+  height: 100%; /* Ensure the chart container fills the height */
+}
+
+.chart-container canvas {
+  width: 100% !important; 
+  height: 400px !important; /* Maintain height of the charts */
+}
+
+.chart-container h3 {
+  text-align: center;
+  margin-bottom: 20px; 
 }
 
 /* Responsive Design */
@@ -134,11 +189,27 @@ h3 {
   .sidebar {
     width: 100%;
     padding: 15px;
+    height: auto; /* Allow sidebar to grow with content on smaller screens */
+    flex-shrink: 0; /* Keep sidebar at a fixed size */
   }
 
   .nav-link {
     font-size: 0.9rem;
     padding: 10px;
+  }
+
+  #overview-cards {
+    flex-direction: column; /* Stack cards vertically on smaller screens */
+    align-items: center;
+  }
+
+  .card {
+    width: 100%; /* Cards will be full width on small screens */
+    margin-bottom: 10px;
+  }
+
+  .chart-container {
+    height: auto; /* Allow height of chart to adjust */
   }
 }
 
@@ -150,77 +221,14 @@ h3 {
   h2 {
     font-size: 1.5rem;
   }
-}
 
-/* Overview Section CSS */ 
+  .card {
+    width: 100%; /* Cards will be full width on small screens */
+    margin-bottom: 10px;
+  }
 
-#overview-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.card {
-  width: 250px;
-  height: 150px;
-  text-align: center;
-  border: 1px solid #E0E0E0;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  background-color: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.card h4 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0;
-  color: #333;
-}
-
-/* making graphs the same size */ 
-canvas {
-  width: 100% !important; 
-  height: 400px !important; 
-}
-
-
-
-.chart-container {
-  width: 90%; 
-  max-width: 800px; 
-  margin: 20px auto;  
-  text-align: center; 
-}
-
-/* Container */ 
-
-.container {
-  background-color: #f8f9fa; 
-  border: 1px solid #ddd; 
-  border-radius: 8px; 
-  padding: 20px; 
-  margin: 0px auto; 
-  max-width: 900px; 
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.container canvas {
-  width: 100% !important; 
-  height: 400px !important; 
-}
-
-.container h3 {
-  text-align: center;
-  margin-bottom: 20px; 
+  .chart-container {
+    width: 100%;
+    height: auto;
+  }
 }

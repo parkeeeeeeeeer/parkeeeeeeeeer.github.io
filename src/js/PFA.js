@@ -1,5 +1,6 @@
 // Import scoring criteria if needed
 import { scoringCriteria } from "./pfaCriteria.js";
+import {db} from "./auth.js";
 
 
 // Define the function to calculate scores
@@ -20,10 +21,11 @@ function calculateScores() {
 
     // Get the selected gender from user input and normalize to lowercase
     const genderSelect = document.getElementById('cadet-gender');
-    const gender = genderSelect.value; 
+    const gender = genderSelect.value;  // Need to change based on the age comming from firebase
 
 
-    const age = parseInt(ageElement.value); // Assuming there's an input for age
+
+    const age = parseInt(ageElement.value); // Need to change based on the age comming from firebase
 
     // Check if age is above 40 and display an error if so
     if (age > 40) {
