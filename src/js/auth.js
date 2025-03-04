@@ -48,7 +48,7 @@ async function loadNavBar(role) {
     // Determine the file to load based on the role
     switch (role) {
         case "Cadre":
-            navFile = "src/assets/cadreNavbar.html";
+            navFile = "src/assets/cadreNavBar.html";
             break;
         case "Wing/CC":
             navFile = "src/assets/wcNavBar.html";
@@ -295,11 +295,6 @@ function showSignupForm() {
                 <label for="role">Role:</label>
                 <select id="role" name="role" required>
                     <option value="" selected disabled>Select Role</option>
-                    <option value="Cadre">Cadre</option>
-                    <option value="Wing/CC">Wing/CC</option>
-                    <option value="A3">A3</option>
-                    <option value="A9">A9</option>
-                    <option value="IO">IO</option>
                     <option value="POC">POC</option>
                     <option value="GMC">GMC</option>
                 </select>
