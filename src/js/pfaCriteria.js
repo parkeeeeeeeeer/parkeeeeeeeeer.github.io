@@ -6,7 +6,7 @@ export const scoringCriteria = [
     gender: 'female',
     ageGroup: '<25',
     minPerformanceValue: 47,
-    maxPerformanceValue: 47,
+    maxPerformanceValue: 100,
     points: 20,
   },
   {
@@ -272,7 +272,7 @@ export const scoringCriteria = [
     gender: 'female',
     ageGroup: '25-29',
     minPerformanceValue: 47,
-    maxPerformanceValue: 47,
+    maxPerformanceValue: 100,
     points: 20,
   },
   {
@@ -546,7 +546,7 @@ export const scoringCriteria = [
     gender: 'female',
     ageGroup: '30-34',
     minPerformanceValue: 46,
-    maxPerformanceValue: 46,
+    maxPerformanceValue: 100,
     points: 20,
   },
   {
@@ -835,7 +835,7 @@ export const scoringCriteria = [
     gender: 'female',
     ageGroup: '35-39',
     minPerformanceValue: 42,
-    maxPerformanceValue: 42,
+    maxPerformanceValue: 100,
     points: 20,
   },
   {
@@ -1101,7 +1101,7 @@ export const scoringCriteria = [
     gender: 'male',
     ageGroup: '<25',
     minPerformanceValue: 67,
-    maxPerformanceValue: 67,
+    maxPerformanceValue: 150,
     points: 20,
   },
   {
@@ -1405,7 +1405,7 @@ export const scoringCriteria = [
     gender: 'male',
     ageGroup: '25-29',
     minPerformanceValue: 62,
-    maxPerformanceValue: 62,
+    maxPerformanceValue: 150,
     points: 20,
   },
   {
@@ -1693,7 +1693,7 @@ export const scoringCriteria = [
     gender: 'male',
     ageGroup: '30-34',
     minPerformanceValue: 57,
-    maxPerformanceValue: 57,
+    maxPerformanceValue: 150,
     points: 20,
   },
   {
@@ -1965,7 +1965,7 @@ export const scoringCriteria = [
     gender: 'male',
     ageGroup: '35-39',
     minPerformanceValue: 51,
-    maxPerformanceValue: 51,
+    maxPerformanceValue: 150,
     points: 20,
   },
   {
@@ -2337,7 +2337,7 @@ export const scoringCriteria = [
     gender: 'male',
     ageGroup: '<25',
     minPerformanceValue: 58,
-    maxPerformanceValue: 58,
+    maxPerformanceValue: 200,
     points: 20,
   },
   {
@@ -2377,7 +2377,7 @@ export const scoringCriteria = [
     gender: 'male',
     ageGroup: '25-29',
     minPerformanceValue: 56,
-    maxPerformanceValue: 56,
+    maxPerformanceValue: 200,
     points: 20,
   },
   {
@@ -2529,7 +2529,7 @@ export const scoringCriteria = [
     gender: 'male',
     ageGroup: '30-34',
     minPerformanceValue: 54,
-    maxPerformanceValue: 54,
+    maxPerformanceValue: 200,
     points: 20,
   },
   {
@@ -2681,7 +2681,7 @@ export const scoringCriteria = [
     gender: 'male',
     ageGroup: '35-39',
     minPerformanceValue: 52,
-    maxPerformanceValue: 52,
+    maxPerformanceValue: 200,
     points: 20,
   },
   {
@@ -2834,7 +2834,7 @@ export const scoringCriteria = [
     gender: 'female',
     ageGroup: '<25',
     minPerformanceValue: 54,
-    maxPerformanceValue: 54,
+    maxPerformanceValue: 200,
     points: 20,
   },
   {
@@ -2994,7 +2994,7 @@ export const scoringCriteria = [
     gender: 'female',
     ageGroup: '25-29',
     minPerformanceValue: 50,
-    maxPerformanceValue: 50,
+    maxPerformanceValue: 200,
     points: 20,
   },
   {
@@ -3154,7 +3154,7 @@ export const scoringCriteria = [
     gender: 'female',
     ageGroup: '30-34',
     minPerformanceValue: 45,
-    maxPerformanceValue: 45,
+    maxPerformanceValue: 200,
     points: 20,
   },
   {
@@ -3314,7 +3314,7 @@ export const scoringCriteria = [
     gender: 'female',
     ageGroup: '35-39',
     minPerformanceValue: 43,
-    maxPerformanceValue: 43,
+    maxPerformanceValue: 200,
     points: 20,
   },
   {

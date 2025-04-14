@@ -12,19 +12,44 @@ let selectedPerson = null; // To store the selected person
 const fetchDirectory = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "users"));
-    directoryData = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    displayDirectory(directoryData); // Display all users initially
+    
+    // Filter out users who don't have AS years between 100-400
+    directoryData = querySnapshot.docs
+      .map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      .filter(user => {
+        // Convert asYear to a number if it's a string
+        const asYearNum = parseInt(user.asYear);
+        
+        // Check if asYear exists and is between 100 and 400
+        return user.asYear && 
+               !isNaN(asYearNum) && 
+               asYearNum >= 100 && 
+               asYearNum <= 400;
+      });
+      
+    displayDirectory(directoryData); // Display filtered users initially
   } catch (error) {
     console.error("Error fetching directory:", error);
   }
 };
 
+
 // Display the directory data in the table
 const displayDirectory = (data = []) => {
   directoryTable.innerHTML = ""; // Clear the table
+
+  if (data.length === 0) {
+    // Display a message if no results found
+    const emptyRow = document.createElement("tr");
+    emptyRow.innerHTML = `
+      <td colspan="5" style="text-align: center;">No matching users found</td>
+    `;
+    directoryTable.appendChild(emptyRow);
+    return;
+  }
 
   data.forEach((entry) => {
     const row = document.createElement("tr");
@@ -61,7 +86,7 @@ const filterDirectory = () => {
   const selectedRole = roleFilter.value;
 
   const filteredData = directoryData.filter((entry) => {
-    const fullName = `${entry.firstName} ${entry.lastName}`.toLowerCase();
+    const fullName = `${entry.firstName || ""} ${entry.lastName || ""}`.toLowerCase();
     const matchesSearch = fullName.includes(searchText);
     const matchesRole = !selectedRole || entry.asYear === selectedRole;
     return matchesSearch && matchesRole;

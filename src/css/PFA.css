@@ -1,160 +1,624 @@
-body {
-  background-color: #f7f7f7; /* Light background for a clean look */
-  font-family: 'Arial', sans-serif; /* Clean and modern font */
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
-  box-sizing: border-box; /* Consistent box-sizing */
+
+/* CSS Variables for consistent styling */
+:root {
+  --primary-color: #0056A3;
+  --primary-light: #007FFF;
+  --primary-dark: #003366;
+  --accent-color: #00A8FF;
+  --success-color: #4CAF50;
+  --warning-color: #FFC107;
+  --danger-color: #F44336;
+  --gray-light: #F2F4F8;
+  --gray-medium: #B0B8C3;
+  --gray-dark: #555;
+  --white: #FFFFFF;
+  --black: #333333;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+  --text-color: var(--black);
+  --border-color: var(--gray-medium);
+  --transition-speed: 0.3s;
 }
 
+/* Base Styles */
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: var(--gray-light);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Main Container */
 .container {
-  max-width: 800px;
-  margin: 10px auto; /* Centered with a top margin to accommodate navbar */
-  padding: 30px; /* More padding for spaciousness */
-  background-color: #ffffff; /* White background for contrast */
-  border-radius: 10px; /* Slightly rounded corners */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  width: 95%;
+  max-width: 1200px;
+  margin: 60px auto 20px;
+  padding: 20px;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+/* Header Styles */
+header {
+  text-align: center;
+  padding-bottom: 15px;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+header h2 {
+  font-size: 2.2rem;
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+header p {
+  color: var(--gray-dark);
+  font-size: 1.1rem;
+  margin: 0;
 }
 
 h2 {
-  font-size: 2.5rem;
-  color: #0056A3; /* Main color */
-  margin-top: 90px; /* Reduced top margin for better spacing */
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 20px;
   text-align: center;
+  font-weight: 500;
 }
 
+/* Form Sections */
+.form-section {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--gray-medium);
+}
+
+/* Section Headers */
+.section-header {
+  color: var(--primary-dark);
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+/* Form Styles */
 form {
   display: flex;
   flex-direction: column;
 }
 
+/* Label Styles */
 label {
-  margin: 10px 0 5px; /* Consistent spacing for labels */
-  font-weight: bold;
-  color: #555; /* Lighter than heading for distinction */
+  margin: 10px 0 5px;
+  font-weight: 500;
+  color: var(--gray-dark);
+  font-size: 1rem;
 }
 
+/* Input Styles */
 input[type="number"],
+input[type="text"],
 select {
-  padding: 12px; /* More padding for comfort */
-  margin-bottom: 15px; /* Space between inputs */
-  border: 1px solid #ccc; /* Neutral border */
-  border-radius: 5px; /* Rounded edges for inputs */
-  font-size: 1rem; /* Consistent font size */
-  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  background-color: var(--white);
+  transition: all var(--transition-speed) ease;
+  width: 100%;
 }
 
 input[type="number"]:focus,
+input[type="text"]:focus,
 select:focus {
-  border-color: #007bff; /* Blue border on focus */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glow effect on focus */
-  outline: none; /* Remove default outline */
+  border-color: var(--primary-light);
+  box-shadow: 0 0 8px rgba(0, 127, 255, 0.3);
+  outline: none;
 }
 
-/* Styling for the cadet search input */
-#searchInput {
+/* Form Row Layout */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 150px;
+}
+
+/* Search Input and Results Styling */
+.search-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+#cadet-search-input, .search-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: all var(--transition-speed) ease;
+  margin-bottom: 10px;
+}
+
+#cadet-search-input:focus, .search-input:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 8px rgba(0, 127, 255, 0.3);
+  outline: none;
+}
+
+#cadet-search-input::placeholder, .search-input::placeholder {
+  color: var(--gray-dark);
+  opacity: 0.7;
+}
+
+/* Fix for cadet selector container */
+#cadet-selector-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-height: 250px;
+  overflow-y: auto;
+  margin-top: -5px;
+}
+
+/* Cadet results list styling */
+.cadet-results {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cadet-results li {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.cadet-results li:last-child {
+  border-bottom: none;
+}
+
+.cadet-results li:hover {
+  background-color: var(--primary-light);
+  color: var(--white);
+}
+
+.no-results {
+  padding: 12px 15px;
+  text-align: center;
+  color: var(--gray-dark);
+  font-style: italic;
+}
+
+/* Selected Cadet Display */
+#selected-cadet-info {
+  margin-top: 15px;
+  padding: 15px;
+  background: var(--gray-light);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--primary-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#selected-cadet-info p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+#selected-cadet-name {
+  font-weight: bold;
+  color: var(--primary-dark);
+}
+
+/* Deselect button styling */
+#deselect-cadet-btn {
+  background-color: var(--danger-color);
+  color: var(--white);
+  padding: 8px 15px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  margin-left: 15px;
+}
+
+#deselect-cadet-btn:hover {
+  background-color: #D32F2F; /* Darker red */
+  transform: translateY(-2px);
+}
+
+/* Cadet Info Display */
+#cadet-info {
+  background-color: var(--gray-light);
+  padding: 15px;
+  border-radius: var(--border-radius);
+  margin-bottom: 15px;
+  transition: all var(--transition-speed) ease;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Helper Text */
+.input-helper {
+  font-size: 0.95rem;
+  color: var(--gray-dark);
+  margin-bottom: 15px;
   padding: 10px;
-  width: 100%; /* Full width input */
-  margin-top: 8px; /* Space above the input */
-  margin-bottom: 15px; /* Space below the input */
-  border: 1px solid #ccc; /* Neutral border */
-  border-radius: 5px; /* Rounded edges */
-  font-size: 1rem; /* Consistent font size */
-  box-sizing: border-box; /* Make sure padding doesn’t overflow */
+  background-color: var(--gray-light);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--primary-color);
 }
 
-#searchInput::placeholder {
-  color: #888; /* Light placeholder text */
-  font-style: italic; /* Italicize placeholder text */
-}
-
+/* Calculated Scores Section */
 .calculated-scores {
-  margin-top: 20px; /* Space above results section */
-  padding: 15px; /* Padding for content */
-  background-color: #e9ecef; /* Light gray for contrast */
-  border-radius: 5px; /* Rounded corners */
-  border: 1px solid #ccc; /* Border for definition */
+  margin-top: 20px;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--gray-medium);
+  padding: 20px;
+  animation: fadeIn 0.4s ease;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
 .calculated-scores p {
-  margin: 5px 0; /* Consistent margin */
-  font-weight: bold; /* Emphasize results */
-  color: #333; /* Dark text for readability */
-}
-
-/* Container for lap inputs */
-#lap-inputs {
-  margin-top: 20px;
-  border: 1px solid #ccc; /* Light gray border */
+  margin: 10px 0;
+  font-size: 1.1rem;
+  text-align: center;
+  background-color: var(--white);
   padding: 15px;
-  border-radius: 5px; /* Rounded corners */
-  background-color: #f9f9f9; /* Light background */
+  border-radius: var(--border-radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  border: 1px solid var(--gray-medium);
 }
 
-/* Style for each lap input field */
+.calculated-scores p:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.calculated-scores strong {
+  color: var(--primary-dark);
+  margin-right: 5px;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calculated-scores span {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+/* Improve total score display */
+#total-result {
+  grid-column: span 2;
+  background-color: var(--primary-light);
+  color: var(--white);
+}
+
+#total-result strong, #total-result span {
+  color: var(--white);
+}
+
+#total-result span {
+  font-size: 1.8rem;
+}
+
+/* Lap Inputs Container */
+#lap-inputs {
+  margin-top: 15px;
+  border: 1px solid var(--gray-medium);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  background-color: var(--gray-light);
+  animation: fadeIn 0.3s ease;
+}
+
+#lap-inputs h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+/* Lap Time Fields */
+#lap-time-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
 #lap-time-fields input {
-  display: block; /* Stack inputs vertically */
-  width: 100%; /* Full width to fit in the parent container */
-  padding: 10px; /* Comfortable padding inside input */
-  margin: 8px 0; /* Reduced spacing between inputs */
-  border: 1px solid #007bff; /* Blue border */
-  border-radius: 4px; /* Slightly rounded corners */
-  font-size: 16px; /* Font size */
-  box-sizing: border-box; /* Include padding and border in width */
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  background-color: var(--white);
+  transition: all var(--transition-speed) ease;
+  margin: 0;
 }
 
-/* Style for input focus */
 #lap-time-fields input:focus {
-  border-color: #0056b3; /* Darker blue when focused */
-  outline: none; /* Remove default outline */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Light shadow */
+  border-color: var(--primary-light);
+  box-shadow: 0 0 8px rgba(0, 127, 255, 0.3);
+  outline: none;
 }
 
-/* Placeholder text style */
 #lap-time-fields input::placeholder {
-  color: #888; /* Gray placeholder text */
-  font-style: italic; /* Italic style */
+  color: var(--gray-medium);
+  font-style: italic;
 }
 
-/* Specific styling for the Calculate and Submit Scores button */
-#calculate-btn {
-  margin-top: 20px; /* Space above the button */
-  padding: 12px 20px; /* Comfortable padding inside the button */
-  background-color: #0056A3; /* Main color for the button */
-  color: white; /* White text for contrast */
-  border: none; /* Remove border */
-  border-radius: 5px; /* Rounded corners */
-  font-size: 1rem; /* Consistent font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transition effects */
+/* Button Styles */
+#calculate-btn, 
+.secondary-btn, 
+.tertiary-btn,
+.primary-btn {
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 5px;
+  box-shadow: var(--box-shadow);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Hover effect for the Calculate button */
-#calculate-btn:hover {
-  background-color: #003e73; /* Darker shade on hover */
-  transform: translateY(-2px); /* Slight lift effect on hover */
+#calculate-btn, .primary-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
 }
 
-/* Focus effect for the Calculate button */
-#calculate-btn:focus {
-  outline: none; /* Remove default outline */
-  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); /* Green glow effect on focus */
+#calculate-btn:hover, .primary-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
 }
 
-/* Responsive design */
-@media (max-width: 600px) {
+.secondary-btn {
+  background-color: var(--white);
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.secondary-btn:hover {
+  background-color: var(--gray-light);
+  transform: translateY(-2px);
+}
+
+.tertiary-btn {
+  background-color: var(--white);
+  color: var(--gray-dark);
+  border: 1px solid var(--gray-medium);
+}
+
+.tertiary-btn:hover {
+  background-color: var(--gray-light);
+  transform: translateY(-2px);
+}
+
+/* Button disabled state */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Action Buttons Container */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Status Message */
+.message {
+  padding: 12px 15px;
+  margin: 15px 0;
+  border-radius: var(--border-radius);
+  text-align: center;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+}
+
+.success {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--success-color);
+  border-left: 4px solid var(--success-color);
+}
+
+.error {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: var(--danger-color);
+  border-left: 4px solid var(--danger-color);
+}
+
+.warning {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: var(--warning-color);
+  border-left: 4px solid var(--warning-color);
+}
+
+/* Loading Indicator */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease infinite;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
   .container {
-      padding: 20px; /* Less padding on small screens */
+    width: 95%;
+    padding: 20px;
   }
+  
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  #lap-time-fields {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
 
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding: 15px;
+    margin-top: 40px;
+  }
+  
   h2 {
-      font-size: 1.5rem; /* Smaller heading for mobile */
+    font-size: 1.8rem;
   }
-
+  
+  .section-header {
+    font-size: 1.2rem;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
   #lap-inputs {
-    padding: 10px; /* Less padding on smaller screens */
+    padding: 15px;
+  }
+  
+  #lap-time-fields {
+    grid-template-columns: 1fr;
+  }
+  
+  .actions {
+    flex-direction: column;
+  }
+  
+  .calculated-scores p {
+    padding: 12px 10px;
+  }
+  
+  .calculated-scores strong {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+  
+  .calculated-scores span {
+    font-size: 1.2rem;
+  }
+  
+  #selected-cadet-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  #deselect-cadet-btn {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
   }
 
-  #lap-time-fields input {
-      font-size: 14px; /* Smaller font size */
+  #calculate-btn,
+  .secondary-btn,
+  .tertiary-btn,
+  .primary-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    padding: 15px 10px;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .section-header {
+    font-size: 1.2rem;
+  }
+  
+  .results-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .calculated-scores p {
+    margin: 5px 0;
+  }
+  
+  #total-result {
+    grid-column: span 1;
+  }
+  
+  #cadet-selector-container {
+    max-height: 200px;
   }
 }

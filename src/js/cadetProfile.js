@@ -21,11 +21,13 @@ async function loadUserData() {
             const userDoc = doc(db, "users", user.uid);
             console.log("Fetching document for UID:", user.uid);
             const userSnap = await getDoc(userDoc);
-
+            
             if (userSnap.exists()) {
                 console.log("User data fetched successfully:", userSnap.data());
                 currentUserData = userSnap.data();
                 populateCadetInfo(currentUserData);
+
+                // const pfaData = await loadUserPFAData();
                 
                 // Now render charts with actual user data
                 renderPFAChart(currentUserData);
@@ -48,6 +50,7 @@ async function loadUserData() {
         window.location.href = 'login.html';
     }
 }
+
 
 function formatPhoneNumber(phone) {
     // Handle empty or undefined phone numbers

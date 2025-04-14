@@ -3,70 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness Test Calculator</title>
-    <!-- Linking stylesheets -->
+    <title>PFA Submissions</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="src/css/nav.css">
     <link rel="stylesheet" href="src/css/pfa.css">
-    <!-- Linking scripts -->
     <script type="module" src="src/js/auth.js"></script>
 </head>
 <body>
     <!-- Navbar -->
     <div id="navbar-container"></div>
 
-    <h2>PFA Submissions</h2>
-    
-    <!-- Main Content -->
+    <!-- Main Container -->
     <div class="container">
+        <header>
+            <h2>PFA Submissions</h2>
+            <p>Enter cadet physical fitness assessment data</p>
+        </header>
 
-        <!-- Form -->
+        <!-- Cadet Search Section -->
+        <div class="form-section">
+            <h3 class="section-header">Cadet Selection</h3>
+            <div class="search-container">
+                <input type="text" id="cadet-search-input" placeholder="Search cadet by name..." class="search-input" />
+                <div id="cadet-selector-container"></div>
+            </div>
+            
+            <!-- Selected Cadet Information -->
+            <div id="selected-cadet-info" style="display: none;">
+                <p><strong>Evaluating:</strong> <span id="selected-cadet-name">None</span></p>
+                <button id="deselect-cadet-btn" class="secondary-btn">Deselect</button>
+            </div>
+        </div>
+
+        <!-- PFA Form -->
         <form id="fitness-form">
-
-              <!-- Cadet Search -->
-            <label for="searchInput">Search by Name:</label>
-            <input type="text" id="searchInput" placeholder="Search by name..." aria-label="Search by name">
-
-
-            <!-- Push-up Input -->
-            <label for="pushup-score"># of Push-ups:</label>
-            <input type="number" id="pushup-score" placeholder="Enter # of push-ups" required>
-
-            <!-- Sit-up Input -->
-            <label for="situp-score"># of Sit-ups:</label>
-            <input type="number" id="situp-score" placeholder="Enter # of sit-ups" required>
-
-            <!-- Laps Dropdown -->
-            <label for="lap-count">Number of Laps (1-6):</label>
-            <select id="lap-count" required>
-                <option value="" disabled selected>Select number of laps</option>
-                <option value="1">1 Lap</option>
-                <option value="2">2 Laps</option>
-                <option value="3">3 Laps</option>
-                <option value="4">4 Laps</option>
-                <option value="5">5 Laps</option>
-                <option value="6">6 Laps</option>
-            </select>
-
-            <!-- Dynamic Lap Input Container -->
-            <div id="lap-inputs" style="display: none;">
-                <div id="lap-time-fields"></div>
+            <!-- Cadet Info (Initially Hidden) -->
+            <div id="cadet-info" style="display: none;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" min="17" max="40" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="cadet-gender">Gender:</label>
+                        <select id="cadet-gender" required disabled>
+                            <option value="" disabled selected>Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            <!-- Submit Button -->
-            <button type="button" id="calculate-btn">Calculate and Submit Scores</button>
+            <!-- Exercise Counts Section -->
+            <div class="form-section">
+                <h3 class="section-header">Upper Body & Core Components</h3>
+                <label for="pushup-score">Push-ups:</label>
+                <input type="number" id="pushup-score" placeholder="Enter number of push-ups" min="0" required disabled>
+                <label for="situp-score">Sit-ups:</label>
+                <input type="number" id="situp-score" placeholder="Enter number of sit-ups" min="0" required disabled>
+            </div>
+
+            <!-- Run Time Section -->
+            <div class="form-section">
+                <h3 class="section-header">Run Time</h3>
+                <label for="lap-count">Number of Laps:</label>
+                <select id="lap-count" required disabled>
+                    <option value="" disabled selected>Select number of laps</option>
+                    <option value="1">1 Lap</option>
+                    <option value="2">2 Laps</option>
+                    <option value="3">3 Laps</option>
+                    <option value="4">4 Laps</option>
+                    <option value="5">5 Laps</option>
+                    <option value="6">6 Laps</option>
+                </select>
+                <div id="lap-inputs" style="display: none;">
+                    <h4>Enter Lap Times</h4>
+                    <p class="input-helper">Enter time in minutes:seconds format (e.g., 2:45)</p>
+                    <div id="lap-time-fields"></div>
+                </div>
+            </div>
+
+            <!-- Status Message Area -->
+            <div id="status-message" style="display: none;" class="message"></div>
+            <button type="button" id="calculate-btn" disabled>Calculate Scores</button>
         </form>
 
         <!-- Results Section -->
-        <div id="calculated-scores" style="display:none;">
-            <h2>Results:</h2>
-            <p id="pushup-result"></p>
-            <p id="situp-result"></p>
-            <p id="run-result"></p>
-            <p id="total-result"></p>
+        <div id="calculated-scores" class="calculated-scores" style="display:none;">
+            <h3 class="section-header">PFA Results</h3>
+            <div class="results-grid">
+                <p id="pushup-result"><strong>Push-ups:</strong> <span>--</span></p>
+                <p id="situp-result"><strong>Sit-ups:</strong> <span>--</span></p>
+                <p id="run-result"><strong>Run:</strong> <span>--</span></p>
+                <p id="total-result"><strong>Total Score:</strong> <span>--</span></p>
+            </div>
         </div>
+
+        <div class="actions">
+            <button id="save-results-btn" class="secondary-btn" disabled>Save to Cadet Record</button>
+            <button id="reset-form-btn" class="tertiary-btn">Reset Form</button>
+        </div>
+    
     </div>
 
-    <!-- JavaScript for Fitness Test -->
-    <script type="module" src="src/js/pfa.js"></script>
+    
+    <!-- JavaScript Files -->
+    <script type="module" src="src/js/PFA.js"></script>
 </body>
 </html>

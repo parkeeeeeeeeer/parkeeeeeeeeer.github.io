@@ -7,181 +7,102 @@
     <link rel="stylesheet" href="src/css/detDashboard.css">
     <link rel="stylesheet" href="src/css/nav.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
     <script type="module" src="src/js/auth.js"></script>
-
-
 </head>
 <body>
     <div id="navbar-container"></div>
 
     <div id="dashboard-container">
         <header>
-            <h1>Evaluation Tracker Dashboard</h1>
-            <p>Detachment 130, Howard University</p>
+            <h1>Cadet Evaluation Dashboard</h1>
+            <p>Wing-Level Performance Metrics</p>
         </header>
-
+      
         <div class="main-content">
-            <!-- Stats Section (left side) -->
-            <aside class="stats-container">
-                <div class="stat-card">
+            <!-- Stats Cards (Top Row) -->
+            <div class="stats-container">
+                <div class="stat-card" id="total-cadets">
                     <h3>Total Cadets</h3>
                     <p>120</p>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" id="avg-pfa">
                     <h3>Average PFA Score</h3>
                     <p>93.5%</p>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" id="active-sobs">
                     <h3>Active SOBs</h3>
                     <p>87</p>
                 </div>
-            
-            </aside>
+                <div class="stat-card" id="form2-completion">
+                    <h3>Form 2 Completion</h3>
+                    <p>92%</p>
+                </div>
+            </div>
 
-            <!-- Main Dashboard Content (centered graphs) -->
+            <!-- Time Period Filter -->
+            <div class="filter-container">
+                <label for="time-period">Time Period:</label>
+                <select id="time-period">
+                    <option value="month">Last Month</option>
+                    <option value="quarter">Last Quarter</option>
+                    <option value="year" selected>Last Year</option>
+                    <option value="all">All Time</option>
+                </select>
+            </div>
+
+            <!-- Main Dashboard Content (Charts) -->
             <section class="overall-trends-dashboard">
-                <h2>Overall Trends Dashboard (Wing-Level)</h2>
-
                 <!-- PFA Trends Section -->
-                <div class="trend-card">
+                <div class="trend-card" id="pfa-section">
                     <h3>PFA Trends Overview</h3>
-                    <canvas id="pfa-trend-chart"></canvas>
+                    <div class="chart-container">
+                        <canvas id="pfa-trend-chart"></canvas>
+                    </div>
                 </div>
 
                 <!-- SOB Performance Trends -->
-                <div class="trend-card">
+                <div class="trend-card" id="sob-section">
                     <h3>SOBs Performance Trends</h3>
-                    <canvas id="sob-trend-chart"></canvas>
+                    <div class="chart-container">
+                        <canvas id="sob-trend-chart"></canvas>
+                    </div>
                 </div>
 
                 <!-- Attendance Trends -->
-                <div class="trend-card">
+                <div class="trend-card" id="attendance-section">
                     <h3>Attendance Trends</h3>
-                    <canvas id="attendance-trend-chart"></canvas>
+                    <div class="chart-container">
+                        <canvas id="attendance-trend-chart"></canvas>
+                    </div>
                 </div>
 
                 <!-- Form 2 Submission Overview -->
-                <div class="trend-card">
+                <div class="trend-card" id="form2-section">
                     <h3>Form 2 Submission Overview</h3>
-                    <canvas id="form2-trend-chart"></canvas>
+                    <div class="chart-container">
+                        <canvas id="form2-trend-chart"></canvas>
+                    </div>
                 </div>
 
                 <!-- Competency Growth Visualization -->
-                <div class="trend-card">
+                <!-- <div class="trend-card" id="competency-section">
                     <h3>Competency Growth Visualization</h3>
-                    <canvas id="competency-trend-chart"></canvas>
-                </div>
+                    <div class="chart-container">
+                        <canvas id="competency-trend-chart"></canvas>
+                    </div>
+                </div> -->
             </section>
         </div>
     </div>
 
-    <script>
-// placeholder graphs below 
-        function generateRandomData(length, max) {
-            return Array.from({ length }, () => Math.floor(Math.random() * max));
-        }
+    <!-- Firebase Config -->
+    <script src="src/js/firebase-config.js"></script>
     
-        const pfaTrendCtx = document.getElementById('pfa-trend-chart').getContext('2d');
-        new Chart(pfaTrendCtx, {
-            type: 'line',
-            data: {
-                labels: ['Start', 'Midterm', 'End'],
-                datasets: [{
-                    label: 'Average PFA Score',
-                    data: generateRandomData(3, 100),
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderWidth: 2,
-                    fill: true,
-                }]
-            },
-            options: {
-                scales: {
-                    y: { beginAtZero: true, max: 100 }
-                }
-            }
-        });
+    <!-- Dashboard Scripts -->
+    <script src="src/js/dashboard.js"></script>
     
-        const sobTrendCtx = document.getElementById('sob-trend-chart').getContext('2d');
-        new Chart(sobTrendCtx, {
-            type: 'line',
-            data: {
-                labels: ['Start', 'Midterm', 'End'],
-                datasets: [{
-                    label: 'SOB Competency',
-                    data: generateRandomData(3, 100),
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                    borderWidth: 2,
-                    fill: true,
-                }]
-            },
-            options: {
-                scales: {
-                    y: { beginAtZero: true, max: 100 }
-                }
-            }
-        });
-    
-        const attendanceTrendCtx = document.getElementById('attendance-trend-chart').getContext('2d');
-        new Chart(attendanceTrendCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Start', 'Midterm', 'End'],
-                datasets: [{
-                    label: 'Attendance Percentage',
-                    data: generateRandomData(3, 100),
-                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                    borderColor: 'rgba(255, 159, 64, 1)',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                scales: {
-                    y: { beginAtZero: true, max: 100 }
-                }
-            }
-        });
-
-        const form2TrendCtx = document.getElementById('form2-trend-chart').getContext('2d');
-        new Chart(form2TrendCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Start', 'Midterm', 'End'],
-                datasets: [{
-                    label: 'Form 2 Submissions (%)',
-                    data: generateRandomData(3, 100),
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                scales: {
-                    y: { beginAtZero: true, max: 100 }
-                }
-            }
-        });
-    
-        const competencyTrendCtx = document.getElementById('competency-trend-chart').getContext('2d');
-        new Chart(competencyTrendCtx, {
-            type: 'radar',
-            data: {
-                labels: ['Leadership', 'Teamwork', 'Communication', 'Problem-Solving', 'Technical Skills'],
-                datasets: [{
-                    label: 'Competency Growth',
-                    data: generateRandomData(5, 100),
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 2,
-                    fill: true
-                }]
-            },
-            options: {
-                scales: {
-                    r: { beginAtZero: true, max: 100 }
-                }
-            }
-        });
-    </script>
-    
+</body>
+</html>

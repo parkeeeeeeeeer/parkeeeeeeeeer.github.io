@@ -1,224 +1,154 @@
 /* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-/* Variables for consistent theming */
+/* Variables */
 :root {
-  --primary-color: #0056A3;
+  --primary: #0056A3;
   --primary-light: #007FFF;
   --primary-dark: #003366;
-  --accent-color: #00A8FF;
-  --success-color: #4CAF50;
-  --warning-color: #FFC107;
-  --danger-color: #F44336;
-  --gray-light: #F2F4F8;
-  --gray-medium: #B0B8C3;
-  --gray-dark: #555;
+  --accent: #00A8FF;
   --white: #FFFFFF;
-  --black: #333333;
-  --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --light-gray: #F2F4F8;
+  --gray: #B0B8C3;
+  --dark: #333333;
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   --nav-height: 70px;
-  --transition: all 0.3s ease;
 }
 
-/* Navbar Container */
+/* Navbar */
 #navbar-container {
     width: 100%;
     height: var(--nav-height);
-    background-color: var(--primary-color);
+    background-color: var(--primary);
     color: var(--white);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 24px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
-    box-sizing: border-box;
-    font-family: 'Roboto', 'Arial', sans-serif;
-    transition: var(--transition);
+    font-family: 'Roboto', sans-serif;
 }
 
-/* Add a subtle gradient to the navbar */
-#navbar-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
-    pointer-events: none;
-}
-
-/* Logo (Left Side) */
+/* Logo */
 #navbar-container .logo {
     font-size: 1.5rem;
     font-weight: 700;
     text-decoration: none;
     color: var(--white);
     text-transform: uppercase;
-    letter-spacing: 1px;
     display: flex;
     align-items: center;
     gap: 12px;
-    position: relative;
-    z-index: 1;
 }
 
-/* Optional logo image */
-#navbar-container .logo img {
-    height: 36px;
-    width: auto;
-}
-
-/* Navigation Links (Right Side) */
+/* Navigation Links */
 #navbar-container .nav-links {
     display: flex;
     align-items: center;
     gap: 8px;
     margin-left: auto;
+    padding-right: 30px;
 }
 
-/* Dropdown Container */
+/* Dropdown */
 .nav-links .dropdown {
     position: relative;
+    /* padding-bottom: 10px; Creates more hover space */
 }
 
 /* Dropdown Button */
 .nav-links .dropbtn, .dropbtnReg {
     background-color: transparent;
     color: var(--white);
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.2rem;
+    font-weight: 700;
     border: none;
     cursor: pointer;
-    padding: 10px 16px;
-    border-radius: 6px;
-    transition: var(--transition);
+    padding: 16px 16px;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-/* Add icons to buttons */
+/* Dropdown arrow icon */
 .nav-links .dropbtn::after, .dropbtnReg::after {
     content: "▼";
     font-size: 0.7rem;
     margin-left: 5px;
-    transition: var(--transition);
 }
 
-.nav-links .dropdown:hover .dropbtn::after {
-    transform: rotate(180deg);
-}
-
+/* Hover effects */
 .nav-links .dropbtn:hover, .dropbtnReg:hover {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Add active state */
-.nav-links .dropbtn.active, .dropbtnReg.active {
-    background-color: var(--accent-color);
-}
-
 /* Dropdown Content */
 .nav-links .dropdown-content {
-    display: none;
     position: absolute;
-    top: calc(100% + 5px);
+    top: calc(100% - 8px);
     right: 0;
     background-color: var(--white);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow);
     min-width: 200px;
     border-radius: 8px;
-    overflow: hidden;
     z-index: 1000;
-    animation: fadeIn 0.2s ease-out;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    
+    /* Improved dropdown visibility method */
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s ease;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Show dropdown on hover */
+.nav-links .dropdown:hover .dropdown-content {
+    visibility: visible;
+    opacity: 1;
 }
 
 /* Dropdown Links */
 .nav-links .dropdown-content a {
     display: flex;
     align-items: center;
-    padding: 12px 16px;
+    padding: 14px 16px; /* Increased for better clickability */
     text-decoration: none;
     color: var(--primary-dark);
-    font-size: 0.95rem;
-    transition: var(--transition);
-    border-left: 3px solid transparent;
+    font-size: 1rem;
     gap: 10px;
 }
 
-/* Add icons to dropdown links */
-.nav-links .dropdown-content a::before {
-    content: "";
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    background-color: var(--primary-light);
-    mask-size: contain;
-    mask-position: center;
-    mask-repeat: no-repeat;
-    opacity: 0.7;
-}
-
 .nav-links .dropdown-content a:hover {
-    background-color: var(--gray-light);
-    color: var(--primary-color);
-    border-left-color: var(--primary-color);
-}
-
-.nav-links .dropdown-content a:hover::before {
-    opacity: 1;
-}
-
-/* Show Dropdown on Hover */
-.nav-links .dropdown:hover .dropdown-content {
-    display: block;
+    background-color: var(--light-gray);
+    color: var(--primary);
+    border-left: 3px solid var(--primary);
 }
 
 /* Divider in dropdown */
 .nav-links .dropdown-content .divider {
     height: 1px;
-    background-color: var(--gray-medium);
-    opacity: 0.5;
+    background-color: var(--gray);
     margin: 5px 0;
 }
 
-/* Basic Styling for Nav Links */
+/* Regular Nav Links */
 .nav-links a.nav-link {
-    background-color: transparent;
     color: var(--white);
     font-size: 1rem;
     font-weight: 500;
     text-decoration: none;
     padding: 10px 16px;
     border-radius: 6px;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
-/* Hover effects for nav link */
 .nav-links a.nav-link:hover {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Active state */
-.nav-links a.nav-link.active {
-    background-color: var(--accent-color);
-}
-
-/* User avatar in navbar */
+/* User avatar */
 .user-avatar {
     width: 36px;
     height: 36px;
@@ -230,7 +160,6 @@
     color: var(--white);
     font-weight: bold;
     border: 2px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Mobile menu button */
@@ -243,25 +172,11 @@
     cursor: pointer;
 }
 
-/* Mobile Friendly Adjustments */
-@media (max-width: 992px) {
-    #navbar-container {
-        padding: 0 16px;
-    }
-    
-    .nav-links a.nav-link span,
-    .nav-links .dropbtn span {
-        display: none;
-    }
-}
-
+/* Mobile view */
 @media (max-width: 768px) {
     #navbar-container {
         height: 60px;
-    }
-    
-    .dashboard-container {
-        margin-top: 60px !important;
+        padding: 0 16px;
     }
     
     .mobile-menu-btn {
@@ -273,11 +188,9 @@
         top: 60px;
         left: 0;
         width: 100%;
-        background-color: var(--primary-color);
+        background-color: var(--primary);
         flex-direction: column;
-        align-items: stretch;
         padding: 10px;
-        gap: 5px;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         max-height: 0;
         overflow: hidden;
@@ -291,6 +204,7 @@
     
     .nav-links .dropdown {
         width: 100%;
+        padding-bottom: 0;
     }
     
     .nav-links .dropbtn, 
@@ -298,35 +212,26 @@
     .nav-links a.nav-link {
         width: 100%;
         justify-content: flex-start;
-        border-radius: 4px;
-    }
-    
-    .nav-links .dropbtn span,
-    .nav-links a.nav-link span {
-        display: inline;
     }
     
     .nav-links .dropdown-content {
         position: static;
         width: 100%;
         box-shadow: none;
-        border: none;
         background-color: rgba(0, 0, 0, 0.1);
-        margin-bottom: 5px;
-        animation: none;
+        transition: none;
+        visibility: hidden;
+        display: none;
+    }
+    
+    /* Use JS to toggle .active class for mobile */
+    .nav-links .dropdown.active .dropdown-content {
+        visibility: visible;
+        display: block;
     }
     
     .nav-links .dropdown-content a {
         color: var(--white);
         padding-left: 40px;
-    }
-    
-    .nav-links .dropdown-content a:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-left-color: var(--white);
-    }
-    
-    .nav-links .dropdown-content .divider {
-        background-color: rgba(255, 255, 255, 0.2);
     }
 }

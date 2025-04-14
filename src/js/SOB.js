@@ -1,3 +1,4 @@
+
 export const objectives = [
     {
       category: 'Training Objective 1 - DAF and AFROTC Grade Structure and Insignia',
@@ -103,7 +104,7 @@ export const objectives = [
     },
     {
       category: 'Training Objective 4 - DAF DAF Customs and Courtesies',
-      objective_number: '4.1X',
+      objective_number: '4.10',
       description: 'Demonstrate proper procedures for reveille.',
       bc: 'P1', bcl: 'P2', icl: 'P3', scl: null
     },

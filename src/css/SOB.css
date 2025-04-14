@@ -1,0 +1,453 @@
+/* SOB Submissions Styles */
+:root {
+    --primary-color: #0056A3;
+    --primary-light: #007FFF;
+    --primary-dark: #003366;
+    --accent-color: #00A8FF;
+    --success-color: #4CAF50;
+    --warning-color: #FFC107;
+    --danger-color: #F44336;
+    --gray-light: #F2F4F8;
+    --gray-medium: #B0B8C3;
+    --gray-dark: #555;
+    --white: #FFFFFF;
+    --black: #333333;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --text-color: var(--black);
+    --border-color: var(--gray-medium);
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: var(--gray-light);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 60px auto 20px;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding-bottom: 15px;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+header h2 {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+}
+
+header p {
+    color: var(--gray-dark);
+    font-size: 1.1rem;
+}
+
+/* Cadet Selector Styles */
+.search-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+    margin-bottom: 10px;
+}
+
+.search-input:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 8px rgba(0, 127, 255, 0.3);
+    outline: none;
+}
+
+.search-results {
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-top: 0.5rem;
+    background: var(--white);
+    box-shadow: var(--box-shadow);
+    list-style-type: none;
+}
+
+.search-results li {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.search-results li:last-child {
+    border-bottom: none;
+}
+
+.search-results li:hover {
+    background-color: var(--primary-light);
+    color: var(--white);
+}
+
+/* Selected Cadet Section */
+#selected-cadet-info {
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--gray-light);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#selected-cadet-info p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+#selected-cadet-name {
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+
+/* Deselect button styling */
+#deselect-cadet-btn {
+    background-color: var(--danger-color);
+    color: var(--white);
+    padding: 8px 15px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    margin-left: 15px;
+}
+
+#deselect-cadet-btn:hover {
+    background-color: #D32F2F; /* Darker red */
+    transform: translateY(-2px);
+}
+
+/* Form Section */
+.form-section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-medium);
+}
+
+.section-header {
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 1.4rem;
+}
+
+/* Instructions text */
+.instructions {
+    font-size: 0.95rem;
+    color: var(--gray-dark);
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: var(--gray-light);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+}
+
+/* SOB Table */
+.sob-container {
+    margin-top: 20px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-medium);
+    padding: 20px;
+    transition: opacity var(--transition-speed) ease, filter var(--transition-speed) ease;
+}
+
+.sob-container.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+    filter: grayscale(50%);
+}
+
+.table-container {
+    max-height: 500px;
+    overflow-y: auto;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+}
+
+.sob-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.sob-table th, .sob-table td {
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.sob-table th {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 500;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.sob-table tr:nth-child(even) {
+    background-color: rgba(242, 244, 248, 0.5);
+}
+
+.obj-number {
+    width: 15%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.obj-description {
+    width: 65%;
+}
+
+.obj-score {
+    width: 20%;
+}
+
+/* Score Dropdown Styling */
+.score-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    background-color: var(--white);
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+}
+
+.score-input:hover, .score-input:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 8px rgba(0, 127, 255, 0.3);
+    outline: none;
+}
+
+/* Highlighting on Hover */
+.sob-table tr:hover {
+    background-color: var(--gray-light);
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+    min-width: 200px;
+}
+
+.filter-input:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 8px rgba(0, 127, 255, 0.3);
+    outline: none;
+}
+
+.filter-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    color: var(--white);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    font-weight: 500;
+}
+
+.filter-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.filter-btn.secondary {
+    background-color: var(--white);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.filter-btn.secondary:hover {
+    background-color: var(--gray-light);
+}
+
+/* Status Message */
+.message {
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-radius: var(--border-radius);
+    display: none;
+    font-weight: 500;
+}
+
+.message.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--success-color);
+    border-left: 4px solid var(--success-color);
+}
+
+.message.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: var(--danger-color);
+    border-left: 4px solid var(--danger-color);
+}
+
+.message.warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--warning-color);
+    border-left: 4px solid var(--warning-color);
+}
+
+/* Buttons */
+.primary-btn, .secondary-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    box-shadow: var(--box-shadow);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    background-color: var(--white);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.secondary-btn:hover {
+    background-color: var(--gray-light);
+    transform: translateY(-2px);
+}
+
+/* Actions Container */
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+    position: sticky;
+    bottom: 0;
+    background: var(--white);
+    padding: 15px;
+    border-top: 1px solid var(--gray-light);
+    z-index: 100;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+        margin-top: 40px;
+    }
+
+    header h2 {
+        font-size: 1.8rem;
+    }
+
+    .section-header {
+        font-size: 1.2rem;
+    }
+
+    #selected-cadet-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #deselect-cadet-btn {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .filter-section {
+        flex-direction: column;
+    }
+    
+    .filter-btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .primary-btn, .secondary-btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .obj-number {
+        width: 20%;
+    }
+    
+    .obj-description {
+        width: 60%;
+    }
+    
+    .obj-score {
+        width: 20%;
+    }
+}

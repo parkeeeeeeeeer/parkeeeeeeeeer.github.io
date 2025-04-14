@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOB Submissions - Evaluation Tracker</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="src/css/nav.css">
+    <link rel="stylesheet" href="src/css/SOB.css">
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <header>
+            <h2>SOB Evaluation Submissions</h2>
+            <!-- <p>Submit Standards of Behavior evaluations for cadets</p> -->
+        </header>
+
+        <!-- Cadet Search Section -->
+        <div class="form-section">
+            <h3 class="section-header">Cadet Selection</h3>
+            <div class="search-container">
+                <input type="text" id="cadet-search-input" placeholder="Search cadet by name..." class="search-input" />
+                <div id="cadet-selector-container"></div>
+            </div>
+            
+            <!-- Selected Cadet Information -->
+            <div id="selected-cadet-info" style="display: none;">
+                <p>
+                    <strong>Evaluating:</strong> 
+                    <span id="selected-cadet-name">None</span>
+                </p>
+                <button id="deselect-cadet-btn" class="secondary-btn">Deselect</button>
+            </div>
+        </div>
+
+        <!-- SOB Evaluation Section -->
+        <div id="sob-container" class="sob-container disabled">
+            <h3 class="section-header">Standards of Behavior Evaluation</h3>
+            <p class="instructions">Enter scores (Ka-P3) for each applicable objective. Leave blank if not evaluating.</p>
+            
+            <!-- SOB Filter Section -->
+            <div class="filter-section">
+                <input type="text" id="sob-filter-input" placeholder="Filter objectives (e.g. 1.1, 2.3, 4.5)" class="filter-input" />
+                <button id="apply-filter-btn" class="filter-btn">Apply Filter</button>
+                <button id="clear-filter-btn" class="filter-btn secondary">Show All</button>
+            </div>
+            
+            <div class="table-container">
+                <table id="sob-table" class="sob-table">
+                    <thead>
+                        <tr>
+                            <th class="obj-number">Objective</th>
+                            <th class="obj-description">Description</th>
+                            <th class="obj-score">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- SOB objectives will be populated here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Status message for user feedback -->
+            <div id="status-message" class="message"></div>
+            
+            <!-- Action buttons -->
+            <div class="actions">
+                <button id="save-sob-btn" class="primary-btn">Save Evaluation</button>
+                <button id="reset-sob-btn" class="secondary-btn">Reset Form</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="src/js/firebase-config.js" defer></script>
+
+    <!-- JavaScript Modules -->
+    <script type="module" src="src/js/auth.js" defer></script>
+    <script type="module" src="src/js/SOBSubmissions.js" defer></script>
+</body>
+</html>
