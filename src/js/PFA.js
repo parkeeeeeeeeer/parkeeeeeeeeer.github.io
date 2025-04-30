@@ -398,7 +398,7 @@ async function saveResults() {
         const cadetRef = doc(db, "users", selectedCadet.id);
         
         // Create a reference to the PFA submissions collection for this cadet
-        const pfaSubmissionRef = doc(collection(db, "pfaSubmissions"), Date.now().toString());
+        const pfaSubmissionRef = doc(collection(db, "users"), Date.now().toString());
         
         // Prepare the PFA data to save
         const pfaData = {
@@ -446,61 +446,6 @@ function showStatusMessage(message, type = "info") {
     }, 5000);
 }
 
-
-// // Handle Signup Submission
-// async function handleSignUp(event) {
-//     event.preventDefault();
-
-//     const firstName = document.getElementById('first-name').value;
-//     const lastName = document.getElementById('last-name').value;
-//     const studentID = document.getElementById('student-id').value;
-//     const phoneNumber = formatPhoneNumber(document.getElementById('phone-number').value);
-//     const age = parseInt(document.getElementById('age').value, 10);
-//     const gender = document.getElementById('gender').value;
-//     const university = document.getElementById('university').value;
-//     const asYear = document.getElementById('as-year').value;
-//     const flight = document.getElementById('flight').value;
-//     const role = document.getElementById('role').value;
-//     const email = document.getElementById('school-email').value;
-//     const password = document.getElementById('password').value;
-
-//     try {
-//         // Create user with email and password
-//         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-//         const user = userCredential.user;
-
-//         console.log("User created:", user.uid);
-
-//         // Store user data in Firestore
-//         const userDocRef = doc(db, "users", user.uid);
-//         await setDoc(userDocRef, {
-//             firstName,
-//             lastName,
-//             email,
-//             studentID,
-//             phoneNumber,
-//             age,
-//             gender,
-//             university,
-//             asYear,
-//             flight,
-//             role,
-//             uid: user.uid,
-//             createdAt: new Date().toISOString(),
-//         });
-
-//         console.log("User data saved in Firestore.");
-
-//         // Redirect user based on role
-//         redirectUserBasedOnRole(role);
-
-//     } catch (error) {
-//         console.error("Error during sign-up:", error);
-//         alert("Error signing up: " + error.message);
-//     }
-
-// }
-// Add event listener to the calculate button
 document.getElementById("calculate-btn").addEventListener("click", calculateScores);
 
 // Add event listener for lap count change
