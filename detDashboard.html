@@ -3,106 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluation Tracker - Dashboard</title>
+    <title>ROTC Detachment Dashboard</title>
     <link rel="stylesheet" href="src/css/detDashboard.css">
     <link rel="stylesheet" href="src/css/nav.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-    <script type="module" src="src/js/auth.js"></script>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 </head>
 <body>
+    <!-- Navigation component will be loaded via JavaScript -->
     <div id="navbar-container"></div>
 
-    <div id="dashboard-container">
-        <header>
-            <h1>Cadet Evaluation Dashboard</h1>
-            <p>Wing-Level Performance Metrics</p>
-        </header>
-      
-        <div class="main-content">
-            <!-- Stats Cards (Top Row) -->
-            <div class="stats-container">
-                <div class="stat-card" id="total-cadets">
-                    <h3>Total Cadets</h3>
-                    <p>120</p>
-                </div>
-                <div class="stat-card" id="avg-pfa">
-                    <h3>Average PFA Score</h3>
-                    <p>93.5%</p>
-                </div>
-                <div class="stat-card" id="active-sobs">
-                    <h3>Active SOBs</h3>
-                    <p>87</p>
-                </div>
-                <div class="stat-card" id="form2-completion">
-                    <h3>Form 2 Completion</h3>
-                    <p>92%</p>
-                </div>
-            </div>
+    <main class="dashboard-container">
+        <h1 id="dashboard-title">Wing-Level Performance Metrics</h1>
 
-            <!-- Time Period Filter -->
+        <!-- Message container for notifications -->
+        <div id="message-container"></div>
+
+        <!-- Loading overlay -->
+        <div id="loading-overlay" class="hidden">
+            <div class="loading-spinner"></div>
+            <p>Loading data...</p>
+        </div>
+
+        <!-- Dashboard Controls -->
+        <div class="dashboard-controls">
             <div class="filter-container">
-                <label for="time-period">Time Period:</label>
-                <select id="time-period">
-                    <option value="month">Last Month</option>
-                    <option value="quarter">Last Quarter</option>
-                    <option value="year" selected>Last Year</option>
-                    <option value="all">All Time</option>
-                </select>
+                <!-- Cadet selector will be added here for authorized roles -->
+                <div class="time-filter">
+                    <label for="time-period">Time Period:</label>
+                    <select id="time-period">
+                        <option value="week">Past Week</option>
+                        <option value="month" selected>Past Month</option>
+                        <option value="quarter">Past Quarter</option>
+                        <option value="year">Past Year</option>
+                    </select>
+                </div>
+                <button id="export-dashboard" class="button-primary">Export Data</button>
             </div>
+        </div>
 
-            <!-- Main Dashboard Content (Charts) -->
-            <section class="overall-trends-dashboard">
-                <!-- PFA Trends Section -->
-                <div class="trend-card" id="pfa-section">
-                    <h3>PFA Trends Overview</h3>
+        <!-- High-level Stats Cards -->
+        <div class="stats-cards">
+            <div class="stat-card" id="total-cadets">
+                <h3>Total Cadets</h3>
+                <p>--</p>
+            </div>
+            <div class="stat-card" id="avg-pfa">
+                <h3>Average PFA Score</h3>
+                <p>--</p>
+                <div class="standards-indicator">-- Pass Rate</div>
+            </div>
+            <div class="stat-card" id="active-sobs">
+                <h3>Active SOBs</h3>
+                <p>--</p>
+            </div>
+            <div class="stat-card" id="form2-completion">
+                <h3>Form 2 Completion</h3>
+                <p>--</p>
+            </div>
+        </div>
+
+        <!-- Overall Trends Dashboard with Sliding Cards -->
+        <section class="dashboard-section">
+            <h2>Performance Trends</h2>
+            <div class="overall-trends-dashboard">
+                <!-- PFA Trend Card -->
+                <div class="trend-card">
                     <div class="chart-container">
+                        <div class="loading-spinner hidden"></div>
                         <canvas id="pfa-trend-chart"></canvas>
                     </div>
                 </div>
 
-                <!-- SOB Performance Trends -->
-                <div class="trend-card" id="sob-section">
-                    <h3>SOBs Performance Trends</h3>
+                <!-- PFA Pass Rate Card -->
+                <div class="trend-card">
                     <div class="chart-container">
+                        <div class="loading-spinner hidden"></div>
+                        <canvas id="pfa-pass-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- SOB Trend Card -->
+                <div class="trend-card">
+                    <div class="chart-container">
+                        <div class="loading-spinner hidden"></div>
                         <canvas id="sob-trend-chart"></canvas>
                     </div>
                 </div>
 
-                <!-- Attendance Trends -->
-                <div class="trend-card" id="attendance-section">
-                    <h3>Attendance Trends</h3>
+                <!-- SOB Standards Card -->
+                <div class="trend-card">
                     <div class="chart-container">
+                        <div class="loading-spinner hidden"></div>
+                        <canvas id="sob-standards-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Attendance Trend Card -->
+                <div class="trend-card">
+                    <div class="chart-container">
+                        <div class="loading-spinner hidden"></div>
                         <canvas id="attendance-trend-chart"></canvas>
                     </div>
                 </div>
 
-                <!-- Form 2 Submission Overview -->
-                <div class="trend-card" id="form2-section">
-                    <h3>Form 2 Submission Overview</h3>
+                <!-- Form 2 Trend Card -->
+                <div class="trend-card">
                     <div class="chart-container">
+                        <div class="loading-spinner hidden"></div>
                         <canvas id="form2-trend-chart"></canvas>
                     </div>
                 </div>
 
-                <!-- Competency Growth Visualization -->
-                <!-- <div class="trend-card" id="competency-section">
-                    <h3>Competency Growth Visualization</h3>
-                    <div class="chart-container">
-                        <canvas id="competency-trend-chart"></canvas>
-                    </div>
-                </div> -->
-            </section>
-        </div>
-    </div>
+                <!-- Navigation arrows and indicators will be added by JavaScript -->
+            </div>
+        </section>
 
-    <!-- Firebase Config -->
-    <script src="src/js/firebase-config.js"></script>
+        <!-- Footer with credits and version info -->
+        <footer class="dashboard-footer">
+            <p>ROTC Detachment Performance Dashboard v1.0</p>
+            <p>Data last updated: <span id="last-update-time">--</span></p>
+        </footer>
+    </main>
+
+    <!-- Firebase scripts -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script>
     
-    <!-- Dashboard Scripts -->
-    <script src="src/js/dashboard.js"></script>
-    
+    <!-- Application scripts -->
+    <script type="module" src="src/js/auth.js" defer></script>
+    <script type="module" src="src/js/dashboard.js" defer></script>
 </body>
 </html>

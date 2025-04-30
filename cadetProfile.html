@@ -39,8 +39,8 @@
                 <button class="nav-link active" data-section="overview">Overview</button>
                 <button class="nav-link" data-section="pfa">PFA Score Breakdown</button>
                 <button class="nav-link" data-section="sob">SOB Performance</button>
-                <button class="nav-link" data-section="attendance">Attendance Overview</button>
-                <button class="nav-link" data-section="form2">Form 2 Status</button>
+                <!-- <button class="nav-link" data-section="attendance">Attendance Overview</button>
+                <button class="nav-link" data-section="form2">Form 2 Status</button> -->
                 <button class="nav-link" data-section="snapshots">Data Snapshots</button>
             </nav>
         </div>
@@ -88,26 +88,74 @@
             </section>
 
             <!-- SOB Section -->
-            <section id="sob" class="content-section">
-                <h3>SOB Performance</h3>
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Objective #</th>
-                                <th>Description</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- SOB data will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+    <!-- SOB Section with Standards Assessment -->
+<section id="sob" class="content-section">
+    <h3>SOB Performance</h3>
+    
+    <!-- Standards Summary Section -->
+    <div id="sob-standards-summary" class="standards-summary">
+        <h4>Standards Achievement Summary</h4>
+        <div class="standards-progress">
+            <div class="standards-progress-segment segment-exceeding" id="sob-exceeding" style="width: 0%;">0%</div>
+            <div class="standards-progress-segment segment-meeting" id="sob-meeting" style="width: 0%;">0%</div>
+            <div class="standards-progress-segment segment-below" id="sob-below" style="width: 0%;">0%</div>
+        </div>
+        <div class="standards-stats">
+            <div class="stat-item stat-exceeding" id="stat-exceeding">
+                Exceeding Standards: 0 (0%)
+            </div>
+            <div class="stat-item stat-meeting" id="stat-meeting">
+                Meeting Standards: 0 (0%)
+            </div>
+            <div class="stat-item stat-below" id="stat-below">
+                Below Standards: 0 (0%)
+            </div>
+            <div class="stat-item stat-not-evaluated" id="stat-not-evaluated">
+                Not Evaluated: 0
+            </div>
+        </div>
+    </div>
+    
+    <!-- SOB Objectives Table -->
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Objective #</th>
+                    <th>Description</th>
+                    <th>Score</th>
+                    <th>Standard</th>
+                    <th>Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- SOB data will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Standards Legend -->
+    <div class="standards-legend">
+        <h4>Standards Legend</h4>
+        <div class="legend-items">
+            <div class="legend-item">
+                <span class="legend-marker exceeds"></span>
+                <span class="legend-text">Exceeding Standard: Performance above required level for AS Year</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-marker meets"></span>
+                <span class="legend-text">Meeting Standard: Performance meets required level for AS Year</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-marker below"></span>
+                <span class="legend-text">Below Standard: Performance below required level for AS Year</span>
+            </div>
+        </div>
+    </div>
+</section>
 
             <!-- Attendance Section -->
-            <section id="attendance" class="content-section">
+            <!-- <section id="attendance" class="content-section">
                 <h3>Attendance Overview</h3>
                 <div class="chart-container">
                     <canvas id="attendance-chart"></canvas>
@@ -115,13 +163,13 @@
                 <div class="attendance-details">
                     <h4>Attendance Records</h4>
                     <div id="attendance-records" class="table-container">
-                        <!-- Attendance records will be populated by JavaScript -->
+                        Attendance records will be populated by JavaScript
                     </div>
                 </div>
-            </section>
+            </section> -->
 
             <!-- Form 2 Section -->
-            <section id="form2" class="content-section">
+            <!-- <section id="form2" class="content-section">
                 <h3>Form 2 Status</h3>
                 <div class="chart-container">
                     <canvas id="form2-chart"></canvas>
@@ -129,10 +177,10 @@
                 <div class="form2-details">
                     <h4>Form 2 Submission History</h4>
                     <div id="form2-history" class="table-container">
-                        <!-- Form 2 history will be populated by JavaScript -->
+                        Form 2 history will be populated by JavaScript
                     </div>
                 </div>
-            </section>
+            </section> -->
 
             <!-- Data Snapshots Section -->
             <section id="snapshots" class="content-section">

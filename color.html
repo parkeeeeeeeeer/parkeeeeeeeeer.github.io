@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Documentation Table</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 2rem;
+            background-color: #f9fafb;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background-color: #f8fafc;
+            color: #333;
+            font-weight: 600;
+        }
+        tr:hover {
+            background-color: #f9fafb;
+        }
+        .color-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .color-info {
+            display: flex;
+            align-items: center;
+        }
+        code {
+            background-color: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+        .variable {
+            color: #0056A3;
+        }
+        .description {
+            color: #555;
+        }
+        @media (max-width: 768px) {
+            body {
+                margin: 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            th, td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Color Documentation</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Variable</th>
+                    <th>Value</th>
+                    <th>Color Preview</th>
+                    <th>Description / Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="variable">--primary-color</code></td>
+                    <td><code>#0056A3</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #0056A3;"></div></div></td>
+                    <td class="description">Main brand color. Used for primary buttons, headings, and brand elements.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--primary-light</code></td>
+                    <td><code>#007FFF</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #007FFF;"></div></div></td>
+                    <td class="description">Lighter variant of primary color. Used for hover states and emphasized elements.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--primary-dark</code></td>
+                    <td><code>#003366</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #003366;"></div></div></td>
+                    <td class="description">Darker variant of primary color. Used for active states and depth effects.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--accent-color</code></td>
+                    <td><code>#00A8FF</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #00A8FF;"></div></div></td>
+                    <td class="description">Accent color for highlights, links, and interactive elements. Draws attention.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--success-color</code></td>
+                    <td><code>#4CAF50</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #4CAF50;"></div></div></td>
+                    <td class="description">Success states, confirmation messages, and positive feedback.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--warning-color</code></td>
+                    <td><code>#FFC107</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #FFC107;"></div></div></td>
+                    <td class="description">Warning messages, cautionary alerts, and attention indicators.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--danger-color</code></td>
+                    <td><code>#F44336</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #F44336;"></div></div></td>
+                    <td class="description">Error states, destructive actions, and critical alerts.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--gray-light</code></td>
+                    <td><code>#F2F4F8</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #F2F4F8;"></div></div></td>
+                    <td class="description">Light backgrounds, borders, and secondary elements.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--gray-medium</code></td>
+                    <td><code>#B0B8C3</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #B0B8C3;"></div></div></td>
+                    <td class="description">Secondary text, disabled states, and placeholder content.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--gray-dark</code></td>
+                    <td><code>#555</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #555;"></div></div></td>
+                    <td class="description">Body text and secondary elements requiring emphasis.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--white</code></td>
+                    <td><code>#FFFFFF</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #FFFFFF;"></div></div></td>
+                    <td class="description">Pure white for backgrounds and text on dark backgrounds.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--black</code></td>
+                    <td><code>#333333</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #333333;"></div></div></td>
+                    <td class="description">Near-black for high-contrast text and strong emphasis.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--box-shadow</code></td>
+                    <td><code>0 2px 5px rgba(0, 0, 0, 0.1)</code></td>
+                    <td><div class="color-info"><div class="color-box" style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); background: white;"></div></div></td>
+                    <td class="description">Default shadow for cards, modals, and elevated elements.</td>
+                </tr>
+                <tr>
+                    <td><code class="variable">--border-radius</code></td>
+                    <td><code>10px</code></td>
+                    <td><div class="color-info"><div class="color-box" style="background-color: #eee; border-radius: 10px;"></div></div></td>
+                    <td class="description">Standard border radius for buttons, cards, and containers.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

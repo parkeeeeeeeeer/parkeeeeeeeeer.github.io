@@ -103,11 +103,11 @@ function updateOverviewCards(userData) {
     
     // These would ideally come from the user data, but using placeholder values for now
     // Replace with actual calculations based on your data structure
-    const pfaAverage = userData.pfaAverage || 90;
+    const pfaScore = userData.latestPFA.totalScore ||90;
     const sobAverage = userData.sobAverage || 85;
     const attendanceAverage = userData.attendanceAverage || 92;
     
-    document.getElementById('pfa-score').textContent = `${pfaAverage}%`;
+    document.getElementById('pfa-score').textContent = `${pfaScore}%`;
     document.getElementById('sob-score').textContent = `${sobAverage}%`;
     document.getElementById('attendance-score').textContent = `${attendanceAverage}%`;
     
@@ -179,60 +179,199 @@ function updateRecentActivities(userData) {
 /**
  * PFA Chart
  */
+// Function that provides both stacked bar and pie chart options
 function renderPFAChart(userData) {
     const pfaChart = document.getElementById('pfa-chart');
     if (!pfaChart) {
         console.error('PFA Chart element not found in the DOM!');
         return;
     }
-
+    
     const ctx = pfaChart.getContext('2d');
     if (!ctx) {
         console.error('Failed to get 2D context for PFA Chart!');
         return;
     }
-
-    // Use userData if available, otherwise fallback to placeholder data
-    const situps = userData?.pfaScores?.situps || 50;
-    const pushups = userData?.pfaScores?.pushups || 40;
-    const run = userData?.pfaScores?.run || 90;
-
+    
+    // Extract data properly with error checking
+    const situpScore = userData?.latestPFA?.situps?.points || 20;
+    const situpCount = userData?.latestPFA?.situps?.count || 35;
+    const pushupScore = userData?.latestPFA?.pushups?.points || 20;
+    const pushupCount = userData?.latestPFA?.pushups?.count || 35;
+    const runScore = userData?.latestPFA?.run?.points || 60;
+    const runTime = userData?.latestPFA?.run?.time || "15:00";
+    
+    // Calculate total score
+    const totalScore = situpScore + pushupScore + runScore;
+    
+    // Create horizontal bar chart with total
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Situps', 'Pushups', 'Run'],
-            datasets: [{
-                label: 'PFA Metrics',
-                data: [situps, pushups, run], 
-                backgroundColor: ['#4CAF50', '#FFC107', '#03A9F4'],
-                borderWidth: 1,
-            }]
+            labels: ['Situps', 'Pushups', 'Run', 'TOTAL'],
+            datasets: [
+                {
+                    label: 'Situps',
+                    data: [situpScore, 0, 0, situpScore],
+                    backgroundColor: 'rgba(76, 175, 80, 0.7)',  // Green for Situps
+                    borderColor: 'rgba(76, 175, 80, 1)',
+                    borderWidth: 1,
+                    stack: 'Stack 0'
+                },
+                {
+                    label: 'Pushups',
+                    data: [0, pushupScore, 0, pushupScore],
+                    backgroundColor: 'rgba(255, 193, 7, 0.7)',  // Amber for Pushups
+                    borderColor: 'rgba(255, 193, 7, 1)',
+                    borderWidth: 1,
+                    stack: 'Stack 0'
+                },
+                {
+                    label: 'Run',
+                    data: [0, 0, runScore, runScore],
+                    backgroundColor: 'rgba(3, 169, 244, 0.7)',  // Blue for Run
+                    borderColor: 'rgba(3, 169, 244, 1)',
+                    borderWidth: 1,
+                    stack: 'Stack 0'
+                }
+            ]
         },
         options: {
-            responsive: true, 
-            maintainAspectRatio: true, 
+            indexAxis: 'y',  // This makes the bars horizontal
+            responsive: true,
+            maintainAspectRatio: true,
             scales: {
-                y: {
+                x: {
+                    stacked: true,
                     beginAtZero: true,
-                    max: 100
+                    max: 100,  // Ensure scale accommodates total
+                    title: {
+                        display: true,
+                        text: 'Points'
+                    }
+                },
+                y: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'Exercise Type'
+                    }
                 }
             },
             plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const value = context.raw || 0;
+                            if (value === 0) return null; // Don't show tooltip for empty stacks
+                            
+                            const datasetLabel = context.dataset.label || '';
+                            const percent = Math.round((value / totalScore) * 100);
+                            
+                            if (context.dataIndex === 3) { // Total row
+                                return `${datasetLabel}: ${value} points (${percent}% of total)`;
+                            }
+                            
+                            if (datasetLabel === 'Situps') {
+                                return [`${datasetLabel}: ${value} points (${percent}% of total)`, `Count: ${situpCount} situps`];
+                            } else if (datasetLabel === 'Pushups') {
+                                return [`${datasetLabel}: ${value} points (${percent}% of total)`, `Count: ${pushupCount} pushups`];
+                            } else if (datasetLabel === 'Run') {
+                                return [`${datasetLabel}: ${value} points (${percent}% of total)`, `Time: ${runTime}`];
+                            }
+                        }
+                    }
+                },
                 legend: {
-                    position: 'top', 
+                    position: 'top',
                 },
                 title: {
                     display: true,
-                    text: 'Physical Fitness Assessment Scores'
+                    text: 'Physical Fitness Assessment Breakdown',
+                    font: {
+                        size: 16,
+                        weight: 'bold'
+                    }
+                },
+                datalabels: {
+                    formatter: function(value, context) {
+                        if (value === 0) return null; // Don't show labels for empty stacks
+                        
+                        const datasetLabel = context.dataset.label;
+                        
+                        if (context.dataIndex === 3) { // Total row
+                            return `${value} pts`;
+                        }
+                        
+                        if (datasetLabel === 'Situps') {
+                            return `${value} pts (${situpCount} reps)`;
+                        } else if (datasetLabel === 'Pushups') {
+                            return `${value} pts (${pushupCount} reps)`;
+                        } else if (datasetLabel === 'Run') {
+                            return `${value} pts (${runTime})`;
+                        }
+                    },
+                    color: '#000',
+                    font: {
+                        weight: 'bold'
+                    },
+                    anchor: 'end',
+                    align: 'end'
                 }
             }
         }
     });
-    console.log('PFA Chart rendered successfully!');
+    
+    console.log('Horizontal PFA Chart with total rendered successfully!');
 }
 
 /**
- * SOB Chart
+ * Update the score cell with proper color-coding based on standard status
+ */
+/**
+ * Update the score cell with proper color-coding based on standard status
+ * This version ensures that standard status takes precedence over the raw score coloring
+ */
+function updateScoreCell(scoreCell, score, standardStatus) {
+    if (score) {
+        scoreCell.textContent = score;
+        scoreCell.style.fontWeight = "bold";
+        
+        // First remove any existing status classes
+        scoreCell.classList.remove('status-good', 'status-warning', 'status-danger', 
+                                  'score-exceeding', 'score-meeting', 'score-below');
+        
+        // Add class based on standard status - this takes precedence
+        if (standardStatus === "exceeding") {
+            scoreCell.className = 'obj-score score-exceeding';
+            // Also force the color directly with inline style to ensure it overrides
+            scoreCell.style.color = 'var(--success-color)';
+        } else if (standardStatus === "meeting") {
+            scoreCell.className = 'obj-score score-meeting';
+            scoreCell.style.color = 'var(--primary-light)';
+        } else if (standardStatus === "below") {
+            scoreCell.className = 'obj-score score-below';
+            scoreCell.style.color = 'var(--danger-color)';
+        } else {
+            // If no standard status, use the old coloring based on score value
+            scoreCell.className = 'obj-score';
+            if (score === "P3" || score === "P2") {
+                scoreCell.classList.add('status-good');
+            } else if (score === "P1" || score === "Kb") {
+                scoreCell.classList.add('status-warning');
+            } else if (score === "Ka") {
+                scoreCell.classList.add('status-danger');
+            }
+        }
+    } else {
+        scoreCell.textContent = "Pending";
+        scoreCell.className = 'obj-score';
+        scoreCell.style.color = '#757575'; // Gray for pending
+    }
+}
+
+/**
+ * SOB Chart - Enhanced with standards assessment and color-coded scores
  */
 function renderSOBChart(userData) {
     // Find the SOB section first
@@ -260,6 +399,8 @@ function renderSOBChart(userData) {
             <th>Objective #</th>
             <th>Description</th>
             <th>Score</th>
+            <th>Standard</th>
+            <th>Comments</th>
         `;
         thead.appendChild(headerRow);
         
@@ -269,8 +410,36 @@ function renderSOBChart(userData) {
         table.appendChild(tbody);
         tableContainer.appendChild(table);
         
+        // Add a summary section above the table
+        const summaryContainer = document.createElement('div');
+        summaryContainer.className = 'standards-summary';
+        summaryContainer.id = 'sob-standards-summary';
+        summaryContainer.innerHTML = `
+            <h4>Standards Achievement Summary</h4>
+            <div class="standards-progress">
+                <div class="standards-progress-segment segment-exceeding" id="sob-exceeding" style="width: 0%;">0%</div>
+                <div class="standards-progress-segment segment-meeting" id="sob-meeting" style="width: 0%;">0%</div>
+                <div class="standards-progress-segment segment-below" id="sob-below" style="width: 0%;">0%</div>
+            </div>
+            <div class="standards-stats">
+                <div class="stat-item stat-exceeding" id="stat-exceeding">
+                    Exceeding Standards: 0 (0%)
+                </div>
+                <div class="stat-item stat-meeting" id="stat-meeting">
+                    Meeting Standards: 0 (0%)
+                </div>
+                <div class="stat-item stat-below" id="stat-below">
+                    Below Standards: 0 (0%)
+                </div>
+                <div class="stat-item stat-not-evaluated" id="stat-not-evaluated">
+                    Not Evaluated: 0
+                </div>
+            </div>
+        `;
+        
         sobSection.innerHTML = '';
         sobSection.innerHTML = '<h3>SOB Performance</h3>';
+        sobSection.appendChild(summaryContainer);
         sobSection.appendChild(tableContainer);
         
         // Call the function again now that the table is created
@@ -287,8 +456,14 @@ function renderSOBChart(userData) {
     // Clear previous content
     tbody.innerHTML = "";
 
-    // Get user SOB scores (if available)
+    // Get user SOB scores, comments, and standards assessment (if available)
     const userSOBScores = userData?.sobScores || {};
+    const userSOBComments = userData?.sobComments || {};
+    const userSOBStandards = userData?.sobStandards || {};
+    const standardsAchievement = userData?.sobStandardsAchievement || null;
+
+    // Update the standards summary if we have data
+    updateStandardsSummary(standardsAchievement);
 
     // Group objectives by category
     const categories = {};
@@ -299,13 +474,23 @@ function renderSOBChart(userData) {
         categories[obj.category].push(obj);
     });
 
+    // Get the expected standard column based on cadet's AS year
+    const asYear = userData?.asYear || "";
+    const columnMapping = {
+        "100": "bc",
+        "200": "bcl",
+        "300": "icl",
+        "400": "scl"
+    };
+    const standardColumn = columnMapping[asYear] || "";
+
     // Iterate through categories and create sections
     Object.keys(categories).forEach(category => {
         // Create a category header row
         const categoryRow = document.createElement("tr");
         const categoryCell = document.createElement("td");
         categoryCell.textContent = category;
-        categoryCell.colSpan = 3; // Span across all columns
+        categoryCell.colSpan = 5; // Span across all columns
         categoryCell.className = 'category-header';
         categoryRow.appendChild(categoryCell);
         tbody.appendChild(categoryRow);
@@ -314,8 +499,22 @@ function renderSOBChart(userData) {
         categories[category].forEach(obj => {
             const row = document.createElement("tr");
 
+            // Get standard assessment data
+            const objectiveNum = obj.objective_number;
+            const standardData = userSOBStandards[objectiveNum] || {};
+            const standardStatus = standardData.status || "";
+            
+            // Add class to row based on standard status
+            if (standardStatus === "exceeding") {
+                row.classList.add("exceeds-standard");
+            } else if (standardStatus === "meeting") {
+                row.classList.add("meets-standard");
+            } else if (standardStatus === "below") {
+                row.classList.add("below-standard");
+            }
+
             const objectiveNumberCell = document.createElement("td");
-            objectiveNumberCell.textContent = obj.objective_number;
+            objectiveNumberCell.textContent = objectiveNum;
             row.appendChild(objectiveNumberCell);
 
             const descriptionCell = document.createElement("td");
@@ -323,33 +522,119 @@ function renderSOBChart(userData) {
             row.appendChild(descriptionCell);
 
             const scoreCell = document.createElement("td");
+            scoreCell.className = "obj-score";
+            
             // Use user's score if available, otherwise "Pending"
-            const score = userSOBScores[obj.objective_number];
-            if (score !== undefined) {
-                scoreCell.textContent = score;
-                // Add classes based on score
-                if (score >= 80) {
-                    scoreCell.className = 'status-good';
-                } else if (score >= 60) {
-                    scoreCell.className = 'status-warning';
-                } else {
-                    scoreCell.className = 'status-danger';
+            const score = userSOBScores[objectiveNum];
+            updateScoreCell(scoreCell, score, standardStatus);
+            
+            row.appendChild(scoreCell);
+
+            // Add standard cell
+            const standardCell = document.createElement("td");
+            standardCell.style.textAlign = "center";
+            
+            // Get the expected standard for this objective at the cadet's level
+            const expectedStandard = obj[standardColumn];
+            
+            if (expectedStandard) {
+                standardCell.textContent = expectedStandard;
+                standardCell.style.fontWeight = "bold";
+                
+                // Add a badge to show the standard status
+                if (standardStatus) {
+                    const badge = document.createElement("span");
+                    badge.className = "standard-badge";
+                    
+                    if (standardStatus === "exceeding") {
+                        badge.textContent = "Exceeds";
+                        badge.classList.add("exceeding");
+                    } else if (standardStatus === "meeting") {
+                        badge.textContent = "Meets";
+                        badge.classList.add("meeting");
+                    } else if (standardStatus === "below") {
+                        badge.textContent = "Below";
+                        badge.classList.add("below");
+                    }
+                    
+                    standardCell.appendChild(badge);
                 }
             } else {
-                scoreCell.textContent = "Pending";
-                scoreCell.style.color = '#757575'; // Gray for pending
+                standardCell.textContent = "N/A";
+                standardCell.style.color = '#757575';
             }
-            scoreCell.style.textAlign = "center";
-            scoreCell.style.fontWeight = "bold";
-            row.appendChild(scoreCell);
+            row.appendChild(standardCell);
+
+            // Add comments cell
+            const commentCell = document.createElement("td");
+            const comment = userSOBComments[objectiveNum];
+            if (comment) {
+                commentCell.textContent = comment;
+            } else {
+                commentCell.textContent = "No comments";
+                commentCell.style.color = '#757575';
+                commentCell.style.fontStyle = 'italic';
+            }
+            row.appendChild(commentCell);
 
             tbody.appendChild(row);
         });
     });
 
-    console.log("SOB table with categorized sections rendered successfully!");
+    console.log("Enhanced SOB table with color-coded scores rendered successfully!");
 }
 
+/**
+ * Update the standards summary section with achievement data
+ */
+function updateStandardsSummary(standardsAchievement) {
+    const summaryContainer = document.getElementById('sob-standards-summary');
+    if (!summaryContainer) return;
+    
+    // If no achievement data, hide the summary
+    if (!standardsAchievement) {
+        summaryContainer.style.display = 'none';
+        return;
+    }
+    
+    summaryContainer.style.display = 'block';
+    
+    // Extract data
+    const { 
+        meetingCount = 0,
+        exceedingCount = 0, 
+        belowCount = 0,
+        notEvaluatedCount = 0,
+        meetingPercent = 0,
+        exceedingPercent = 0,
+        belowPercent = 0,
+        totalApplicable = 0,
+        evaluatedCount = 0
+    } = standardsAchievement;
+    
+    // Update the progress bar segments
+    document.getElementById('sob-exceeding').style.width = `${exceedingPercent}%`;
+    document.getElementById('sob-exceeding').textContent = `${exceedingPercent}%`;
+    
+    document.getElementById('sob-meeting').style.width = `${meetingPercent}%`;
+    document.getElementById('sob-meeting').textContent = `${meetingPercent}%`;
+    
+    document.getElementById('sob-below').style.width = `${belowPercent}%`;
+    document.getElementById('sob-below').textContent = `${belowPercent}%`;
+    
+    // Update the statistics text
+    document.getElementById('stat-exceeding').textContent = 
+        `Exceeding Standards: ${exceedingCount} (${exceedingPercent}%)`;
+    
+    document.getElementById('stat-meeting').textContent = 
+        `Meeting Standards: ${meetingCount} (${meetingPercent}%)`;
+    
+    document.getElementById('stat-below').textContent = 
+        `Below Standards: ${belowCount} (${belowPercent}%)`;
+    
+    document.getElementById('stat-not-evaluated').textContent = 
+        `Not Evaluated: ${notEvaluatedCount} of ${totalApplicable}`;
+}
 /**
  * Attendance Chart
  */

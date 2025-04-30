@@ -402,9 +402,9 @@ async function saveResults() {
         
         // Prepare the PFA data to save
         const pfaData = {
-            cadetId: selectedCadet.id,
-            cadetName: `${selectedCadet.firstName || ""} ${selectedCadet.lastName || ""}`,
-            asYear: selectedCadet.asYear,
+            // cadetId: selectedCadet.id,
+            // cadetName: `${selectedCadet.firstName || ""} ${selectedCadet.lastName || ""}`,
+            // asYear: selectedCadet.asYear,
             ...selectedCadet.pfaResults,
             submittedAt: serverTimestamp()
         };

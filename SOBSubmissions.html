@@ -27,7 +27,7 @@
             <h3 class="section-header">Cadet Selection</h3>
             <div class="search-container">
                 <input type="text" id="cadet-search-input" placeholder="Search cadet by name..." class="search-input" />
-                <div id="cadet-selector-container"></div>
+                <div id="cadet-selector-container" style="display: none;"></div>
             </div>
             
             <!-- Selected Cadet Information -->
@@ -43,7 +43,53 @@
         <!-- SOB Evaluation Section -->
         <div id="sob-container" class="sob-container disabled">
             <h3 class="section-header">Standards of Behavior Evaluation</h3>
-            <p class="instructions">Enter scores (Ka-P3) for each applicable objective. Leave blank if not evaluating.</p>
+            <div class="instructions-container">
+                <p class="instructions">Enter scores (Ka-P3) for each applicable objective. Leave blank if not evaluating. 
+                    <span class="legend-tooltip-trigger">View proficiency code descriptions
+                        <span class="info-icon">ⓘ</span>
+                    </span>
+                </p>
+                
+                <!-- Proficiency Code Legend Tooltip -->
+                <div class="proficiency-legend">
+                    <div class="legend-header">
+                        <h4>Objective Proficiency Codes</h4>
+                        <span class="close-legend">×</span>
+                    </div>
+                    <div class="legend-content">
+                        <table class="legend-table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Ka</td>
+                                    <td>Recall basic facts from memory (Bloom's Remember)</td>
+                                </tr>
+                                <tr>
+                                    <td>Kb</td>
+                                    <td>Summarize basic facts from memory and draw conclusions about subject (Bloom's Understand)</td>
+                                </tr>
+                                <tr>
+                                    <td>P1</td>
+                                    <td>Can do most parts of the task. Needs only help on hardest parts (Partially Proficient)</td>
+                                </tr>
+                                <tr>
+                                    <td>P2</td>
+                                    <td>Can do all parts of the task. Needs only a spot check of completed work (Competent)</td>
+                                </tr>
+                                <tr>
+                                    <td>P3</td>
+                                    <td>Can do the complete task quickly and accurately. Can teach others how to do the task (Highly Proficient)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             
             <!-- SOB Filter Section -->
             <div class="filter-section">
@@ -59,6 +105,7 @@
                             <th class="obj-number">Objective</th>
                             <th class="obj-description">Description</th>
                             <th class="obj-score">Score</th>
+                            <th class="obj-comment">Comment</th>
                         </tr>
                     </thead>
                     <tbody>

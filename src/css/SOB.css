@@ -61,6 +61,11 @@ header p {
 }
 
 /* Cadet Selector Styles */
+.search-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
 .search-input {
     width: 100%;
     padding: 12px 15px;
@@ -68,7 +73,6 @@ header p {
     border-radius: var(--border-radius);
     font-size: 1rem;
     transition: all var(--transition-speed) ease;
-    margin-bottom: 10px;
 }
 
 .search-input:focus {
@@ -77,29 +81,44 @@ header p {
     outline: none;
 }
 
-.search-results {
-    max-height: 250px;
-    overflow-y: auto;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    margin-top: 0.5rem;
+/* PFA-style cadet results */
+#cadet-selector-container {
+    position: absolute;
+    z-index: 100;
+    width: 100%;
     background: var(--white);
+    border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    list-style-type: none;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 5px;
 }
 
-.search-results li {
+.no-results {
+    padding: 15px;
+    text-align: center;
+    color: var(--gray-dark);
+    font-style: italic;
+}
+
+.cadet-results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cadet-results li {
     padding: 12px 15px;
     border-bottom: 1px solid var(--border-color);
     cursor: pointer;
     transition: background-color var(--transition-speed) ease;
 }
 
-.search-results li:last-child {
+.cadet-results li:last-child {
     border-bottom: none;
 }
 
-.search-results li:hover {
+.cadet-results li:hover {
     background-color: var(--primary-light);
     color: var(--white);
 }
@@ -142,36 +161,69 @@ header p {
 
 #deselect-cadet-btn:hover {
     background-color: #D32F2F; /* Darker red */
-    transform: translateY(-2px);
+    transform: translateX(-50%);
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Form Section */
-.form-section {
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: var(--white);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    border: 1px solid var(--gray-medium);
+.proficiency-legend.active {
+    display: block;
+    opacity: 1;
 }
 
-.section-header {
-    color: var(--primary-dark);
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-color);
-    font-size: 1.4rem;
+.legend-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 12px 15px;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
 }
 
-/* Instructions text */
-.instructions {
-    font-size: 0.95rem;
-    color: var(--gray-dark);
-    margin-bottom: 15px;
+.legend-header h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.close-legend {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.close-legend:hover {
+    opacity: 0.8;
+}
+
+.legend-content {
+    padding: 15px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.legend-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.legend-table th,
+.legend-table td {
     padding: 10px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.legend-table th {
     background-color: var(--gray-light);
-    border-radius: var(--border-radius);
-    border-left: 4px solid var(--primary-color);
+    font-weight: 500;
+}
+
+.legend-table tr:nth-child(even) {
+    background-color: rgba(242, 244, 248, 0.5);
 }
 
 /* SOB Table */
@@ -225,17 +277,21 @@ header p {
 }
 
 .obj-number {
-    width: 15%;
+    width: 10%;
     text-align: center;
     font-weight: bold;
 }
 
 .obj-description {
-    width: 65%;
+    width: 45%;
 }
 
 .obj-score {
-    width: 20%;
+    width: 15%;
+}
+
+.obj-comment {
+    width: 30%;
 }
 
 /* Score Dropdown Styling */
@@ -258,6 +314,26 @@ header p {
 }
 
 .score-input:hover, .score-input:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 8px rgba(0, 127, 255, 0.3);
+    outline: none;
+}
+
+/* Comment Input Styling */
+.comment-input {
+    width: 100%;
+    padding: 8px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    background-color: var(--white);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all var(--transition-speed) ease;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.comment-input:hover, .comment-input:focus {
     border-color: var(--primary-light);
     box-shadow: 0 0 8px rgba(0, 127, 255, 0.3);
     outline: none;
@@ -440,14 +516,101 @@ header p {
     }
 
     .obj-number {
-        width: 20%;
+        width: 15%;
     }
     
     .obj-description {
-        width: 60%;
+        width: 40%;
     }
     
     .obj-score {
         width: 20%;
     }
+    
+    .obj-comment {
+        width: 25%;
+    }
+    
+    .comment-input {
+        min-height: 50px;
+        font-size: 0.9rem;
+    }
+    
+    .proficiency-legend {
+        width: 95vw;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+
+/* Form Section */
+.form-section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-medium);
+}
+
+.section-header {
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 1.4rem;
+}
+
+/* Instructions container and tooltip */
+.instructions-container {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+/* Instructions text */
+.instructions {
+    font-size: 0.95rem;
+    color: var(--gray-dark);
+    padding: 10px;
+    background-color: var(--gray-light);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+}
+
+/* Legend tooltip trigger */
+.legend-tooltip-trigger {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+    margin-left: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color var(--transition-speed) ease;
+}
+
+.legend-tooltip-trigger:hover {
+    text-decoration: underline;
+    color: var(--primary-dark);
+}
+
+.info-icon {
+    margin-left: 5px;
+    font-size: 1rem;
+}
+
+/* Proficiency Legend Styling */
+.proficiency-legend {
+    display: none;
+    position: absolute;
+    width: 500px;
+    max-width: 90vw;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+    top: 100%;
+    left: 50%;
+    transform: translate
 }
