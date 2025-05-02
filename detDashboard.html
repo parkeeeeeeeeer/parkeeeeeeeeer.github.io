@@ -32,8 +32,8 @@
                 <div class="time-filter">
                     <label for="time-period">Time Period:</label>
                     <select id="time-period">
-                        <option value="week">Past Week</option>
-                        <option value="month" selected>Past Month</option>
+                        <option value="week" selected>Past Week</option>
+                        <option value="month" >Past Month</option>
                         <option value="quarter">Past Quarter</option>
                         <option value="year">Past Year</option>
                     </select>
@@ -57,10 +57,10 @@
                 <h3>Active SOBs</h3>
                 <p>--</p>
             </div>
-            <div class="stat-card" id="form2-completion">
+            <!-- <div class="stat-card" id="form2-completion">
                 <h3>Form 2 Completion</h3>
                 <p>--</p>
-            </div>
+            </div> -->
         </div>
 
         <!-- Overall Trends Dashboard with Sliding Cards -->
@@ -100,20 +100,20 @@
                 </div>
 
                 <!-- Attendance Trend Card -->
-                <div class="trend-card">
+                <!-- <div class="trend-card">
                     <div class="chart-container">
                         <div class="loading-spinner hidden"></div>
                         <canvas id="attendance-trend-chart"></canvas>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Form 2 Trend Card -->
-                <div class="trend-card">
+                <!-- <div class="trend-card">
                     <div class="chart-container">
                         <div class="loading-spinner hidden"></div>
                         <canvas id="form2-trend-chart"></canvas>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Navigation arrows and indicators will be added by JavaScript -->
             </div>
@@ -122,7 +122,7 @@
         <!-- Footer with credits and version info -->
         <footer class="dashboard-footer">
             <p>ROTC Detachment Performance Dashboard v1.0</p>
-            <p>Data last updated: <span id="last-update-time">--</span></p>
+            <p>Data last updated: 05/02/2025<span id="last-update-time">--</span></p>
         </footer>
     </main>
 
@@ -133,6 +133,9 @@
     
     <!-- Application scripts -->
     <script type="module" src="src/js/auth.js" defer></script>
+    <script type="module" src="src/js/SOB.js" defer></script>
     <script type="module" src="src/js/dashboard.js" defer></script>
+    <script type="module" src="src/js/dashboardCharts.js" defer></script>
+
 </body>
 </html>
