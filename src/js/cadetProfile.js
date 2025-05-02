@@ -287,7 +287,7 @@ function renderPFAChart(userData) {
                 },
                 title: {
                     display: true,
-                    text: 'Physical Fitness Assessment Breakdown',
+                    text: 'PFA Score Breakdown',
                     font: {
                         size: 16,
                         weight: 'bold'

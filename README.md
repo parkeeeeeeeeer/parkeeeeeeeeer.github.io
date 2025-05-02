@@ -31,51 +31,61 @@ This document provides an overview of the file organization for the project.
 ## Folder Structure
 
 parkeeeeeeeeer.github.io
-├── node_modules/
-├── src/
-│   ├── assets/
+│
+├── .vscode/               # VS Code configuration
+│
+├── node_modules/          # External dependencies
+│
+├── src/                   # Source code
+│   ├── assets/            # HTML components for navigation
 │   │   ├── a3NavBar.html
-│   │   ├── a9Navbar.html
-│   │   ├── cadreNavbar.html
-│   │   ├── det130.png
+│   │   ├── a9NavBar.html
+│   │   ├── cadreNavBar.html
+│   │   ├── det130.png     # Image file
 │   │   ├── gmcNavBar.html
 │   │   ├── pocNavbar.html
 │   │   └── wcNavbar.html
-│   ├── css/
+│   │
+│   ├── css/               # Stylesheet files
 │   │   ├── attendance.css
 │   │   ├── cadetProfile.css
 │   │   ├── detDashboard.css
 │   │   ├── directory.css
-│   │   ├── form2.css
 │   │   ├── main.css
 │   │   ├── nav.css
-│   │   └── PFA.css
-│   ├── databases/
-│   │   ├── ids.sql
-│   │   └── sob.sql
-│   ├── js/
+│   │   ├── PFA.css
+│   │   └── SOB.css
+│   │
+│   ├── js/                # JavaScript functionality
 │   │   ├── attendance.js
 │   │   ├── auth.js
 │   │   ├── cadetProfile.js
-│   │   ├── const.js
+│   │   ├── dashboard.js
+│   │   ├── dashboardCharts.js
 │   │   ├── directory.js
 │   │   ├── form2Submissions.js
 │   │   ├── PFA.js
 │   │   ├── pfaCriteria.js
 │   │   ├── SOB.js
+│   │   ├── SOBSubmissions.js
 │   │   └── index.js
-│   ├── attendance.html
-│   ├── cadetProfile.html
-│   ├── database.rules.json
-│   ├── detDashboard.html
-│   ├── directory.html
-│   ├── form2Submissions.html
-│   ├── index.html
-│   ├── pfaInput.html
-├── .gitignore
-├── package-lock.json
-├── package.json
-├── README.md
+│   │
+│   └── databases/         # Database-related files
+│
+├── .gitignore             # Git ignore configuration
+├── attendance.html        # Main HTML pages
+├── cadetProfile.html
+├── color.html
+├── database.rules.json    # Database configuration
+├── detDashboard.html
+├── directory.html
+├── index.html             # Entry point
+├── package-lock.json      # NPM dependencies lock
+├── package.json           # Project configuration
+├── pfaInput.html
+├── README.md              # Project documentation
+├── readPFAexcel.html
+└── SOBsubmissions.html
 
 
 # Cites:
