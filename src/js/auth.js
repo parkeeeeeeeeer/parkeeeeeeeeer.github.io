@@ -48,25 +48,26 @@ async function loadNavBar(role) {
     // Determine the file to load based on the role
     switch (role) {
         case "Cadre":
-            navFile = "./src/assets/cadreNavbar.html";
+            navFile = "./src/assets/cadreNavBar.html";
             break;
         case "Wing/CC":
-            navFile = "./src/assets/wcNavbar.html";
+            navFile = "./src/assets/wcNavBar.html";
             break;
         case "A3":
-            navFile = "./src/assets/a3NavBar.html";
+            navFile = "src/assets/a3NavBar.html";
             break;
         case "A9":
-            navFile = "./src/assets/a9Navbar.html";
+            navFile = "./src/assets/a9NavBar.html";
             break;
+        case "Flt/CC":
         case "IO":
-            navFile = "./src/assets/pocNavbar.html";
+            navFile = "./src/assets/pocNavBar.html";
             break;
         case "POC":
-            navFile = "./src/assets/pocNavbar.html";
+            navFile = "./src/assets/pocNavBar.html";
             break;
         case "GMC":
-            navFile = "./src/assets/gmcNavBar.html";
+            navFile = "src/assets/gmcNavBar.html";
             break;
         default:
             navFile = "./src/assets/gmcNavBar.html";
