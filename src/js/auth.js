@@ -69,9 +69,9 @@ async function loadNavBar(role) {
         case "GMC":
             navFile = "./src/assets/gmcNavBar.html";
             break;
-        default:
-            navFile = "./src/assets/gmcNavBar.html";
-            break;
+        // default:
+        //     navFile = "./src/assets/gmcNavBar.html";
+        //     break;
     }
 
     try {
